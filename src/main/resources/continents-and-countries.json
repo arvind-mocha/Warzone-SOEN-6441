@@ -1,0 +1,77 @@
+{
+  "Africa": {
+    "continent": "Africa",
+    "countries": [
+      "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi",
+      "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Comoros",
+      "Congo", "Congo, The Democratic Republic of the", "Cote d'Ivoire", "Djibouti",
+      "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon",
+      "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia",
+      "Libyan Arab Jamahiriya", "Madagascar", "Malawi", "Mali", "Mauritania",
+      "Mauritius", "Mayotte", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria",
+      "Reunion", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone",
+      "Somalia", "South Africa", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"
+    ]
+  },
+  "Antarctica": {
+    "continent": "Antarctica",
+    "countries": [
+      "Antarctica", "Bouvet Island", "French Southern territories", "Heard Island and McDonald Islands",
+      "South Georgia and the South Sandwich Islands"
+    ]
+  },
+  "Asia": {
+    "continent": "Asia",
+    "countries": [
+      "Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan",
+      "Brunei", "Cambodia", "China", "Cyprus", "Georgia", "Hong Kong", "India",
+      "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakstan",
+      "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Macao", "Malaysia", "Maldives",
+      "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Palestine",
+      "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka",
+      "Syria", "Tajikistan", "Thailand", "Timor-Leste", "Turkey", "Turkmenistan", "United Arab Emirates",
+      "Uzbekistan", "Vietnam", "Yemen"
+    ]
+  },
+  "Europe": {
+    "continent": "Europe",
+    "countries": [
+      "Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina",
+      "Bulgaria", "Croatia", "Czech Republic", "Denmark", "Estonia", "Faroe Islands",
+      "Finland", "France", "Germany", "Gibraltar", "Greece", "Holy See (Vatican City State)",
+      "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Liechtenstein", "Lithuania",
+      "Luxembourg", "Macedonia", "Malta", "Moldova", "Monaco", "Netherlands", "Norway",
+      "Poland", "Portugal", "Romania", "Russian Federation", "San Marino", "Serbia and Montenegro",
+      "Slovakia", "Slovenia", "Spain", "Svalbard and Jan Mayen", "Sweden", "Switzerland",
+      "Ukraine", "United Kingdom", "Yugoslavia"
+    ]
+  },
+  "North America": {
+    "continent": "North America",
+    "countries": [
+      "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Bermuda", "Canada", "Cayman Islands",
+      "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Greenland", "Grenada",
+      "Guadeloupe", "Guatemala", "Haiti", "Honduras", "Jamaica", "Martinique", "Mexico",
+      "Montserrat", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia",
+      "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "Turks and Caicos Islands",
+      "United States", "British Virgin Islands", "U.S. Virgin Islands"
+    ]
+  },
+  "Oceania": {
+    "continent": "Oceania",
+    "countries": [
+      "American Samoa", "Australia", "Cocos (Keeling) Islands", "Cook Islands", "Fiji Islands",
+      "French Polynesia", "Guam", "Kiribati", "Marshall Islands", "Micronesia", "Nauru",
+      "New Caledonia", "New Zealand", "Niue", "Norfolk Island", "Northern Mariana Islands",
+      "Palau", "Papua New Guinea", "Pitcairn", "Samoa", "Solomon Islands", "Tokelau",
+      "Tonga", "Tuvalu", "United States Minor Outlying Islands", "Vanuatu", "Wallis and Futuna"
+    ]
+  },
+  "South America": {
+    "continent": "South America",
+    "countries": [
+      "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Falkland Islands",
+      "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"
+    ]
+  }
+}
