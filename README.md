@@ -9,7 +9,7 @@ The program was developed as a requirement to complete **Concordia University's 
 
 ## Authors (GitHub Username and Email ID)
 
-- **Devasenan Murugan**: `devasenan` ([devasenan.murugan@gmail.com](mailto:devasenan.murugan@gmail.com))  
+- **Devasenan Murugan**: `devasenan134` ([devasenan.murugan@gmail.com](mailto:devasenan.murugan@gmail.com))  
 - **Priya**: `Pksp73` ([Pksp73.ca@gmail.com](mailto:Pksp73.ca@gmail.com))  
 - **Arvind Lakshmanan**: `arvind` ([arvindarvind2210@gmail.com](mailto:arvindarvind2210@gmail.com))  
 - **Barath**: `barath` ([barath.2952@gmail.com](mailto:barath.2952@gmail.com)) 
