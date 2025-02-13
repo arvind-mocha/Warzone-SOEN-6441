@@ -2,7 +2,7 @@ package org.com.Models;
 
 import java.util.ArrayList;
 
-public class Countries {
+public class Country {
 
     private static String name;
     private static ArrayList neighbours;
