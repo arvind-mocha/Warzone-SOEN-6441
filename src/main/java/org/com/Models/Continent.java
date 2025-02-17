@@ -12,37 +12,45 @@ public class Continent {
 
 
     public Continent(int p_id, int p_value){
-        this.d_id = p_id;
-        this.d_value = p_value;
-        this.d_countries = new ArrayList<>();
+        d_id = p_id;
+        d_value = p_value;
+        d_countries = new ArrayList<>();
+    }
+
+    public int getId(){
+        return d_id;
+    }
+
+    public void setId(int p_id){
+        d_id = p_id;
     }
 
     public void setName(String p_name){
-        this.d_name = p_name;
+        d_name = p_name;
     }
 
     public String getName(){
-        return this.d_name;
+        return d_name;
     }
 
     public void addCountry(Country p_country){
-        this.d_countries.add(p_country);
+        d_countries.add(p_country);
     }
 
     public void removeCountry(Country p_country){
-        this.d_countries.remove(p_country);
+        d_countries.remove(p_country);
     }
 
     public List<Country> getCountries(){
-        return this.d_countries;
+        return d_countries;
     }
 
     public void setValue(int p_value){
-        this.d_value = p_value;
+        d_value = p_value;
     }
 
     public int getValue(){
-        return this.d_value;
+        return d_value;
     }
 
 }
