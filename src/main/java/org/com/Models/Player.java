@@ -1,4 +1,5 @@
 package org.com.Models;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,9 @@ public class Player {
     private int d_armyCount;
     private List<Country>d_countries;   //Countries owned by a particular player
     private List<Continent>d_continents;   //Continents owned by a particular player
+    private List<Order> d_orderList;
+    private Order d_currentOrder;
+
 
     /**
      * This is a default constructor which is used in the beginning of the game to get player's name and
