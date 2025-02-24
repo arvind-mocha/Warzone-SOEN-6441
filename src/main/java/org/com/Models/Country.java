@@ -1,8 +1,9 @@
 package org.com.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Country {
+public class Country implements Serializable {
     private int d_id;
     private String d_name;
     private int d_continentId;

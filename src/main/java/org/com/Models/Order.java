@@ -1,5 +1,7 @@
 package org.com.Models;
 
+import java.io.Serializable;
+
 /**
  * This file is used to represent the "Order" given by a player <b>(Each player will have an order)</b> in the game.
  * Orders are :
@@ -10,7 +12,7 @@ package org.com.Models;
  * </ul>
  * Used in relation with the game <b>Controls.
  */
-public class Order {
+public class Order implements Serializable {
     private Country d_country;
     private int d_armyCount;
 

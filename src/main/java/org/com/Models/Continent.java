@@ -1,10 +1,11 @@
 package org.com.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Continent {
+public class Continent implements Serializable {
     private int d_id;
     private String d_name;
     private int d_value;
