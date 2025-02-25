@@ -6,6 +6,7 @@ import org.com.GamePhase.LoadMapPhase;
 import org.com.GamePhase.Phase;
 import org.com.Utils.LogUtil;
 
+import java.io.File;
 import java.util.logging.Level;
 
 /**
@@ -80,24 +81,28 @@ public class CommandHandler {
         }
 
         // validating commands based on each phase
-        if(p_currentGamePhase.getValidCommands().contains(l_baseCommand))
+        if(!p_currentGamePhase.getValidCommands().contains(l_baseCommand))
         {
-            return true;
+            return false;
         }
 
-        // validating if file name is provided for required commands
+        // validating the correctness of the file provided for required commands
         if(l_commandEnum.d_isFileRequired)
         {
             try {
                 String fileName = p_commands[1];
-//                File
+                if(!new File(System.getProperty("user.dir") + "/src/main/resources/" + fileName).exists())
+                {
+                   throw new RuntimeException();// Thrown exception will be caught and proper error message will get displayed
+                }
             }
             catch (Exception e)
             {
-                l_console.print("Enter a valid file name");
+                l_console.print("\nProvide a valid file");
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }

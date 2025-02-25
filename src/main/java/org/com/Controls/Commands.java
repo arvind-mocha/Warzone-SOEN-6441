@@ -15,9 +15,14 @@ import java.util.List;
 public enum Commands {
     HELP(CommonConstants.HELP_COMMAND, false, null),
     EXIT(CommonConstants.EXIT_COMMAND, false, null),
+    SAVE_MAP(CommonConstants.SAVE_MAP_COMMAND, true, null),
+    EDIT_MAP(CommonConstants.EDIT_MAP_COMMAND, true, null),
     LOAD_MAP(CommonConstants.LOAD_MAP_COMMAND, true, null),
-    EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT, true, Arrays.asList("-add", "-remove")),
-    EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY, true, Arrays.asList("-add", "-remove"));
+    SHOW_MAP(CommonConstants.SHOW_MAP_COMMAND, false, null),
+    VALIDATE_MAP(CommonConstants.VALIDATE_MAP_COMMAND, true, null),
+    EDIT_NEIGHBOUR(CommonConstants.EDIT_NEIGHBOUR, false, Arrays.asList("-add", "-remove")),
+    EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY, false, Arrays.asList("-add", "-remove")),
+    EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT, false, Arrays.asList("-add", "-remove"));
 
     public final String d_name;
     public final List d_attributesList;
