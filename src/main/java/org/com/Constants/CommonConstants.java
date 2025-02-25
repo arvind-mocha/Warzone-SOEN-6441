@@ -20,4 +20,15 @@ public class CommonConstants {
     public static final String EDIT_COUNTRY = "editcountry";
     public static final String EDIT_NEIGHBOUR = "editneighbour";
     public static final String EDIT_CONTINENT = "editcontinent";
+
+    // Directories
+    public static final String GAME_DATA_DIR = System.getProperty("user.dir") + "/src/main/resources/GameData/";
+
+    // Integers
+    public static final Integer INTEGER_ZERO = 0;
+
+    // Strings
+    public static final String CONTINENTS = "[continents]";
+    public static final String COUNTRIES = "[countries]";
+    public static final String BORDERS = "[borders]";
 }

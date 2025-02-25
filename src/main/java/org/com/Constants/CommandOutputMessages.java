@@ -8,6 +8,10 @@ package org.com.Constants;
  */
 
 public class CommandOutputMessages {
+
+    // Message to get all instructions
+    public static final String HELP_DEFAULT_MESSAGE = "Enter 'help' to get instructions of available commands";
+
     // Map commands help messages
     public static final String MAP_HELP = "usage: " +
             "\n\t loadmap <filename> :\tLoads a map from the given file path " +

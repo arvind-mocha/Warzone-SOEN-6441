@@ -11,7 +11,9 @@ public class Continent implements Serializable {
     private int d_value;
     private List<Country> d_countries;
 
-
+    public Continent() {
+        d_countries = new ArrayList<>();
+    }
     public Continent(int p_id, int p_value){
         d_id = p_id;
         d_value = p_value;

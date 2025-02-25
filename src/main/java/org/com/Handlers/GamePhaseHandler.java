@@ -1,4 +1,4 @@
-package org.com.Controls;
+package org.com.Handlers;
 
 import org.com.GamePhase.LoadMapPhase;
 import org.com.GamePhase.Phase;

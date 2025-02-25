@@ -1,8 +1,9 @@
 package org.com.GamePage;
 
+import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
-import org.com.Controls.CommandHandler;
-import org.com.Controls.GamePhaseHandler;
+import org.com.Handlers.CommandHandler;
+import org.com.Handlers.GamePhaseHandler;
 import org.com.Utils.LogUtil;
 
 import java.nio.file.Files;
@@ -30,16 +31,7 @@ public class GameEngine implements Serializable {
         //The following messages will be displayed at the start of the game.
         var l_console = System.console();
         l_console.print("Welcome to the WarZone edition of Risk.");
-        l_console.print("\nEnter 'help' to get instructions of available commands");
-
-        //Deleting the log file if exists
-        try {
-            Files.deleteIfExists(Paths.get(LogUtil.LOG_FILE_DIR));
-        }
-        catch (Exception e)
-        {
-            l_console.print("Issue occurred while deleting the log file");
-        }
+        l_console.print("\n" + CommandOutputMessages.HELP_DEFAULT_MESSAGE);
 
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
@@ -49,7 +41,13 @@ public class GameEngine implements Serializable {
         do {
             l_console.print("\n> ");
             l_inputCommand = l_scanner.nextLine();
-            CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
+            try {
+                CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
+            }
+            catch (Exception e)
+            {
+                l_console.print("\n\u001B[31m " + e.getMessage() + " \u001B[0m");
+            }
         } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));
 
         LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has been ended");

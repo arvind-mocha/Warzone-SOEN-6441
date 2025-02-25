@@ -1,12 +1,3 @@
-; map: europe.map
-; map made with the map maker
-; yura.net Risk 1.0.9.3
-
-[files]
-pic europe_pic.jpg
-map europe_map.gif
-crd europe.cards
-
 [continents]
 North_Europe 5 red
 East_Europe 4 magenta

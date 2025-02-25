@@ -1,6 +1,8 @@
 package org.com.Utils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.*;
 
 /**
@@ -12,7 +14,13 @@ import java.util.logging.*;
 
 public class LogUtil {
 
-    public static final String LOG_FILE_DIR = System.getProperty("user.dir") + "/src/main/resources/Logs/game.log";
+    private static final String LOG_FILE_DIR;
+
+    static {
+        // Generate a unique log file name
+        String l_timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        LOG_FILE_DIR = System.getProperty("user.dir") + "/src/main/resources/Logs/application-logs-" + l_timestamp + ".log";
+    }
 
     /**
      * Logs a message with a specified logging level and class name.

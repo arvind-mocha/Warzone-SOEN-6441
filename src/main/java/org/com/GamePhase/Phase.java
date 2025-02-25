@@ -1,5 +1,8 @@
 package org.com.GamePhase;
 
+import org.com.Constants.CommonErrorMessages;
+import org.com.Handlers.GamePhaseHandler;
+
 import java.util.ArrayList;
 
 /**
@@ -20,5 +23,9 @@ public interface Phase {
      */
     default ArrayList<String> getCommonCommands(){
         return null;
+    }
+
+    default void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
+        System.console().print(CommonErrorMessages.INVALID_COMMAND);
     }
 }

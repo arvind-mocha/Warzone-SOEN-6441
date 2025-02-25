@@ -1,6 +1,7 @@
 package org.com.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Country implements Serializable {
@@ -11,6 +12,9 @@ public class Country implements Serializable {
     private List<Integer> d_neighbourCountryIds;
     private int d_soldierCount;
 
+    public Country() {
+        this.d_neighbourCountryIds = new ArrayList<>();
+    }
 
     public Country(int p_id, List<Integer> p_neighbourCountryIds, int p_soldierCount){
         d_id = p_id;
@@ -59,6 +63,4 @@ public class Country implements Serializable {
     public void setNeighbourCountryIds(List<Integer> p_neighbourCountryIds){
         d_neighbourCountryIds = p_neighbourCountryIds;
     }
-
-
 }
