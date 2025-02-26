@@ -36,10 +36,10 @@ public class MapOperationsHandler {
      */
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
-    public static void processMap(GamePhaseHandler p_gamePhaseHandler,String p_fileName) throws Exception {
+    public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
-        l_console.println("Loading the map from " + p_fileName + " ...");
+        l_console.println("Processing the map from " + p_fileName + " ...");
 
         try {
             List<String> l_file = Files.readAllLines(Paths.get(CommonConstants.GAME_DATA_DIR + p_fileName));
@@ -65,12 +65,17 @@ public class MapOperationsHandler {
             }
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
             ValidationUtil.validateMap(l_gameMap);
+            if(p_isMapValidationCommand)
+            {
+                l_console.println("The map is valid");
+                return;
+            }
             l_console.println("The Map has been constructed and validated successfully!");
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map has been validated");
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);
-            p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().nextPhase());
+            p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
             l_console.println("The Map has been loaded");
         } catch (IOException e) {
             l_console.println("Failed to load the file: " + e.getMessage());

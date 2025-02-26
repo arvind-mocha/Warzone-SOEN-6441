@@ -39,30 +39,17 @@ public class CommandHandler {
         switch(l_inputs[0].toLowerCase())
         {
             case CommonConstants.HELP_COMMAND:
-                l_console.println(getHelpInstructionsBasedOnPhase(l_currentGamePhase));
+                l_console.println(l_currentGamePhase.getHelpMessage());
                 break;
             case CommonConstants.LOAD_MAP_COMMAND:
-                String l_fileName = l_inputs[1];
-                MapOperationsHandler.processMap(p_gamePhaseHandler, l_fileName);
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_inputs[1], false);
                 break;
             case CommonConstants.SHOW_MAP_COMMAND:
                 MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
-                LogUtil.Logger(CommandHandler.class.getName(), Level.INFO, "The map has been displayed");
+                break;
+            case CommonConstants.VALIDATE_MAP_COMMAND:
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_inputs[1], true);
                 break;
         }
-    }
-
-    /**
-     * Returns help instructions based on the current game phase.
-     *
-     * @param p_currentGamePhase The current game phase.
-     * @return The help instructions for the current game phase.
-     */
-    private static String getHelpInstructionsBasedOnPhase(Phase p_currentGamePhase) {
-        if(p_currentGamePhase instanceof LoadMapPhase)
-        {
-            return CommandOutputMessages.MAP_HELP;
-        }
-        return null;
     }
 }

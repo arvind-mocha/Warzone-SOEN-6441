@@ -6,10 +6,8 @@ import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.Utils.LogUtil;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Scanner;
 import java.io.Serializable;
+import java.util.Scanner;
 import java.util.logging.Level;
 
 /**
@@ -17,7 +15,6 @@ import java.util.logging.Level;
  * Represents the main game loop.
  *
  * @author Arvind Nachiappan
- *
  */
 
 public class GameEngine implements Serializable {
@@ -43,9 +40,7 @@ public class GameEngine implements Serializable {
             l_inputCommand = l_scanner.nextLine();
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 l_console.println("\u001B[31m " + e.getMessage() + " \u001B[0m");
             }
         } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));

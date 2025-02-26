@@ -53,7 +53,7 @@ public class ValidationUtil {
     {
         // Checking whether the map is empty
         if (p_gameMap == null) {
-            throw new Exception(CommonErrorMessages.EMPTY_MAP);
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
         }
 
         // Continent validation

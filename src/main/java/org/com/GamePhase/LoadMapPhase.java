@@ -18,13 +18,18 @@ import java.util.Arrays;
 
 public class LoadMapPhase implements Phase{
     @Override
-    public Phase nextPhase() {
+    public Phase getNextPhase() {
         return new GameStartUpPhase();
     }
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.d_name, Commands.EDIT_COUNTRY.d_name, Commands.EDIT_CONTINENT.d_name));
+        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.d_name, Commands.EDIT_COUNTRY.d_name, Commands.EDIT_CONTINENT.d_name, Commands.VALIDATE_MAP.d_name));
+    }
+
+    @Override
+    public String getHelpMessage() {
+        return CommandOutputMessages.MAP_HELP;
     }
 
     @Override
