@@ -11,6 +11,7 @@ import org.com.Utils.ValidationUtil;
 
 import java.io.File;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class handles all commands and invocation of all command methods take place here.
@@ -38,11 +39,15 @@ public class CommandHandler {
         switch(l_inputs[0].toLowerCase())
         {
             case CommonConstants.HELP_COMMAND:
-                l_console.print(getHelpInstructionsBasedOnPhase(l_currentGamePhase));
+                l_console.println(getHelpInstructionsBasedOnPhase(l_currentGamePhase));
                 break;
             case CommonConstants.LOAD_MAP_COMMAND:
                 String l_fileName = l_inputs[1];
                 MapOperationsHandler.processMap(p_gamePhaseHandler, l_fileName);
+                break;
+            case CommonConstants.SHOW_MAP_COMMAND:
+                MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
+                LogUtil.Logger(CommandHandler.class.getName(), Level.INFO, "The map has been displayed");
                 break;
         }
     }

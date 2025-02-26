@@ -30,13 +30,8 @@ public class LoadMapPhase implements Phase{
     @Override
     public void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
         var console = System.console();
-        Map l_gameMap = MapOperationsHandler.processMap(p_gamePhaseHandler, p_fileName);
-//        MapOperationsHandler.validateMap(l_gameMap);
-
-        //Set the game phase to start up phase
-        p_gamePhaseHandler.setGamePhase(this.nextPhase());
-        p_gamePhaseHandler.setGameMap(l_gameMap);
-        console.print("Next, add players to the game");
-        console.print(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+        p_gamePhaseHandler.getGamePhase().constructGameMap(p_fileName, p_gamePhaseHandler);
+        console.println("You can now add playes to the game");
+        console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
     }
 }

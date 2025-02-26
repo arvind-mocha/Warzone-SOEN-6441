@@ -30,8 +30,8 @@ public class GameEngine implements Serializable {
 
         //The following messages will be displayed at the start of the game.
         var l_console = System.console();
-        l_console.print("Welcome to the WarZone edition of Risk.");
-        l_console.print("\n" + CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+        l_console.println("Welcome to the WarZone edition of Risk.");
+        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
 
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
@@ -39,18 +39,18 @@ public class GameEngine implements Serializable {
         LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has begun!!");
         String l_inputCommand;
         do {
-            l_console.print("\n> ");
+            l_console.println("> ");
             l_inputCommand = l_scanner.nextLine();
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             }
             catch (Exception e)
             {
-                l_console.print("\n\u001B[31m " + e.getMessage() + " \u001B[0m");
+                l_console.println("\u001B[31m " + e.getMessage() + " \u001B[0m");
             }
         } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));
 
         LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has been ended");
-        l_console.print("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
+        l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
     }
 }

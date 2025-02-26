@@ -1,9 +1,12 @@
 package org.com.Handlers;
 
 import org.com.Constants.CommonConstants;
+import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
+import org.com.Models.Player;
+import org.com.Utils.DisplayUtil;
 import org.com.Utils.LogUtil;
 import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -14,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 /**
@@ -32,10 +36,10 @@ public class MapOperationsHandler {
      */
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
-    public static Map processMap(GamePhaseHandler p_gamePhaseHandler,String p_fileName) throws Exception {
+    public static void processMap(GamePhaseHandler p_gamePhaseHandler,String p_fileName) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
-        l_console.print("Loading the map from " + p_fileName + " ...");
+        l_console.println("Loading the map from " + p_fileName + " ...");
 
         try {
             List<String> l_file = Files.readAllLines(Paths.get(CommonConstants.GAME_DATA_DIR + p_fileName));
@@ -61,17 +65,16 @@ public class MapOperationsHandler {
             }
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
             ValidationUtil.validateMap(l_gameMap);
-            l_console.print("\nThe Map has been constructed and validated successfully!");
+            l_console.println("The Map has been constructed and validated successfully!");
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map has been validated");
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);
             p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().nextPhase());
-            l_console.print("\nThe Map has been loaded");
+            l_console.println("The Map has been loaded");
         } catch (IOException e) {
-            l_console.print("Failed to load the file: " + e.getMessage());
+            l_console.println("Failed to load the file: " + e.getMessage());
         }
-        return l_gameMap;
     }
 
     private static int processBorders(List<String> p_file, Map p_map, int p_lineNum) {
@@ -137,5 +140,31 @@ public class MapOperationsHandler {
             p_map.setContinentMap(l_continentGraph);
         }
         return CommonConstants.INTEGER_ZERO;
+    }
+
+    public static void processShowGameMap(GamePhaseHandler p_gameMap) throws Exception {
+        Map l_gameMap = p_gameMap.getGameMap();
+        if (l_gameMap == null) {
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+        }
+
+        Set<Country> l_countryVertexes = l_gameMap.getCountryMap().vertexSet();
+        String[][] l_data = new String[l_countryVertexes.size()][5];
+        int l_rowNum = 0;
+        for (Country l_country : l_countryVertexes) {
+
+            Player l_owner = l_country.getOwner();
+            StringBuilder l_neighbourCountries = new StringBuilder();
+            for (int l_neighbourID : l_country.getNeighbourCountryIds()) {
+                l_neighbourCountries.append(l_neighbourID).append(", ");
+            }
+            l_data[l_rowNum][0] = l_country.getName();
+            l_data[l_rowNum][1] = String.valueOf(l_country.getContinentId());
+            l_data[l_rowNum][2] = l_neighbourCountries.toString().trim();
+            l_data[l_rowNum][3] = l_owner == null ? "-" : l_owner.getD_name();
+            l_data[l_rowNum][4] = String.valueOf(l_country.getSoldierCount());
+            l_rowNum++;
+        }
+        DisplayUtil.displayMap(l_data, new String[] {"Country", "Continent", "Neighbors", "Owner", "Armies"}, "Domination Map Viewer");
     }
 }

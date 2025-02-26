@@ -11,6 +11,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
+import java.util.List;
 
 public class ValidationUtil {
 
@@ -27,7 +28,7 @@ public class ValidationUtil {
         Commands l_commandEnum = Commands.getCommandByName(l_baseCommand); // fetching the respective command and its attributes
 
         // skipping validation for help command since no processing needed for help
-        if(l_baseCommand.equalsIgnoreCase(CommonConstants.HELP_COMMAND) || l_baseCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND))
+        if(l_baseCommand.equalsIgnoreCase(CommonConstants.HELP_COMMAND) || l_baseCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND) ||l_baseCommand.equalsIgnoreCase(CommonConstants.SHOW_MAP_COMMAND) )
         {
             return;
         }
@@ -50,26 +51,49 @@ public class ValidationUtil {
 
     public static void validateMap(Map p_gameMap) throws Exception
     {
-        // Checking the case where the map is empty
+        // Checking whether the map is empty
         if (p_gameMap == null) {
             throw new Exception(CommonErrorMessages.EMPTY_MAP);
         }
 
         // Continent validation
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = p_gameMap.getContinentMap();
+        // Checking whether the continents are present
         if(l_continentGraph.vertexSet().isEmpty())
         {
             throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
         }
 
+        for (Continent l_continent : l_continentGraph.vertexSet()) {
+            if (l_continent.getCountries() == null) {
+                throw new Exception(CommonErrorMessages.CONUTRYLESS_CONTINENT);
+            }
+        }
+
         // Countries validation
         DefaultDirectedGraph<Country, DefaultEdge> l_countriesGraph = p_gameMap.getCountryMap();
+        // Checking whether countries are present
         if(l_countriesGraph.vertexSet().isEmpty())
         {
             throw new Exception(CommonErrorMessages.COUNTRIES_UNAVAILABLE);
         }
 
-        // Boarders validation
+        // Checking whether countries have neighbouring countries
+        for (Country l_country : l_countriesGraph.vertexSet()) {
+            if (l_country.getNeighbourCountryIds().isEmpty()) {
+                throw new Exception(CommonErrorMessages.NEIGHBOURLESS_COUNTRIES);
+            }
+        }
 
+        // Checking whether the neighbouring countries are properly mapped
+        for (Country l_i : l_countriesGraph.vertexSet()) {
+            List<Integer> l_neighbourList = l_i.getNeighbourCountryIds();
+            for (int l_neighbourIds : l_neighbourList) {
+                Country l_country = p_gameMap.getCountryById(l_neighbourIds);
+                if (!l_countriesGraph.containsEdge(l_country, l_i)) {
+                    throw new Exception(CommonErrorMessages.IMPROPER_NEIGHBOUR_MAPPING);
+                }
+            }
+        }
     }
 }
