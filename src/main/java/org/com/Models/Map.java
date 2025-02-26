@@ -3,10 +3,22 @@ package org.com.Models;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.io.Serializable;
 
 
-
-public class Map {
+/**
+ * The `Map` class represents the game map, which includes continents and countries.
+ * It uses `DefaultDirectedGraph` from the JGraphT library to model the relationships
+ * between continents and countries.
+ *
+ * This class provides methods to retrieve continents and countries by their IDs,
+ * as well as methods to get and set the continent and country maps.
+ *
+ * Implements `Serializable` to allow the map to be serialized.
+ *
+ * @author Arvind Lakshmanan
+ */
+public class Map implements Serializable {
     private DefaultDirectedGraph<Continent, DefaultEdge> d_continentMap;
     private DefaultDirectedGraph<Country, DefaultEdge> d_countryMap;
 

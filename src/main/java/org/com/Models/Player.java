@@ -1,5 +1,6 @@
 package org.com.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * Contains all the attributes of a player.
  */
 
-public class Player {
+public class Player implements Serializable {
 
     private String d_name;
     private int d_armyCount;
