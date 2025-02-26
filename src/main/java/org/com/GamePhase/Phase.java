@@ -27,6 +27,6 @@ public interface Phase {
     }
 
     default void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
-        System.console().print(CommonErrorMessages.INVALID_COMMAND);
+        System.console().println(CommonErrorMessages.INVALID_COMMAND);
     }
 }

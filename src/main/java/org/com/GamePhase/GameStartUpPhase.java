@@ -21,7 +21,7 @@ public class GameStartUpPhase implements Phase {
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList());
+        return new ArrayList<>(Arrays.asList(Commands.ADD_PLAYER.getName()));
     }
 
     @Override

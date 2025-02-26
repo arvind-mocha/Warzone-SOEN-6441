@@ -8,6 +8,7 @@ public class Country implements Serializable {
     private int d_id;
     private String d_name;
     private int d_continentId;
+    private String d_continentName;
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
     private int d_soldierCount;
@@ -34,6 +35,12 @@ public class Country implements Serializable {
 
     public void setName(String p_name){
         d_name = p_name;
+    }
+
+    public String getContinentName(){ return d_continentName; }
+
+    public void setContinentName(String p_continentName){
+        d_continentName = p_continentName;
     }
 
     public int getContinentId(){ return d_continentId; }

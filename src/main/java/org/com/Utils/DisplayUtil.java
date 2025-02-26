@@ -24,7 +24,7 @@ public class DisplayUtil {
 
         // Adjusting the initial frame of the GUI
         frame.setSize(400, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 }
