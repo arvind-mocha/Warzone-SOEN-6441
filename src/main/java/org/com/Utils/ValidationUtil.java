@@ -61,7 +61,8 @@ public class ValidationUtil {
         // Checking whether the continents are present
         if(l_continentGraph.vertexSet().isEmpty())
         {
-            throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
+            throw new Exception();
+//            throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
         }
 
         for (Continent l_continent : l_continentGraph.vertexSet()) {
