@@ -41,4 +41,4 @@ build/
 .DS_Store
 
 ## Project ##
-/src/main/resources/Logs/*
+/src/main/resources/Logs

@@ -1,5 +1,6 @@
 package org.com.Utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,11 +16,13 @@ import java.util.logging.*;
 public class LogUtil {
 
     private static final String LOG_FILE_DIR;
+    private static final String LOG_FOLDER;
 
     static {
         // Generate a unique log file name
         String l_timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        LOG_FILE_DIR = System.getProperty("user.dir") + "/src/main/resources/Logs/application-logs-" + l_timestamp + ".log";
+        LOG_FOLDER = System.getProperty("user.dir") + "/src/main/resources/Logs";
+        LOG_FILE_DIR = LOG_FOLDER + "/application-logs-" + l_timestamp + ".log";
     }
 
     /**
@@ -66,6 +69,14 @@ public class LogUtil {
         @Override
         public String format(LogRecord p_record) {
             return String.format("Time :: %d || Class name :: %s || Message :: %s%n", p_record.getMillis(), p_record.getLoggerName(), p_record.getMessage());
+        }
+    }
+
+    public static void createLogFolder()
+    {
+        File l_logsDirectory = new File(LOG_FOLDER);
+        if (!l_logsDirectory.exists()) {
+            l_logsDirectory.mkdir();
         }
     }
 }
