@@ -42,4 +42,6 @@ public class CommandOutputMessages {
             "\n\t deploy <countryID> <num> \t: deploys armies to owned countries" +
             "\n\t showmap \t\t\t\t\t: show all countries and continents, armies on each country, ownership, and connectivity in a way that\n" +
             "\t\t\t\t\t\t\t\t enables efficient game play";
+
+    public static final String PLAYER_TURN_INDICATOR = "Player %s Time to make your move!";
 }
