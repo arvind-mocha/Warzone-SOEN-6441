@@ -1,17 +1,11 @@
 package org.com.Handlers;
 
-import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
-import org.com.Constants.CommonErrorMessages;
-import org.com.GamePhase.LoadMapPhase;
 import org.com.GamePhase.Phase;
-import org.com.Models.Map;
 import org.com.Utils.LogUtil;
 import org.com.Utils.ValidationUtil;
 
-import java.io.File;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class handles all commands and invocation of all command methods take place here.
@@ -31,38 +25,36 @@ public class CommandHandler {
     public static void processCommand(GamePhaseHandler p_gamePhaseHandler, String p_command)throws Exception
     {
         var l_console = System.console();
-        String[] l_inputs = p_command.split("\\s+");
+        String[] l_commandArray = p_command.split("\\s+");
         Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
-        ValidationUtil.validateCommand(l_currentGamePhase, l_inputs);
+        ValidationUtil.validateCommand(l_currentGamePhase, l_commandArray, p_command);
         LogUtil.Logger(CommandHandler.class.getName(), Level.INFO, "Processing the command: " + p_command);
 
-        switch(l_inputs[0].toLowerCase())
+        switch(l_commandArray[0].toLowerCase())
         {
             case CommonConstants.HELP_COMMAND:
-                l_console.println(getHelpInstructionsBasedOnPhase(l_currentGamePhase));
+                l_console.println(l_currentGamePhase.getHelpMessage());
                 break;
+//            case CommonConstants.EDIT_MAP_COMMAND:
+//            case CommonConstants.EDIT_CONTINENT_COMMAND:
+//            case CommonConstants.EDIT_COUNTRY_COMMAND:
+//            case CommonConstants.EDIT_NEIGHBOUR_COMMAND:
+//            case CommonConstants.SAVE_MAP_COMMAND:
             case CommonConstants.LOAD_MAP_COMMAND:
-                String l_fileName = l_inputs[1];
-                MapOperationsHandler.processMap(p_gamePhaseHandler, l_fileName);
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false);
                 break;
             case CommonConstants.SHOW_MAP_COMMAND:
                 MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
-                LogUtil.Logger(CommandHandler.class.getName(), Level.INFO, "The map has been displayed");
+                break;
+            case CommonConstants.VALIDATE_MAP_COMMAND:
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], true);
+                break;
+            case CommonConstants.ADD_PLAYER_COMMAND:
+                PlayerOperationsHandler.processPlayerManagement(p_command, p_gamePhaseHandler);
+                break;
+            case CommonConstants.ASSIGN_COUNTRIES_COMMAND:
+                PlayerOperationsHandler.processAssignCountries(p_gamePhaseHandler);
                 break;
         }
-    }
-
-    /**
-     * Returns help instructions based on the current game phase.
-     *
-     * @param p_currentGamePhase The current game phase.
-     * @return The help instructions for the current game phase.
-     */
-    private static String getHelpInstructionsBasedOnPhase(Phase p_currentGamePhase) {
-        if(p_currentGamePhase instanceof LoadMapPhase)
-        {
-            return CommandOutputMessages.MAP_HELP;
-        }
-        return null;
     }
 }

@@ -18,20 +18,25 @@ import java.util.Arrays;
 
 public class LoadMapPhase implements Phase{
     @Override
-    public Phase nextPhase() {
+    public Phase getNextPhase() {
         return new GameStartUpPhase();
     }
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.d_name, Commands.EDIT_COUNTRY.d_name, Commands.EDIT_CONTINENT.d_name));
+        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.getName(), Commands.EDIT_COUNTRY.getName(), Commands.EDIT_CONTINENT.getName(), Commands.VALIDATE_MAP.getName()));
+    }
+
+    @Override
+    public String getHelpMessage() {
+        return CommandOutputMessages.MAP_HELP;
     }
 
     @Override
     public void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
-        var console = System.console();
+        var l_console = System.console();
         p_gamePhaseHandler.getGamePhase().constructGameMap(p_fileName, p_gamePhaseHandler);
-        console.println("You can now add playes to the game");
-        console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+        l_console.println("You can now add playes to the game");
+        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
     }
 }

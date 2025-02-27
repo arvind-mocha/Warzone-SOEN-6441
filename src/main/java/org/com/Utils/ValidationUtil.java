@@ -7,10 +7,12 @@ import org.com.Handlers.Commands;
 import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
+import org.com.Models.Player;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 public class ValidationUtil {
@@ -19,32 +21,58 @@ public class ValidationUtil {
      * Validates the given command based on the current game phase.
      *
      * @param p_currentGamePhase The current game phase.
-     * @param p_commands The command entered by the user, split into an array.
+     * @param p_commandsArray The command entered by the user, split into an array.
      * @return true if the command is valid, false otherwise.
      */
-    public static void validateCommand(Phase p_currentGamePhase, String[] p_commands)throws Exception
+    public static void validateCommand(Phase p_currentGamePhase, String[] p_commandsArray, String p_command)throws Exception
     {
-        String l_baseCommand = p_commands[0]; // 0th value of the array will always be the base command
+        String l_baseCommand = p_commandsArray[0]; // 0th value of the array will always be the base command
         Commands l_commandEnum = Commands.getCommandByName(l_baseCommand); // fetching the respective command and its attributes
 
-        // skipping validation for help command since no processing needed for help
+        // Skipping validation for some command since no processing needed
         if(l_baseCommand.equalsIgnoreCase(CommonConstants.HELP_COMMAND) || l_baseCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND) ||l_baseCommand.equalsIgnoreCase(CommonConstants.SHOW_MAP_COMMAND) )
         {
+            if(p_commandsArray.length > 1)
+            {
+                throw new Exception(CommonErrorMessages.INVALID_COMMAND);
+            }
             return;
         }
 
-        // validating commands based on each phase
+        // Validating commands based on each phase
         if(!p_currentGamePhase.getValidCommands().contains(l_baseCommand))
         {
             throw new Exception(CommonErrorMessages.INVALID_COMMAND);
         }
 
-        // validating the correctness of the file provided for required commands
-        if(l_commandEnum.d_isFileRequired)
+        HashMap<String, Integer> l_attributesHashMap = l_commandEnum.getAttributesHashMap();
+        // Validating the correctness of the file provided for required commands
+        if(l_commandEnum.isFileRequired())
         {
-            if(p_commands.length < 2 || !new File(CommonConstants.GAME_DATA_DIR + p_commands[1]).exists())
+            if(p_commandsArray.length < 2 || !new File(CommonConstants.GAME_DATA_DIR + p_commandsArray[1]).exists())
             {
                 throw new Exception(CommonErrorMessages.INVALID_FILE);// Thrown exception will be caught and proper error message will get displayed
+            }
+        }
+
+        // Validating the attributes of the command
+        if(l_attributesHashMap != null)
+        {
+            String[] l_commandsArray = p_command.split(" -");
+            if(l_commandsArray.length < 2)
+            {
+                throw new Exception(CommonErrorMessages.INVALID_ATTRIBUTE);
+            }
+
+            for(int l_index=1; l_index<l_commandsArray.length; l_index++)
+            {
+                String[] l_attributesArray = l_commandsArray[l_index].split(" ");
+                String l_attribute = l_attributesArray[0];
+                // Checking whether the attribute is provided and the provided attributes and values are valid
+                if(l_attribute == null || !l_attributesHashMap.containsKey(l_attribute) || l_attributesHashMap.get(l_attribute) != l_attributesArray.length-1)
+                {
+                    throw new Exception(CommonErrorMessages.INVALID_ATTRIBUTE);
+                }
             }
         }
     }
@@ -53,7 +81,7 @@ public class ValidationUtil {
     {
         // Checking whether the map is empty
         if (p_gameMap == null) {
-            throw new Exception(CommonErrorMessages.EMPTY_MAP);
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
         }
 
         // Continent validation
@@ -64,6 +92,7 @@ public class ValidationUtil {
             throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
         }
 
+        // Checking whether the continents contain countries
         for (Continent l_continent : l_continentGraph.vertexSet()) {
             if (l_continent.getCountries() == null) {
                 throw new Exception(CommonErrorMessages.CONUTRYLESS_CONTINENT);
@@ -94,6 +123,40 @@ public class ValidationUtil {
                     throw new Exception(CommonErrorMessages.IMPROPER_NEIGHBOUR_MAPPING);
                 }
             }
+        }
+    }
+
+    public static void validatePlayerManagement(List<Player> p_playerList, String p_operation, String p_playerName) throws Exception
+    {
+        if(p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
+            if(validatePlayerExistence(p_playerList, p_playerName))
+            {
+                throw new Exception(CommonErrorMessages.PLAYER_ALREADY_EXISTS);
+            }
+            if (p_playerList.size() >= CommonConstants.MAX_PLAYER_COUNT) {
+                throw new Exception(CommonErrorMessages.MAX_PLAYER_COUNT_REACHED);
+            }
+        } else if (p_operation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
+            if(p_playerList.isEmpty())
+            {
+                throw new Exception(CommonErrorMessages.NO_PLAYER_EXISTS);
+            }
+        }
+    }
+
+    public static boolean validatePlayerExistence(List<Player> p_playerList, String p_playerName)
+    {
+        for (Player player : p_playerList) {
+            if (player.get_name().equalsIgnoreCase(p_playerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void validateAssignCountries(List<Player> p_playerList)throws Exception {
+        if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
+            throw new Exception(CommonErrorMessages.MIN_PLAYER_COUNT_NOT_REACHED);
         }
     }
 }

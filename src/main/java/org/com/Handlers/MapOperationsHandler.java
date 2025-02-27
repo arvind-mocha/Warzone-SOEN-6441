@@ -7,6 +7,7 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 import org.com.Utils.DisplayUtil;
+import org.com.Utils.HelperUtil;
 import org.com.Utils.LogUtil;
 import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -36,10 +37,10 @@ public class MapOperationsHandler {
      */
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
-    public static void processMap(GamePhaseHandler p_gamePhaseHandler,String p_fileName) throws Exception {
+    public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
-        l_console.println("Loading the map from " + p_fileName + " ...");
+        l_console.println("Processing the map from " + p_fileName + " ...");
 
         try {
             List<String> l_file = Files.readAllLines(Paths.get(CommonConstants.GAME_DATA_DIR + p_fileName));
@@ -65,12 +66,17 @@ public class MapOperationsHandler {
             }
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
             ValidationUtil.validateMap(l_gameMap);
+            if(p_isMapValidationCommand)
+            {
+                l_console.println("The map is valid");
+                return;
+            }
             l_console.println("The Map has been constructed and validated successfully!");
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map has been validated");
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);
-            p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().nextPhase());
+            p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
             l_console.println("The Map has been loaded");
         } catch (IOException e) {
             l_console.println("Failed to load the file: " + e.getMessage());
@@ -113,9 +119,11 @@ public class MapOperationsHandler {
             String[] l_countryInfoArray = l_countryInfo.split(" ");
             Country l_country = new Country();
             Continent l_continent = p_map.getContinentById(Integer.parseInt(l_countryInfoArray[2]));
+            Integer l_continentId  =Integer.parseInt(l_countryInfoArray[2]);
             l_country.setId(Integer.parseInt(l_countryInfoArray[0]));
             l_country.setName(l_countryInfoArray[1]);
-            l_country.setContinentId(Integer.parseInt(l_countryInfoArray[2]));
+            l_country.setContinentId(l_continentId);
+            l_country.setContinentName(HelperUtil.getContinentById(p_map.getContinentMap().vertexSet(),l_continentId ));
             l_countryGraph.addVertex(l_country);
             l_continent.addCountry(l_country);
         }
@@ -149,22 +157,23 @@ public class MapOperationsHandler {
         }
 
         Set<Country> l_countryVertexes = l_gameMap.getCountryMap().vertexSet();
-        String[][] l_data = new String[l_countryVertexes.size()][5];
+        String[][] l_data = new String[l_countryVertexes.size()][6];
         int l_rowNum = 0;
         for (Country l_country : l_countryVertexes) {
 
             Player l_owner = l_country.getOwner();
             StringBuilder l_neighbourCountries = new StringBuilder();
             for (int l_neighbourID : l_country.getNeighbourCountryIds()) {
-                l_neighbourCountries.append(l_neighbourID).append(", ");
+                l_neighbourCountries.append(l_neighbourID).append(" ");
             }
-            l_data[l_rowNum][0] = l_country.getName();
-            l_data[l_rowNum][1] = String.valueOf(l_country.getContinentId());
-            l_data[l_rowNum][2] = l_neighbourCountries.toString().trim();
-            l_data[l_rowNum][3] = l_owner == null ? "-" : l_owner.getD_name();
-            l_data[l_rowNum][4] = String.valueOf(l_country.getSoldierCount());
+            l_data[l_rowNum][0] = String.valueOf(l_country.getId());
+            l_data[l_rowNum][1] = l_country.getName();
+            l_data[l_rowNum][2] = l_country.getContinentName();
+            l_data[l_rowNum][3] = l_neighbourCountries.toString().trim();
+            l_data[l_rowNum][4] = l_owner == null ? "-" : l_owner.get_name();
+            l_data[l_rowNum][5] = String.valueOf(l_country.getArmyCount());
             l_rowNum++;
         }
-        DisplayUtil.displayMap(l_data, new String[] {"Country", "Continent", "Neighbors", "Owner", "Armies"}, "Domination Map Viewer");
+        DisplayUtil.displayMap(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, "Domination Map Viewer");
     }
 }
