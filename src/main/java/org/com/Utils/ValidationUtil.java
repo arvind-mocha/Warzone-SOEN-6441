@@ -14,7 +14,6 @@ import org.jgrapht.graph.DefaultEdge;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class ValidationUtil {
 
@@ -148,10 +147,16 @@ public class ValidationUtil {
     public static boolean validatePlayerExistence(List<Player> p_playerList, String p_playerName)
     {
         for (Player player : p_playerList) {
-            if (player.getD_name().equalsIgnoreCase(p_playerName)) {
+            if (player.get_name().equalsIgnoreCase(p_playerName)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static void validateAssignCountries(List<Player> p_playerList)throws Exception {
+        if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
+            throw new Exception(CommonErrorMessages.MIN_PLAYER_COUNT_NOT_REACHED);
+        }
     }
 }

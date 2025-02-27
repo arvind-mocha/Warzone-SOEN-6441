@@ -35,6 +35,11 @@ public class CommandHandler {
             case CommonConstants.HELP_COMMAND:
                 l_console.println(l_currentGamePhase.getHelpMessage());
                 break;
+//            case CommonConstants.EDIT_MAP_COMMAND:
+//            case CommonConstants.EDIT_CONTINENT_COMMAND:
+//            case CommonConstants.EDIT_COUNTRY_COMMAND:
+//            case CommonConstants.EDIT_NEIGHBOUR_COMMAND:
+//            case CommonConstants.SAVE_MAP_COMMAND:
             case CommonConstants.LOAD_MAP_COMMAND:
                 MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false);
                 break;
@@ -44,13 +49,11 @@ public class CommandHandler {
             case CommonConstants.VALIDATE_MAP_COMMAND:
                 MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], true);
                 break;
-//            case CommonConstants.EDIT_MAP_COMMAND:
-//            case CommonConstants.EDIT_CONTINENT_COMMAND:
-//            case CommonConstants.EDIT_COUNTRY_COMMAND:
-//            case CommonConstants.EDIT_NEIGHBOUR_COMMAND:
-//            case CommonConstants.SAVE_MAP_COMMAND:
             case CommonConstants.ADD_PLAYER_COMMAND:
                 PlayerOperationsHandler.processPlayerManagement(p_command, p_gamePhaseHandler);
+                break;
+            case CommonConstants.ASSIGN_COUNTRIES_COMMAND:
+                PlayerOperationsHandler.processAssignCountries(p_gamePhaseHandler);
                 break;
         }
     }

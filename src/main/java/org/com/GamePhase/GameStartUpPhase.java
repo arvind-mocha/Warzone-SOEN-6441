@@ -16,12 +16,12 @@ public class GameStartUpPhase implements Phase {
 
     @Override
     public Phase getNextPhase() {
-        return null;
+        return new IssueOrderPhase();
     }
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.ADD_PLAYER.getName()));
+        return new ArrayList<>(Arrays.asList(Commands.ADD_PLAYER.getName(), Commands.ASSIGN_COUNTRIES.getName()));
     }
 
     @Override

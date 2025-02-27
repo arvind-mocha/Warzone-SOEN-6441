@@ -170,8 +170,8 @@ public class MapOperationsHandler {
             l_data[l_rowNum][1] = l_country.getName();
             l_data[l_rowNum][2] = l_country.getContinentName();
             l_data[l_rowNum][3] = l_neighbourCountries.toString().trim();
-            l_data[l_rowNum][4] = l_owner == null ? "-" : l_owner.getD_name();
-            l_data[l_rowNum][5] = String.valueOf(l_country.getSoldierCount());
+            l_data[l_rowNum][4] = l_owner == null ? "-" : l_owner.get_name();
+            l_data[l_rowNum][5] = String.valueOf(l_country.getArmyCount());
             l_rowNum++;
         }
         DisplayUtil.displayMap(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, "Domination Map Viewer");

@@ -23,7 +23,7 @@ public enum Commands {
     EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE),
     EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE),
     ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH),
-    ASSIGN_COUNTRIES(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH);
+    ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null);
 
 
     private final String d_name;

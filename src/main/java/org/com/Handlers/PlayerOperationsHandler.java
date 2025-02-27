@@ -2,9 +2,11 @@ package org.com.Handlers;
 
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.ValidationUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerOperationsHandler {
@@ -30,10 +32,33 @@ public class PlayerOperationsHandler {
                     {
                         throw new Exception(String.format(CommonErrorMessages.PLAYER_NOT_EXISTS_REMOVAL, l_playerName));
                     }
-                    l_playerList.removeIf(l_player -> l_player.getD_name().equalsIgnoreCase(l_playerName));
+                    l_playerList.removeIf(l_player -> l_player.get_name().equalsIgnoreCase(l_playerName));
                     System.console().println(String.format("Player %s! has been removed successfully", l_playerName));
                 }
             }
         }
+    }
+
+    public static void processAssignCountries(GamePhaseHandler p_gamePhaseHandler)throws Exception {
+        List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
+        ValidationUtil.validateAssignCountries(l_playerList);
+        ArrayList<Country> l_countryArray = new ArrayList<>(p_gamePhaseHandler.getGameMap().getCountryMap().vertexSet());
+        Integer l_totalCountries = l_countryArray.size();
+        int l_countrySplitValue = Math.floorDivExact(l_countryArray.size(), l_playerList.size());
+
+        for (int l_playerIndex = 0; l_playerIndex < l_playerList.size(); l_playerIndex++) {
+            Player l_player = l_playerList.get(l_playerIndex);
+            int l_currentCountryId = l_countrySplitValue * (l_playerIndex);
+            Country l_currentCountry = l_countryArray.get(l_currentCountryId >  l_totalCountries ? l_totalCountries : l_currentCountryId);
+            l_player.addCountry(l_currentCountry);
+            l_currentCountry.setOwner(l_player);
+        }
+        System.console().println("Game has begun!");
+        p_gamePhaseHandler.assignReinforcements();
+
+        p_gamePhaseHandler.setCurrentPlayer(0);
+        int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
+        System.console().println("Player " + l_playerList.get(l_currentPlayerTurn).get_name() + "make your moves");
+        p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
     }
 }

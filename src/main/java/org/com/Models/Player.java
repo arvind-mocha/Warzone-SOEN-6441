@@ -75,7 +75,7 @@ public class Player implements Serializable {
      *
      * @return d_name Player's name
      */
-    public String getD_name() {
+    public String get_name() {
         return d_name;
     }
 
@@ -84,7 +84,7 @@ public class Player implements Serializable {
      *
      * @param p_name Used to set the new player's name
      */
-    public void setD_name(String p_name) {
+    public void set_name(String p_name) {
         this.d_name = p_name;
     }
 
@@ -93,7 +93,7 @@ public class Player implements Serializable {
      *
      * @return d_armyCount Size of the army the current player holds
      */
-    public int getD_armyCount() {
+    public int get_armyCount() {
         return d_armyCount;
     }
 
@@ -102,7 +102,7 @@ public class Player implements Serializable {
      *
      * @param p_armyCount Size of army
      */
-    public void setD_armyCount(int p_armyCount) {
+    public void set_armyCount(int p_armyCount) {
         this.d_armyCount = p_armyCount;
     }
 
@@ -111,7 +111,7 @@ public class Player implements Serializable {
      *
      * @return d_countries List of Countries
      */
-    public List<Country> getD_countries() {
+    public List<Country> get_countries() {
         return d_countries;
     }
 
@@ -120,7 +120,7 @@ public class Player implements Serializable {
      *
      * @param p_countries List of Country objects under player's ownership
      */
-    public void setD_countries(List<Country> p_countries) {
+    public void set_countries(List<Country> p_countries) {
         this.d_countries = p_countries;
     }
 
@@ -129,7 +129,7 @@ public class Player implements Serializable {
      *
      * @return d_orderList List of orders issued by the player
      */
-    public List<Order> getD_orderList() {
+    public List<Order> get_orderList() {
         return d_orderList;
     }
 
@@ -138,7 +138,7 @@ public class Player implements Serializable {
      *
      * @param p_orderList List of orders issued by the player
      */
-    public void setD_orderList(List<Order> p_orderList) {
+    public void set_orderList(List<Order> p_orderList) {
         this.d_orderList = p_orderList;
     }
 
@@ -147,7 +147,7 @@ public class Player implements Serializable {
      *
      * @return d_currentOrder of the current player that is being issued
      */
-    public Order getD_currentOrder() {
+    public Order get_currentOrder() {
         return d_currentOrder;
     }
 
@@ -156,7 +156,7 @@ public class Player implements Serializable {
      *
      * @param p_currentOrder current Order of the current player that is being issued
      */
-    public void setD_currentOrder(Order p_currentOrder) {
+    public void set_currentOrder(Order p_currentOrder) {
         this.d_currentOrder = p_currentOrder;
     }
 
@@ -165,7 +165,7 @@ public class Player implements Serializable {
      *
      * @return d_continents List of continents the player owns
      */
-    public List<Continent> getD_continents() {
+    public List<Continent> get_continents() {
         return d_continents;
     }
 
@@ -174,7 +174,7 @@ public class Player implements Serializable {
      *
      * @param p_continents List of Continent objects under player's ownership
      */
-    public void setD_continents(List<Continent> p_continents) {
+    public void set_continents(List<Continent> p_continents) {
         this.d_continents = p_continents;
     }
 }

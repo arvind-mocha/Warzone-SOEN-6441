@@ -35,6 +35,7 @@ public class CommonConstants {
     // Integers
     public static final Integer INTEGER_ZERO = 0;
     public static final Integer MAX_PLAYER_COUNT = 5;
+    public static final Integer MIN_PLAYER_COUNT = 2;
 
     // Strings
     public static final String CONTINENTS = "[continents]";

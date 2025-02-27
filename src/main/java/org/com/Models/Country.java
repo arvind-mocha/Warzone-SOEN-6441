@@ -11,7 +11,7 @@ public class Country implements Serializable {
     private String d_continentName;
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
-    private int d_soldierCount;
+    private int d_armyCount;
 
     public Country() {
         this.d_neighbourCountryIds = new ArrayList<>();
@@ -20,7 +20,7 @@ public class Country implements Serializable {
     public Country(int p_id, List<Integer> p_neighbourCountryIds, int p_soldierCount){
         d_id = p_id;
         d_neighbourCountryIds = p_neighbourCountryIds;
-        d_soldierCount = p_soldierCount;
+        d_armyCount = p_soldierCount;
     }
 
     public int getId(){ return d_id;}
@@ -49,10 +49,10 @@ public class Country implements Serializable {
         d_continentId = p_continentId;
     }
 
-    public int getSoldierCount(){ return d_soldierCount; }
+    public int getArmyCount(){ return d_armyCount; }
 
-    public void setSoldierCount(int p_soldierCount){
-        d_soldierCount = p_soldierCount;
+    public void setArmyCount(int p_soldierCount){
+        d_armyCount = p_soldierCount;
     }
 
     public Player getOwner(){
