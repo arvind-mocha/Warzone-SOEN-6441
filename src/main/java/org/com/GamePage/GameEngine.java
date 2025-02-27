@@ -30,6 +30,9 @@ public class GameEngine implements Serializable {
         l_console.println("Welcome to the WarZone edition of Risk.");
         l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
 
+        //Creating Logs folder if it does not exist
+        LogUtil.createLogFolder();
+
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
         GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
