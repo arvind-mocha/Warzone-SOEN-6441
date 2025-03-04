@@ -1,5 +1,13 @@
 package org.com.Models;
 
+/**
+ * The 'Country' class represents the Country in the game map.
+ * Contains the properties of a Country.
+ * <p>
+ * Country is related to the Continent and the Map classes.
+ * @author Devasenan Murugan
+ */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +21,21 @@ public class Country implements Serializable {
     private List<Integer> d_neighbourCountryIds;
     private int d_armyCount;
 
+    /**
+     * Default constructor for the Country class
+     */
+
     public Country() {
         this.d_neighbourCountryIds = new ArrayList<>();
     }
 
+    /**
+     * Constructor with parameters for Country class.
+     *
+     * @param p_id              The ID of the country.
+     * @param p_neighbourCountryIds The list of neighboring country IDs
+     * @param p_soldierCount              The number of armies in the country.
+     */
     public Country(int p_id, List<Integer> p_neighbourCountryIds, int p_soldierCount){
         d_id = p_id;
         d_neighbourCountryIds = p_neighbourCountryIds;
