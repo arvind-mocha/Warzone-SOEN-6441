@@ -16,7 +16,7 @@ public class CommandOutputMessages {
     public static final String MAP_HELP = "usage: " +
             "\n\t loadmap <filename> :\tLoads a map from the given file path " +
             "\n\t editmap <filename> :\tLoads a map from an existing “domination” map file, or create a new map from scratch if the file does not exist." +
-            "\n\n\t editcontinent -add <continentID> <continentvalue> -remove <continentID>" +
+            "\n\n\t editcontinent -add <continentName> <continentvalue> -remove <continentID>" +
             "\t: Add or Remove continents to the map" +
             "\n\t editcountry -add <countryID> <continentID> -remove <countryID>" +
             "\t\t\t: Add or Remove countries to the map" +
