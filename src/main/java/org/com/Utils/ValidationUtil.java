@@ -49,7 +49,8 @@ public class ValidationUtil {
         // Validating the correctness of the file provided for required commands
         if(l_commandEnum.isFileRequired())
         {
-            if(p_commandsArray.length < 2 || !new File(CommonConstants.GAME_DATA_DIR + p_commandsArray[1]).exists())
+//            if(p_commandsArray.length < 2 || !new File(CommonConstants.GAME_DATA_DIR + p_commandsArray[1]).exists())
+            if(p_commandsArray.length < 2)
             {
                 throw new Exception(CommonErrorMessages.INVALID_FILE);// Thrown exception will be caught and proper error message will get displayed
             }
@@ -143,6 +144,7 @@ public class ValidationUtil {
             }
         }
     }
+
 
     public static boolean validatePlayerExistence(List<Player> p_playerList, String p_playerName)
     {
