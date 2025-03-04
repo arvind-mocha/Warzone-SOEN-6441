@@ -28,11 +28,11 @@ public class Continent implements Serializable {
     /**
      * Constructor with parameters for Continent class.
      *
-     * @param p_id    The ID of the continent
+     * @param p_name    The ID of the continent
      * @param p_value The value of the continent
      */
-    public Continent(int p_id, int p_value){
-        d_id = p_id;
+    public Continent(int p_name, int p_value){
+        d_id = p_name;
         d_value = p_value;
         d_countries = new ArrayList<>();
     }
