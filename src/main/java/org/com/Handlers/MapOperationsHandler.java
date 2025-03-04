@@ -13,8 +13,12 @@ import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.logging.Level;
  * All important methods which are used for processing a command are written here.
  *
  * @author Arvind Lakshmanan
+ * @author Devasenan Murugan
  *
  */
 
@@ -37,6 +42,20 @@ public class MapOperationsHandler {
      */
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
+    public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
+        var l_console = System.console();
+        Map l_map;
+        try (BufferedReader l_reader = new BufferedReader(new FileReader("src/main/resources/" + p_fileName))) {
+            processMap(p_gamePhaseHandler, p_fileName, false);
+        } catch (Exception l_e) {
+            l_console.println("File not found");
+            l_map = new Map();
+            p_gamePhaseHandler.setGameMap(l_map);
+            l_console.println("A new map has been loaded to be edited..");
+            l_console.println("Try executing the editcontinent, editcountry, editneighbor commands!");
+        }
+    }
+    
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
