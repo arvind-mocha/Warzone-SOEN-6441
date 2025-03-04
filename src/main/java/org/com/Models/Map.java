@@ -4,6 +4,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.io.Serializable;
+import java.lang.classfile.instruction.ConstantInstruction;
 
 
 /**
@@ -31,6 +32,15 @@ public class Map implements Serializable {
         for (Continent l_continent : d_continentMap.vertexSet()){
             if (l_continent.getId() == p_continentId)
                 return l_continent;
+        }
+        return null;
+    }
+
+    public Continent getContinentByName(String p_continentName){
+        for (Continent l_continent: d_continentMap.vertexSet()){
+            if(l_continent.getName().equalsIgnoreCase(p_continentName)) {
+                return l_continent;
+            }
         }
         return null;
     }
