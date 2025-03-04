@@ -10,7 +10,7 @@ import java.io.File;
  * Unit test for the processMap method in LoadMap.
  * This test verifies if a valid map file is correctly loaded into the game.
  *
- * @Author Swathi Priya Pasumarthy
+ * @author Swathi Priya Pasumarthy
  */
 
 public class LoadMapTest {

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit test for the processMap method in LoadMap.
  * This test verifies a valid map file which is correctly loaded into the game is retrieved.
  *
- * @Author Swathi Priya Pasumarthy
+ * @author Swathi Priya Pasumarthy
  */
 class ShowMapTest {
 
