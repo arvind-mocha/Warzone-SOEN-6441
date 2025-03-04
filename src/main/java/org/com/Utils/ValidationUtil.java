@@ -145,6 +145,33 @@ public class ValidationUtil {
         }
     }
 
+    public static void validateContinentManagement(Map p_gameMap, String p_operation, String p_continentName, String p_continentValue) throws Exception{
+        try {
+            Integer l_continentValue = Integer.parseInt(p_continentValue);
+        } catch(NumberFormatException e){
+            throw new Exception(CommonErrorMessages.INVALID_ATTRIBUTE);
+        }
+
+        Continent l_checkContinentExists = p_gameMap.getContinentByName(p_continentName);
+        if(p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
+            if(l_checkContinentExists != null)
+            {
+                throw new Exception(CommonErrorMessages.CONTINENT_ALREADY_EXISTS);
+            }
+        } else if (p_operation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
+            // Checking whether the continents are present
+            if(l_checkContinentExists == null)
+            {
+                throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
+            }
+        }
+    }
+
+    public static void validateAssignCountries(List<Player> p_playerList)throws Exception {
+        if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
+            throw new Exception(CommonErrorMessages.MIN_PLAYER_COUNT_NOT_REACHED);
+        }
+    }
 
     public static boolean validatePlayerExistence(List<Player> p_playerList, String p_playerName)
     {
@@ -156,9 +183,4 @@ public class ValidationUtil {
         return false;
     }
 
-    public static void validateAssignCountries(List<Player> p_playerList)throws Exception {
-        if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
-            throw new Exception(CommonErrorMessages.MIN_PLAYER_COUNT_NOT_REACHED);
-        }
-    }
 }

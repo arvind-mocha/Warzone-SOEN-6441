@@ -55,7 +55,49 @@ public class MapOperationsHandler {
             l_console.println("Try executing the editcontinent, editcountry, editneighbor commands!");
         }
     }
-    
+
+    public static void editContinent(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+        var l_console = System.console();
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        if (l_gameMap == null) {
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+        }
+
+        String[] l_commandsArray = p_command.split(" -");
+        DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = l_gameMap.getContinentMap();
+        Set<Continent> l_continentsSet = l_continentGraph.vertexSet();
+
+        int l_continentID = 0;
+        if(!l_continentsSet.isEmpty()) {
+            for (Continent l_c: l_continentsSet){
+                if (l_continentID < l_c.getId()) {
+                    l_continentID = l_c.getId();
+                }
+            }
+        }
+        l_continentID += 1;
+
+        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+            String[] l_operationsArray = l_commandsArray[l_index].split(" ");
+            String l_attributeOperation = l_operationsArray[0];
+            String l_continentName = l_operationsArray[1];
+            String l_continentValue = l_operationsArray[2];
+            ValidationUtil.validateContinentManagement(l_gameMap, l_attributeOperation, l_continentName, l_continentValue);
+
+            if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
+                Continent l_continent = new Continent(l_continentID, Integer.parseInt(l_continentValue));
+                l_continent.setName(l_continentName);
+                l_continentGraph.addVertex(l_continent);
+                l_console.println(String.format("Continent %d - %s has been added", l_continentID, l_continentName));
+            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
+                Continent l_continent = l_gameMap.getContinentByName(l_continentName);
+                l_continentGraph.removeVertex(l_continent);
+                l_console.println(String.format("Continent %d - %s has been removed", l_continentID, l_continentName));
+            }
+        }
+    }
+
+
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
