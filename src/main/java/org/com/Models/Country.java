@@ -91,7 +91,11 @@ public class Country implements Serializable {
         d_neighbourCountryIds = p_neighbourCountryIds;
     }
 
-    public void addNeighbourCountryIds(int p_neighbourCountryId){
+    public void removeNeighbourCountryId(int p_neighbourCountryId){
+        d_neighbourCountryIds.remove(p_neighbourCountryId);
+    }
+
+    public void addNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.add(p_neighbourCountryId);
     }
 }
