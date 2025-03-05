@@ -107,4 +107,234 @@ public class PlayerOperationsHandler {
             System.console().println("Next player's turn: " + p_gamePhaseHandler.getPlayerList().get(l_nextPlayerIndex).get_name());
         }
     }
+
+//    public static void processAdvanceCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+//        if (p_commandArray.length != 4) {
+//            throw new Exception("Invalid advance command. Usage: advance <source_country> <target_country> <num_armies>");
+//        }
+//
+//        String l_sourceCountryName = p_commandArray[1];
+//        String l_targetCountryName = p_commandArray[2];
+//        int l_numArmies = Integer.parseInt(p_commandArray[3]);
+//
+//        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+//        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+//        Country l_sourceCountry = null;
+//        Country l_targetCountry = null;
+//
+//        // Find source country by name
+//        for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+//            if (l_country.getName().equalsIgnoreCase(l_sourceCountryName)) {
+//                l_sourceCountry = l_country;
+//                break;
+//            }
+//        }
+//
+//        // Find target country by name
+//        for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+//            if (l_country.getName().equalsIgnoreCase(l_targetCountryName)) {
+//                l_targetCountry = l_country;
+//                break;
+//            }
+//        }
+//
+//        if (l_sourceCountry == null) {
+//            throw new Exception("Invalid source country name.");
+//        }
+//
+//        if (l_targetCountry == null) {
+//            throw new Exception("Invalid target country name.");
+//        }
+//
+//        if (l_sourceCountry.getOwner() != l_currentPlayer) {
+//            throw new Exception("You can only move armies from your own countries.");
+//        }
+//
+//        if (l_targetCountry.getOwner() == l_currentPlayer) {
+//            // Move armies between owned countries
+//            if (!l_sourceCountry.getNeighbourCountryIds().contains(l_targetCountry.getId())) {
+//                throw new Exception("Target country is not a neighbor of the source country.");
+//            }
+//
+//            if (l_numArmies <= 0 || l_numArmies >= l_sourceCountry.getArmyCount()) {
+//                throw new Exception("Invalid number of armies to move.  Must be greater than 0 and less than the source army count.");
+//            }
+//
+//            l_sourceCountry.setArmyCount(l_sourceCountry.getArmyCount() - l_numArmies);
+//            l_targetCountry.setArmyCount(l_targetCountry.getArmyCount() + l_numArmies);
+//
+//            System.console().println(String.format("Moved %d armies from %s to %s", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+//        } else {
+//            //Attack another country
+//            if (!l_sourceCountry.getNeighbourCountryIds().contains(l_targetCountry.getId())) {
+//                throw new Exception("Target country is not a neighbor of the source country for attack.");
+//            }
+//
+//            if (l_numArmies <= 0 || l_numArmies >= l_sourceCountry.getArmyCount()) {
+//                throw new Exception("Invalid number of armies to attack with. Must be greater than 0 and less than the source army count.");
+//            }
+//            // Perform the attack
+//            int l_attackingArmies = l_numArmies;
+//            int l_defendingArmies = l_targetCountry.getArmyCount();
+//
+//            //Simulate battle (simplified)
+//            int l_attackLosses = (int) (Math.random() * l_defendingArmies * 0.5); // Attacker loses up to 50% of attacking armies
+//            int l_defendLosses = (int) (Math.random() * l_attackingArmies * 0.7); // Defender loses up to 70% of attacking armies
+//
+//            l_attackingArmies = Math.max(0, l_attackingArmies - l_attackLosses);
+//            l_defendingArmies = Math.max(0, l_defendingArmies - l_defendLosses);
+//
+//            l_sourceCountry.setArmyCount(l_sourceCountry.getArmyCount() - l_numArmies + l_attackingArmies ); // update source army count
+//            l_targetCountry.setArmyCount(l_defendingArmies); // update target army count
+//
+//            if (l_defendingArmies <= 0) {
+//                // The attacker has conquered the target country
+//                l_targetCountry.setOwner(l_currentPlayer);
+//                l_currentPlayer.addCountry(l_targetCountry);
+//                System.console().println(String.format("%s has conquered %s!", l_currentPlayer.get_name(), l_targetCountry.getName()));
+//            } else {
+//                System.console().println("Attack failed! " + l_targetCountry.getName() + " successfully defended.");
+//            }
+//
+//
+//            System.console().println(String.format("Attacker lost %d armies. Defender lost %d armies.", l_attackLosses, l_defendLosses));
+//        }
+//    }
+
+
+    public static void processAdvanceCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+        if (p_commandArray.length != 4 && !p_commandArray[0].equalsIgnoreCase("commit")) {
+            throw new Exception("Invalid advance command. Usage: advance <source_country> <target_country> <num_armies> or commit");
+        }
+
+        if (p_commandArray[0].equalsIgnoreCase("commit")) {
+            executeBufferedCommands(p_gamePhaseHandler);
+            return;
+        }
+
+        String l_sourceCountryName = p_commandArray[1];
+        String l_targetCountryName = p_commandArray[2];
+        int l_numArmies = Integer.parseInt(p_commandArray[3]);
+
+        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        Country l_sourceCountry = null;
+        Country l_targetCountry = null;
+
+        // Find source country by name
+        for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+            if (l_country.getName().equalsIgnoreCase(l_sourceCountryName)) {
+                l_sourceCountry = l_country;
+                break;
+            }
+        }
+
+        // Find target country by name
+        for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+            if (l_country.getName().equalsIgnoreCase(l_targetCountryName)) {
+                l_targetCountry = l_country;
+                break;
+            }
+        }
+
+        if (l_sourceCountry == null) {
+            throw new Exception("Invalid source country name.");
+        }
+
+        if (l_targetCountry == null) {
+            throw new Exception("Invalid target country name.");
+        }
+
+        if (l_sourceCountry.getOwner() != l_currentPlayer) {
+            throw new Exception("You can only move armies from your own countries.");
+        }
+
+        if (l_targetCountry.getOwner() == l_currentPlayer) {
+            // Move armies between owned countries
+            if (!l_sourceCountry.getNeighbourCountryIds().contains(l_targetCountry.getId())) {
+                throw new Exception("Target country is not a neighbor of the source country.");
+            }
+
+            if (l_numArmies <= 0 || l_numArmies >= l_sourceCountry.getArmyCount()) {
+                throw new Exception("Invalid number of armies to move.  Must be greater than 0 and less than the source army count.");
+            }
+
+            // Command is valid, add it to the buffer
+            p_gamePhaseHandler.getAdvanceCommandsBuffer().add(p_commandArray);
+            System.console().println(String.format("Advance command added to buffer: move %d armies from %s to %s", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+
+
+        } else {
+            System.out.println("You can only advance to your own country");
+        }
+    }
+
+    // Method to execute the buffered commands
+    private static void executeBufferedCommands(GamePhaseHandler p_gamePhaseHandler) throws Exception {
+        List<String[]> l_commands = p_gamePhaseHandler.getAdvanceCommandsBuffer();
+        if (l_commands.isEmpty()) {
+            System.console().println("No advance commands in buffer.");
+            return;
+        }
+
+        //Iterate through buffered commands
+        for (String[] l_commandArray : l_commands) {
+            String l_sourceCountryName = l_commandArray[1];
+            String l_targetCountryName = l_commandArray[2];
+            int l_numArmies = Integer.parseInt(l_commandArray[3]);
+
+            Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+            Map l_gameMap = p_gamePhaseHandler.getGameMap();
+            Country l_sourceCountry = null;
+            Country l_targetCountry = null;
+
+            // Find source country by name
+            for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+                if (l_country.getName().equalsIgnoreCase(l_sourceCountryName)) {
+                    l_sourceCountry = l_country;
+                    break;
+                }
+            }
+
+            // Find target country by name
+            for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+                if (l_country.getName().equalsIgnoreCase(l_targetCountryName)) {
+                    l_targetCountry = l_country;
+                    break;
+                }
+            }
+            if (l_sourceCountry == null) {
+                throw new Exception("Invalid source country name.");
+            }
+
+            if (l_targetCountry == null) {
+                throw new Exception("Invalid target country name.");
+            }
+
+            if (l_sourceCountry.getOwner() != l_currentPlayer) {
+                throw new Exception("You can only move armies from your own countries.");
+            }
+
+            if (l_targetCountry.getOwner() == l_currentPlayer) {
+                // Move armies between owned countries
+                if (!l_sourceCountry.getNeighbourCountryIds().contains(l_targetCountry.getId())) {
+                    throw new Exception("Target country is not a neighbor of the source country.");
+                }
+
+                if (l_numArmies <= 0 || l_numArmies >= l_sourceCountry.getArmyCount()) {
+                    throw new Exception("Invalid number of armies to move.  Must be greater than 0 and less than the source army count.");
+                }
+                l_sourceCountry.setArmyCount(l_sourceCountry.getArmyCount() - l_numArmies);
+                l_targetCountry.setArmyCount(l_targetCountry.getArmyCount() + l_numArmies);
+
+                System.console().println(String.format("Moved %d armies from %s to %s", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+
+            } else {
+                System.out.println("You can only advance to your own country");
+            }
+        }
+        p_gamePhaseHandler.clearAdvanceCommandsBuffer();
+    }
+
+
 }

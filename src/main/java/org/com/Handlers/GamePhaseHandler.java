@@ -26,10 +26,12 @@ public class GamePhaseHandler {
     private int d_currentPlayer;
     private Map d_gameMap;
     private String d_mapFileName;
+    private List<String[]> d_advanceCommandsBuffer;
 
     public GamePhaseHandler() {
         this.d_gamePhase = new LoadMapPhase();
         this.d_playerList = new ArrayList<>();
+        d_advanceCommandsBuffer = new ArrayList<>();
     }
 
     public Phase getGamePhase() {
@@ -84,4 +86,13 @@ public class GamePhaseHandler {
 //        System.console().println("Armies have been assigned to all player");
         LogUtil.Logger(GamePhaseHandler.class.getName(), Level.INFO, "Armies have been assigned to all player");
     }
+
+    public List<String[]> getAdvanceCommandsBuffer() {  //Add Getter
+        return d_advanceCommandsBuffer;
+    }
+
+    public void clearAdvanceCommandsBuffer() {  //Add Clear
+        d_advanceCommandsBuffer.clear();
+    }
+
 }
