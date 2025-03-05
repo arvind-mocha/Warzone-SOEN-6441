@@ -12,10 +12,10 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This test case verifies the correctness of the showmap command
+ * Unit test for the showMap command.
  * @author Swathi Priya P
  */
-class ShowGameMapTest {
+class ShowMapTest {
 
     // The Europe map's file name should be in the appropriate directory.
     private static final String l_testMapFile = "europe.map";
@@ -25,16 +25,28 @@ class ShowGameMapTest {
 
     //The setup method loads the Europe map and initialises the GamePhaseHandler before every test.
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         d_gamePhaseHandler = new GamePhaseHandler();
+    }
 
-        // Load the Europe map before running the test
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_testMapFile, false);
+    // Verifying showMap command doesn't work when no map is loaded.
+    @Test
+    void testShowGameMap_NoMapLoaded() {
+
+        String[][] l_actualData = extractMapData(d_gamePhaseHandler);
+
+        // The extracted data should be null or empty
+        assertNull(l_actualData, "Extracted map data should be null when no map is loaded.");
+        System.out.println("Please load a map before using showMap command ");
     }
 
     //This test verifies that the extracted map data matches the expected structure.
     @Test
     void testShowGameMap() throws Exception {
+
+        // Load the Europe map before running the test
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_testMapFile, false);
+
         // Ensure that the map has been successfully loaded
         assertNotNull(d_gamePhaseHandler.getGameMap(), "Game map should be loaded before calling showMap.");
 
@@ -71,15 +83,14 @@ class ShowGameMapTest {
         };
 
         // Verify if the extracted map data matches the expected structure and prints the result
-        boolean isMatch = Arrays.deepEquals(l_expectedData, l_actualData);
-        if (isMatch) {
+        boolean l_isMatch = Arrays.deepEquals(l_expectedData, l_actualData);
+        if (l_isMatch) {
             System.out.println("Loaded map and displayed map are the same. Test Passed!");
         } else {
             System.out.println("Loaded map and displayed map are different. Test Failed!");
         }
-
         // Fail the test if the extracted data does not match the expected data
-        assertTrue(isMatch, "Loaded map and displayed map should match.");
+        assertTrue(l_isMatch, "Loaded map and displayed map should match.");
     }
 
     /**
