@@ -25,7 +25,8 @@ public enum Commands {
     ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH),
     ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null),
     ADVANCE_ARMY_COMMAND(CommonConstants.ADVANCE_ARMY_COMMAND, false, null),
-    DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null);
+    DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null),
+    COMMIT(CommonConstants.COMMIT, false, null),;
 
 
 
