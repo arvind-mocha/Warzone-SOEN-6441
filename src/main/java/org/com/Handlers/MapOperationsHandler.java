@@ -75,28 +75,85 @@ public class MapOperationsHandler {
                 }
             }
         }
-        l_continentID += 1;
 
         for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
             String[] l_operationsArray = l_commandsArray[l_index].split(" ");
             String l_attributeOperation = l_operationsArray[0];
             String l_continentName = l_operationsArray[1];
-            String l_continentValue = l_operationsArray[2];
+            String l_continentValue;
+            try{
+                l_continentValue = l_operationsArray[2];
+            }catch(IndexOutOfBoundsException e){
+                l_continentValue = "0";
+            }
             ValidationUtil.validateContinentManagement(l_gameMap, l_attributeOperation, l_continentName, l_continentValue);
+            l_continentID += 1;
 
             if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
                 Continent l_continent = new Continent(l_continentID, Integer.parseInt(l_continentValue));
                 l_continent.setName(l_continentName);
                 l_continentGraph.addVertex(l_continent);
-                l_console.println(String.format("Continent %d - %s has been added", l_continentID, l_continentName));
+                l_console.println(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Continent l_continent = l_gameMap.getContinentByName(l_continentName);
                 l_continentGraph.removeVertex(l_continent);
-                l_console.println(String.format("Continent %d - %s has been removed", l_continentID, l_continentName));
+                l_console.println(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
             }
         }
     }
 
+    public static void editCountry(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+        var l_console = System.console();
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        if (l_gameMap == null) {
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+        }
+
+        String[] l_commandsArray = p_command.split(" -");
+        DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = l_gameMap.getCountryMap();
+        Set<Country> l_countriesSet = l_countryGraph.vertexSet();
+
+        int l_countryID = 0;
+        if(!l_countriesSet.isEmpty()) {
+            for (Country l_c: l_countriesSet){
+                if (l_countryID < l_c.getId()) {
+                    l_countryID = l_c.getId();
+                }
+            }
+        }
+
+        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+            String[] l_operationsArray = l_commandsArray[l_index].split(" ");
+            String l_attributeOperation = l_operationsArray[0];
+            String l_countryName = l_operationsArray[1];
+            String l_inContinent;
+            try{
+                l_inContinent = l_operationsArray[2];
+            }catch(IndexOutOfBoundsException e){
+                l_inContinent = "0";
+            }
+            ValidationUtil.validateCountryManagement(l_gameMap, l_attributeOperation, l_countryName, l_inContinent);
+            l_countryID += 1;
+
+            if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
+                Continent l_continentObj = l_gameMap.getContinentByName(l_inContinent);
+                int l_defaultSoldierCount = 0;
+                Country l_country = new Country(l_countryName, l_continentObj, l_defaultSoldierCount);
+                l_country.setId(l_countryID);
+
+                l_countryGraph.addVertex(l_country);
+                l_console.println(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
+            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
+                Country l_country = l_gameMap.getCountryByName(l_countryName);
+                l_countryGraph.removeVertex(l_country);
+                l_console.println(String.format("Country %d - %s has been removed", l_country.getId(), l_country.getName()));
+            }
+        }
+    }
+
+//    public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+//
+//    }
 
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
