@@ -25,7 +25,7 @@ class ShowMapTest {
 
     //The setup method loads the Europe map and initialises the GamePhaseHandler before every test.
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         d_gamePhaseHandler = new GamePhaseHandler();
     }
 

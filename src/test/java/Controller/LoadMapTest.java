@@ -49,7 +49,7 @@ public class LoadMapTest {
         assertNull(d_gamePhaseHandler.getGameMap(), "Game map should be null for non-existent files.");
     }
 
-    // Checking the Load Map feature when attempting to load a empty map file
+    // Checking the Load Map feature when attempting to load an empty map file
     @Test
     void testLoadEmptyMap() {
         Exception exception = assertThrows(Exception.class, () -> {
