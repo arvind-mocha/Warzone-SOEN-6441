@@ -96,7 +96,7 @@ public class ValidationUtil {
         // Checking whether the continents contain countries
         for (Continent l_continent : l_continentGraph.vertexSet()) {
             if (l_continent.getCountries() == null) {
-                throw new Exception(CommonErrorMessages.CONUTRYLESS_CONTINENT);
+                throw new Exception(CommonErrorMessages.COUNTRYLESS_CONTINENT);
             }
         }
 
@@ -162,7 +162,28 @@ public class ValidationUtil {
             // Checking whether the continents are present
             if(l_checkContinentExists == null)
             {
-                throw new Exception(CommonErrorMessages.CONTINENT_UNAVAILABLE);
+                throw new Exception(CommonErrorMessages.UNKNOWN_CONTINENT);
+            }
+        }
+    }
+
+    public static void validateCountryManagement(Map p_gameMap, String p_operation, String p_countryName, String p_continentName) throws Exception{
+        Continent l_checkContinentExists = p_gameMap.getContinentByName(p_continentName);
+        Country l_checkCountryExists = p_gameMap.getCountryByName(p_countryName);
+
+        if(p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
+            if(l_checkCountryExists != null)
+            {
+                throw new Exception(CommonErrorMessages.COUNTRY_ALREADY_EXISTS);
+            }
+            if(l_checkContinentExists == null){
+                throw new Exception(CommonErrorMessages.COUNTRY_SET_TO_UNKNOWN_CONTINENT);
+            }
+        } else if (p_operation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
+            // Checking whether the continents are present
+            if(l_checkCountryExists == null)
+            {
+                throw new Exception(CommonErrorMessages.UNKNOWN_COUNTRY);
             }
         }
     }
