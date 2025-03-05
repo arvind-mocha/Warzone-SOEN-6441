@@ -43,7 +43,9 @@ public class CommandHandler {
             case CommonConstants.EDIT_COUNTRY_COMMAND:
                 MapOperationsHandler.editCountry(p_gamePhaseHandler, p_command);
                 break;
-//            case CommonConstants.EDIT_NEIGHBOUR_COMMAND;
+            case CommonConstants.EDIT_NEIGHBOUR_COMMAND:
+                MapOperationsHandler.editNeighbour(p_gamePhaseHandler, p_command);
+                break;
 //            case CommonConstants.SAVE_MAP_COMMAND:
             case CommonConstants.LOAD_MAP_COMMAND:
                 MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false);
