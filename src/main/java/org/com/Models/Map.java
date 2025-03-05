@@ -53,6 +53,14 @@ public class Map implements Serializable {
         return null;
     }
 
+    public Country getCountryByName(String p_countryName){
+        for (Country l_country : d_countryMap.vertexSet()){
+            if (l_country.getName().equalsIgnoreCase(p_countryName))
+                return l_country;
+        }
+        return null;
+    }
+
     public DefaultDirectedGraph<Country, DefaultEdge> getCountryMap(){
         return d_countryMap;
     }
