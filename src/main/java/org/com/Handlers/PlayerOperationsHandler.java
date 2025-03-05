@@ -1,5 +1,6 @@
 package org.com.Handlers;
 
+import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Country;
@@ -58,7 +59,7 @@ public class PlayerOperationsHandler {
 
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
-        System.console().println("Player " + l_playerList.get(l_currentPlayerTurn).get_name() + "make your moves");
+        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_playerList.get(l_currentPlayerTurn).get_name()));
         p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
     }
 }

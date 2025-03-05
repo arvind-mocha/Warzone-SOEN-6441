@@ -31,12 +31,4 @@ public class LoadMapPhase implements Phase{
     public String getHelpMessage() {
         return CommandOutputMessages.MAP_HELP;
     }
-
-    @Override
-    public void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
-        var l_console = System.console();
-        p_gamePhaseHandler.getGamePhase().constructGameMap(p_fileName, p_gamePhaseHandler);
-        l_console.println("You can now add playes to the game");
-        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
-    }
 }

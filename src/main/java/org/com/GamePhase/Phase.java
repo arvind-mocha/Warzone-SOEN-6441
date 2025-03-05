@@ -25,8 +25,4 @@ public interface Phase {
     default ArrayList<String> getCommonCommands(){
         return null;
     }
-
-    default void constructGameMap(String p_fileName, GamePhaseHandler p_gamePhaseHandler) throws Exception{
-        System.console().println(CommonErrorMessages.INVALID_COMMAND);
-    }
 }
