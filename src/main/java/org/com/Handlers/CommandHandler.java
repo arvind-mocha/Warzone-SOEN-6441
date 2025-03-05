@@ -67,9 +67,9 @@ public class CommandHandler {
             case CommonConstants.DEPLOY_ARMIES_COMMAND:
                 PlayerOperationsHandler.processDeployArmies(p_gamePhaseHandler, l_commandArray);
                 break;
-//            case CommonConstants.ADVANCE_ARMY_COMMAND:
-//                PlayerOperationsHandler.processAdvanceCommand(p_gamePhaseHandler, l_commandArray);
-//                break;
+            case CommonConstants.ADVANCE_ARMY_COMMAND, CommonConstants.COMMIT:
+                PlayerOperationsHandler.processAdvanceCommand(p_gamePhaseHandler, l_commandArray);
+                break;
         }
     }
 }
