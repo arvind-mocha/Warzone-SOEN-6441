@@ -39,7 +39,7 @@ public class GameEngine implements Serializable {
         LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has begun!!");
         String l_inputCommand;
         do {
-            l_console.println("> ");
+            l_console.print("> ");
             l_inputCommand = l_scanner.nextLine();
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
