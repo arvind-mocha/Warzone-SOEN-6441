@@ -4,6 +4,7 @@ import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Country;
+import org.com.Models.Map;
 import org.com.Models.Player;
 import org.com.Utils.ValidationUtil;
 
@@ -56,10 +57,54 @@ public class PlayerOperationsHandler {
         }
         System.console().println("Game has begun!");
         p_gamePhaseHandler.assignReinforcements();
-
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
-        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_playerList.get(l_currentPlayerTurn).get_name()));
+        System.console().println("Player " + l_playerList.get(l_currentPlayerTurn).get_name() + " make your moves ");
         p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
+    }
+
+    public static void processDeployArmies(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+        if (p_commandArray.length != 3) {
+            throw new Exception("Invalid deploy command. Usage: deploy <country_name> <num_armies>");
+        }
+
+        String l_countryName = p_commandArray[1];
+        int l_numArmies = Integer.parseInt(p_commandArray[2]);
+
+        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        Country l_targetCountry = null;
+
+        // Find the country by name
+        for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+            if (l_country.getName().equalsIgnoreCase(l_countryName)) {
+                l_targetCountry = l_country;
+                break;
+            }
+        }
+
+        if (l_targetCountry == null) {
+            throw new Exception("Invalid country name.");
+        }
+
+        if (l_targetCountry.getOwner() != l_currentPlayer) {
+            throw new Exception("You can only deploy armies to your own countries.");
+        }
+
+        if (l_numArmies > l_currentPlayer.get_armyCount()) {
+            throw new Exception("You don't have enough armies to deploy.");
+        }
+
+        l_targetCountry.setArmyCount(l_targetCountry.getArmyCount() + l_numArmies);
+        l_currentPlayer.set_armyCount(l_currentPlayer.get_armyCount() - l_numArmies);
+
+        System.console().println(String.format("Successfully deployed %d armies to %s", l_numArmies, l_targetCountry.getName()));
+
+        // Check if the player has finished deploying
+        if (l_currentPlayer.get_armyCount() == 0) {
+            int l_nextPlayerIndex = (p_gamePhaseHandler.getCurrentPlayer() + 1) % p_gamePhaseHandler.getPlayerList().size();
+            p_gamePhaseHandler.setCurrentPlayer(l_nextPlayerIndex);
+            System.console().println("Next player's turn: " + p_gamePhaseHandler.getPlayerList().get(l_nextPlayerIndex).get_name());
+        }
     }
 }
