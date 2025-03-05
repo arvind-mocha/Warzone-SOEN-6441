@@ -27,6 +27,8 @@ public class CommonConstants {
     public static final String EDIT_CONTINENT_COMMAND = "editcontinent";
     public static final String ADD_PLAYER_COMMAND = "gameplayer";
     public static final String ASSIGN_COUNTRIES_COMMAND = "assigncountries";
+    public static final String DEPLOY_ARMIES_COMMAND = "deploy";
+    public static final String ADVANCE_ARMY_COMMAND = "advance";
 
 
     // Directories
