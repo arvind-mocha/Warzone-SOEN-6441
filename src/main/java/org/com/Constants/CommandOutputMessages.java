@@ -20,7 +20,7 @@ public class CommandOutputMessages {
             "\t: Add or Remove continents to the map" +
             "\n\t editcountry -add <countryName> <continentName> -remove <countryName>" +
             "\t\t\t: Add or Remove countries to the map" +
-            "\n\t editneighbor -add <countryID> <neighborcountryID> \n\t\t\t\t\t\t-remove <countryID> <neighborcountryID>" +
+            "\n\t editneighbor -add <countryName> <neighborcountryNames> \n\t\t\t\t\t\t-remove <countryName> <neighborcountryNames>" +
             "\t\t\t\t: Add or Remove neighbour countries to the map" +
             "\n\t savemap <filename> :\tSaves the user-created map into a file path given" +
             "\n\t validatemap \t\t:\tVerifies the correctness of the map" +
