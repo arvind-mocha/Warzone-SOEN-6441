@@ -25,7 +25,7 @@ public class LoadMapPhase implements Phase{
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.getName(), Commands.EDIT_MAP.getName(), Commands.EDIT_COUNTRY.getName(), Commands.EDIT_CONTINENT.getName(), Commands.EDIT_NEIGHBOUR.getName(), Commands.VALIDATE_MAP.getName()));
+        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.getName(), Commands.EDIT_MAP.getName(), Commands.EDIT_COUNTRY.getName(), Commands.EDIT_CONTINENT.getName(), Commands.EDIT_NEIGHBOUR.getName(), Commands.VALIDATE_MAP.getName(), Commands.SAVE_MAP.getName()));
     }
 
     @Override
