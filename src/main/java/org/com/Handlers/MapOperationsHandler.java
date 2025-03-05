@@ -151,9 +151,54 @@ public class MapOperationsHandler {
         }
     }
 
-//    public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
-//
-//    }
+    public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+        var l_console = System.console();
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        if (l_gameMap == null) {
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+        }
+
+        String[] l_commandsArray = p_command.split(" -");
+
+        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+            String[] l_operationsArray = l_commandsArray[l_index].split(" ");
+            String l_attributeOperation = l_operationsArray[0];
+            String l_countryName = l_operationsArray[1];
+            Country l_country = l_gameMap.getCountryByName(l_countryName);
+            if(l_country == null)
+            {
+                throw new Exception(CommonErrorMessages.UNKNOWN_COUNTRY);
+            }
+            List<Integer> l_existingNeighbours = l_country.getNeighbourCountryIds();
+
+            String l_neighbourCountryName;
+
+            for(int l_jndex=2; l_jndex<l_operationsArray.length; l_jndex++) {
+                l_neighbourCountryName = l_operationsArray[l_jndex];
+                Country l_neighbourCountry = l_gameMap.getCountryByName(l_neighbourCountryName);
+
+                if (l_neighbourCountry == null){
+                    l_console.println(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
+                } else {
+                    if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
+                        if (!l_existingNeighbours.contains(l_neighbourCountry.getId())) {
+                            l_country.addNeighbourCountryId(l_neighbourCountry.getId());
+                        }
+                    } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
+                        if (l_existingNeighbours.contains(l_neighbourCountry.getId())) {
+                            l_country.removeNeighbourCountryId(l_neighbourCountry.getId());
+                        }
+                    }
+                }
+            }
+
+            if(l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)){
+                l_console.println("Added the given Neighbour Countries!");
+            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
+                l_console.println("Removed the listed Neighbour Countries!");
+            }
+        }
+    }
 
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
