@@ -159,7 +159,6 @@ public class ValidationUtil {
                 throw new Exception(CommonErrorMessages.CONTINENT_ALREADY_EXISTS);
             }
         } else if (p_operation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
-            // Checking whether the continents are present
             if(l_checkContinentExists == null)
             {
                 throw new Exception(CommonErrorMessages.UNKNOWN_CONTINENT);
@@ -180,13 +179,13 @@ public class ValidationUtil {
                 throw new Exception(CommonErrorMessages.COUNTRY_SET_TO_UNKNOWN_CONTINENT);
             }
         } else if (p_operation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
-            // Checking whether the continents are present
             if(l_checkCountryExists == null)
             {
                 throw new Exception(CommonErrorMessages.UNKNOWN_COUNTRY);
             }
         }
     }
+
 
     public static void validateAssignCountries(List<Player> p_playerList)throws Exception {
         if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
