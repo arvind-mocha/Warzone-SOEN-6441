@@ -15,8 +15,9 @@ import java.util.List;
 public class Country implements Serializable {
     private int d_id;
     private String d_name;
-    private int d_continentId;
-    private String d_continentName;
+    private Continent d_continent;
+//    private int d_continentId;
+//    private String d_continentName;
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
     private int d_armyCount;
@@ -32,14 +33,14 @@ public class Country implements Serializable {
     /**
      * Constructor with parameters for Country class.
      *
-     * @param p_id              The ID of the country.
-     * @param p_neighbourCountryIds The list of neighboring country IDs
+     * @param p_name              The Name of the country.
      * @param p_soldierCount              The number of armies in the country.
      */
-    public Country(int p_id, List<Integer> p_neighbourCountryIds, int p_soldierCount){
-        d_id = p_id;
-        d_neighbourCountryIds = p_neighbourCountryIds;
+    public Country(String p_name, Continent p_continent, int p_soldierCount){
+        d_name = p_name;
+        d_continent = p_continent;
         d_armyCount = p_soldierCount;
+        this.d_neighbourCountryIds = new ArrayList<>();
     }
 
     public int getId(){ return d_id;}
@@ -56,16 +57,16 @@ public class Country implements Serializable {
         d_name = p_name;
     }
 
-    public String getContinentName(){ return d_continentName; }
+    public String getContinentName(){ return d_continent.getName(); }
 
     public void setContinentName(String p_continentName){
-        d_continentName = p_continentName;
+        d_continent.setName(p_continentName);
     }
 
-    public int getContinentId(){ return d_continentId; }
+    public int getContinentId(){ return d_continent.getId(); }
 
     public void setContinentId(int p_continentId){
-        d_continentId = p_continentId;
+        d_continent.setId(p_continentId);
     }
 
     public int getArmyCount(){ return d_armyCount; }
@@ -88,5 +89,9 @@ public class Country implements Serializable {
 
     public void setNeighbourCountryIds(List<Integer> p_neighbourCountryIds){
         d_neighbourCountryIds = p_neighbourCountryIds;
+    }
+
+    public void addNeighbourCountryIds(int p_neighbourCountryId){
+        d_neighbourCountryIds.add(p_neighbourCountryId);
     }
 }
