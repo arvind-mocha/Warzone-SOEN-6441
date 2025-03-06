@@ -45,7 +45,7 @@ public class MapOperationsHandler {
     public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
         var l_console = System.console();
         Map l_map;
-        try (BufferedReader l_reader = new BufferedReader(new FileReader("src/main/resources/" + p_fileName))) {
+        try (BufferedReader l_reader = new BufferedReader(new FileReader(CommonConstants.GAME_DATA_DIR + p_fileName))) {
             processMap(p_gamePhaseHandler, p_fileName, false);
         } catch (Exception l_e) {
             l_console.println("File not found");
@@ -90,14 +90,20 @@ public class MapOperationsHandler {
             l_continentID += 1;
 
             if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
-                Continent l_continent = new Continent(l_continentID, Integer.parseInt(l_continentValue));
-                l_continent.setName(l_continentName);
+                Continent l_continent = new Continent(l_continentName, Integer.parseInt(l_continentValue));
+                l_continent.setId(l_continentID);
                 l_continentGraph.addVertex(l_continent);
                 l_console.println(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Continent l_continent = l_gameMap.getContinentByName(l_continentName);
                 l_continentGraph.removeVertex(l_continent);
                 l_console.println(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
+
+                for (Country l_c: l_gameMap.getCountryMap().vertexSet()){
+                    if(l_c.getContinentId() == l_continent.getId()){
+                        l_gameMap.getCountryMap().removeVertex(l_c);
+                    }
+                }
             }
         }
     }
@@ -142,6 +148,7 @@ public class MapOperationsHandler {
                 l_country.setId(l_countryID);
 
                 l_countryGraph.addVertex(l_country);
+                l_continentObj.addCountry(l_country);
                 l_console.println(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Country l_country = l_gameMap.getCountryByName(l_countryName);
