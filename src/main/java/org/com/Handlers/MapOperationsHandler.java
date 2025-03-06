@@ -141,8 +141,8 @@ public class MapOperationsHandler {
             ValidationUtil.validateCountryManagement(l_gameMap, l_attributeOperation, l_countryName, l_inContinent);
             l_countryID += 1;
 
+            Continent l_continentObj = l_gameMap.getContinentByName(l_inContinent);
             if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
-                Continent l_continentObj = l_gameMap.getContinentByName(l_inContinent);
                 int l_defaultSoldierCount = 0;
                 Country l_country = new Country(l_countryName, l_continentObj, l_defaultSoldierCount);
                 l_country.setId(l_countryID);
@@ -153,6 +153,7 @@ public class MapOperationsHandler {
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Country l_country = l_gameMap.getCountryByName(l_countryName);
                 l_countryGraph.removeVertex(l_country);
+                l_continentObj.removeCountry(l_country);
                 l_console.println(String.format("Country %d - %s has been removed", l_country.getId(), l_country.getName()));
             }
         }
