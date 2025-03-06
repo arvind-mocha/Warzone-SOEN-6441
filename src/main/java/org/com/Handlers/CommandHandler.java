@@ -47,7 +47,7 @@ public class CommandHandler {
                 MapOperationsHandler.editNeighbour(p_gamePhaseHandler, p_command);
                 break;
             case CommonConstants.SAVE_MAP_COMMAND:
-                MapOperationsHandler.saveMap(p_gamePhaseHandler, l_commandArray[1]);
+                MapOperationsHandler.saveMap(p_gamePhaseHandler, p_command);
                 break;
             case CommonConstants.LOAD_MAP_COMMAND:
                 MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false);
