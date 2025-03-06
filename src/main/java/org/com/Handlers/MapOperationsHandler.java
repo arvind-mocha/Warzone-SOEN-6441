@@ -194,7 +194,9 @@ public class MapOperationsHandler {
                     if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
                         if (!l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.addNeighbourCountryId(l_neighbourCountry.getId());
-                            l_neighbourCountry.addNeighbourCountryId(l_country.getId());
+                            if(!l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
+                                l_neighbourCountry.addNeighbourCountryId(l_country.getId());
+                            }
                             l_countryGraph.addEdge(l_country, l_neighbourCountry);
                             l_countryGraph.addEdge(l_neighbourCountry, l_country);
                             if(l_country.getContinentId() != l_neighbourCountry.getContinentId()){
@@ -204,10 +206,12 @@ public class MapOperationsHandler {
                     } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                         if (l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.removeNeighbourCountryId(l_neighbourCountry.getId());
-                            l_neighbourCountry.removeNeighbourCountryId(l_country.getId());
+                            if(l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
+                                l_neighbourCountry.removeNeighbourCountryId(l_country.getId());
+                            }
                             l_countryGraph.removeEdge(l_country, l_neighbourCountry);
                             l_countryGraph.removeEdge(l_neighbourCountry, l_country);
-                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()){
+                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()) {
                                 l_continentGraph.removeEdge(l_country.getContinent(), l_neighbourCountry.getContinent());
                             }
                         }
