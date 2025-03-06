@@ -64,10 +64,15 @@ public class Country implements Serializable {
         d_continent.setName(p_continentName);
     }
 
-    public int getContinentId(){ return d_continent.getId(); }
+    public int getContinentId(){ return d_continent.getId();
+    }
 
     public void setContinentId(int p_continentId){
         d_continent.setId(p_continentId);
+    }
+
+    public void setContinent(Continent p_continentObj){
+        this.d_continent = p_continentObj;
     }
 
     public int getArmyCount(){ return d_armyCount; }
@@ -95,9 +100,11 @@ public class Country implements Serializable {
     public void removeNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.remove(p_neighbourCountryId);
     }
+
     public Continent getContinent(){
         return this.d_continent;
     }
+
     public void addNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.add(p_neighbourCountryId);
     }
