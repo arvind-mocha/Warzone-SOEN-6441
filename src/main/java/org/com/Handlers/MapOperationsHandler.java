@@ -42,8 +42,10 @@ public class MapOperationsHandler {
     public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
         var l_console = System.console();
         Map l_map;
+        p_gamePhaseHandler.setMapFileName(p_fileName);
+
         try (BufferedReader l_reader = new BufferedReader(new FileReader(CommonConstants.GAME_DATA_DIR + p_fileName))) {
-            processMap(p_gamePhaseHandler, p_fileName, false);
+            processMap(p_gamePhaseHandler, p_fileName, false, true);
         } catch (Exception l_e) {
             l_console.println("File not found");
             l_map = new Map();
