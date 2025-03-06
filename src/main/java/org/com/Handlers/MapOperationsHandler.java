@@ -166,8 +166,10 @@ public class MapOperationsHandler {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
         }
 
-        String[] l_commandsArray = p_command.split(" -");
+        DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = l_gameMap.getCountryMap();
+        DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = l_gameMap.getContinentMap();
 
+        String[] l_commandsArray = p_command.split(" -");
         for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
             String[] l_operationsArray = l_commandsArray[l_index].split(" ");
             String l_attributeOperation = l_operationsArray[0];
@@ -187,14 +189,28 @@ public class MapOperationsHandler {
 
                 if (l_neighbourCountry == null){
                     l_console.println(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
+                } else if (l_neighbourCountry.getName().equalsIgnoreCase(l_country.getName())){
+                    continue;
                 } else {
                     if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
                         if (!l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.addNeighbourCountryId(l_neighbourCountry.getId());
+                            l_neighbourCountry.addNeighbourCountryId(l_country.getId());
+                            l_countryGraph.addEdge(l_country, l_neighbourCountry);
+                            l_countryGraph.addEdge(l_neighbourCountry, l_country);
+                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()){
+                                l_continentGraph.addEdge(l_country.getContinent(), l_neighbourCountry.getContinent());
+                            }
                         }
                     } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                         if (l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.removeNeighbourCountryId(l_neighbourCountry.getId());
+                            l_neighbourCountry.removeNeighbourCountryId(l_country.getId());
+                            l_countryGraph.removeEdge(l_country, l_neighbourCountry);
+                            l_countryGraph.removeEdge(l_neighbourCountry, l_country);
+                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()){
+                                l_continentGraph.removeEdge(l_country.getContinent(), l_neighbourCountry.getContinent());
+                            }
                         }
                     }
                 }
@@ -290,7 +306,7 @@ public class MapOperationsHandler {
             String[] l_countryInfoArray = l_countryInfo.split(" ");
             Country l_country = new Country();
             Continent l_continent = p_map.getContinentById(Integer.parseInt(l_countryInfoArray[2]));
-            Integer l_continentId  =Integer.parseInt(l_countryInfoArray[2]);
+            Integer l_continentId = Integer.parseInt(l_countryInfoArray[2]);
             l_country.setId(Integer.parseInt(l_countryInfoArray[0]));
             l_country.setName(l_countryInfoArray[1]);
             l_country.setContinentId(l_continentId);
