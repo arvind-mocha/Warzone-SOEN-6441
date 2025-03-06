@@ -13,10 +13,7 @@ import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -224,6 +221,59 @@ public class MapOperationsHandler {
         }
     }
 
+    public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName) throws Exception{
+        var l_console = System.console();
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        if (l_gameMap == null) {
+            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+        }
+
+        ValidationUtil.validateMap(l_gameMap);
+        l_console.println("The map is valid");
+
+        try (BufferedWriter l_writer = new BufferedWriter(new FileWriter(CommonConstants.GAME_DATA_DIR + p_fileName))) {
+            //writing the details of continents in the file
+            l_writer.write("[continents]\n");
+            for (Continent l_continent : l_gameMap.getContinentMap().vertexSet()) {
+                l_writer.write(l_continent.getName() + " " + l_continent.getValue());
+//                        + " blue\n");
+            }
+            l_writer.write("\n");
+
+            //writing the details of countries in the file
+            l_writer.write("[countries]\n");
+            for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+                l_writer.write(l_country.getId()
+                        + " " + l_country.getName() + " " + l_country.getContinentId());
+//                + " 100 100\n");
+            }
+            l_writer.write("\n");
+
+            //writing the details of the edge in the graph about countries and it's neighbour
+            l_writer.write("[borders]\n");
+            for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
+                StringBuilder l_borderData = new StringBuilder();
+                //Adding the country ID
+                l_borderData.append(l_country.getId());
+
+                //Adding the neighbouring countries of the country
+                for (int l_neighbourID : l_country.getNeighbourCountryIds()) {
+                    l_borderData.append(" ");
+                    l_borderData.append(l_neighbourID);
+                }
+                l_writer.write(String.valueOf(l_borderData));
+                l_writer.write("\n");
+            }
+            System.out.println("Map saved successfully!");
+        } catch (Exception l_e) {
+            System.out.println("Error saving the map: " + l_e.getMessage());
+        }
+
+//        p_gamePhaseHandler.setMapFileName(p_fileName);
+//        p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
+//        l_console.println("The Map has been loaded");
+    }
+
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
@@ -252,13 +302,14 @@ public class MapOperationsHandler {
                 }
             }
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
+
             ValidationUtil.validateMap(l_gameMap);
-            if(p_isMapValidationCommand)
-            {
+            if(p_isMapValidationCommand){
                 l_console.println("The map is valid");
                 return;
             }
-            l_console.println("The Map has been constructed and validated successfully!");
+
+            l_console.println("The Map has been validated and constructed successfully!");
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map has been validated");
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
