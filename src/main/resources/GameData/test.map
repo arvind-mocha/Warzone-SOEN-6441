@@ -1,0 +1,10 @@
+[continents]
+1 20
+
+[countries]
+1 india 1
+2 srilanka 1
+
+[borders]
+1 2
+2 1
