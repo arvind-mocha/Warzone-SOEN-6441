@@ -381,7 +381,7 @@ public class MapOperationsHandler {
             Continent l_continent = new Continent();
             l_continent.setName(l_continentInfoArray[0]);
             l_continent.setValue(Integer.parseInt(l_continentInfoArray[1]));
-            l_continent.setId(l_lineNum); // Line number is being used as continent id
+            l_continent.setId(l_lineNum-p_lineNum+1); // Line number is being used as continent id
             l_continentGraph.addVertex(l_continent);
             p_map.setContinentMap(l_continentGraph);
         }
