@@ -13,6 +13,8 @@ import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -227,21 +229,35 @@ public class MapOperationsHandler {
         }
     }
 
-    public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName) throws Exception{
+    public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
         var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
         }
 
-        ValidationUtil.validateMap(l_gameMap);
-        l_console.println("The map is valid");
+        String[] l_commandArray = p_command.split("\\s+");
+        String l_fileName;
+        if(l_commandArray.length == 1){
+            l_fileName = p_gamePhaseHandler.getMapFileName();
+        } else{
+            l_fileName = l_commandArray[1];
+        }
 
-        try (BufferedWriter l_writer = new BufferedWriter(new FileWriter(CommonConstants.GAME_DATA_DIR + p_fileName))) {
+        try {
+            ValidationUtil.validateMap(l_gameMap);
+            l_console.println("The map has been validated!");
+        } catch (Exception e){
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss_ddMMyyyy");
+            l_fileName += "_inValidMap_" + now.format(formatter) + ".map";
+        }
+
+        try (BufferedWriter l_writer = new BufferedWriter(new FileWriter(CommonConstants.GAME_DATA_DIR + l_fileName))) {
             //writing the details of continents in the file
             l_writer.write("[continents]\n");
             for (Continent l_continent : l_gameMap.getContinentMap().vertexSet()) {
-                l_writer.write(l_continent.getName() + " " + l_continent.getValue());
+                l_writer.write(l_continent.getName() + " " + l_continent.getValue()+"\n");
 //                        + " blue\n");
             }
             l_writer.write("\n");
@@ -250,7 +266,7 @@ public class MapOperationsHandler {
             l_writer.write("[countries]\n");
             for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
                 l_writer.write(l_country.getId()
-                        + " " + l_country.getName() + " " + l_country.getContinentId());
+                        + " " + l_country.getName() + " " + l_country.getContinentId()+"\n");
 //                + " 100 100\n");
             }
             l_writer.write("\n");
@@ -270,17 +286,14 @@ public class MapOperationsHandler {
                 l_writer.write(String.valueOf(l_borderData));
                 l_writer.write("\n");
             }
-            System.out.println("Map saved successfully!");
+            System.out.println(String.format("Map saved successfully as %s!", l_fileName));
         } catch (Exception l_e) {
             System.out.println("Error saving the map: " + l_e.getMessage());
         }
 
-//        p_gamePhaseHandler.setMapFileName(p_fileName);
-//        p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
-//        l_console.println("The Map has been loaded");
     }
 
-    public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand) throws Exception {
+    public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand, boolean p_isEditMapCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
         l_console.println("Processing the map from " + p_fileName + " ...");
@@ -309,7 +322,19 @@ public class MapOperationsHandler {
             }
             LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
 
-            ValidationUtil.validateMap(l_gameMap);
+            try{
+                ValidationUtil.validateMap(l_gameMap);
+            } catch (Exception e){
+                l_console.println("The Map Validation has failed and has the following error");
+                if(p_isEditMapCommand){
+                    l_console.println(e);
+                    p_gamePhaseHandler.setGameMap(l_gameMap);
+                    p_gamePhaseHandler.setMapFileName(p_fileName);
+                    l_console.println("Map has to be edited accordingly to play with this map!");
+                    return;
+                }
+                throw e;
+            }
             if(p_isMapValidationCommand){
                 l_console.println("The map is valid");
                 return;
@@ -320,6 +345,11 @@ public class MapOperationsHandler {
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);
+
+            if(p_isEditMapCommand){
+                return;
+            }
+
             p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
             l_console.println("The Map has been loaded");
         } catch (IOException e) {

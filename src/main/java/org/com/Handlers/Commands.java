@@ -14,7 +14,7 @@ import java.util.*;
 public enum Commands {
     HELP(CommonConstants.HELP_COMMAND, false, null),
     EXIT(CommonConstants.EXIT_COMMAND, false, null),
-    SAVE_MAP(CommonConstants.SAVE_MAP_COMMAND, true, null),
+    SAVE_MAP(CommonConstants.SAVE_MAP_COMMAND, false, null),
     EDIT_MAP(CommonConstants.EDIT_MAP_COMMAND, true, null),
     LOAD_MAP(CommonConstants.LOAD_MAP_COMMAND, true, null),
     SHOW_MAP(CommonConstants.SHOW_MAP_COMMAND, false, null),
