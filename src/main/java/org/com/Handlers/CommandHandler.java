@@ -50,13 +50,13 @@ public class CommandHandler {
                 MapOperationsHandler.saveMap(p_gamePhaseHandler, p_command);
                 break;
             case CommonConstants.LOAD_MAP_COMMAND:
-                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false);
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false, false);
                 break;
             case CommonConstants.SHOW_MAP_COMMAND:
                 MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
                 break;
             case CommonConstants.VALIDATE_MAP_COMMAND:
-                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], true);
+                MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], true, false);
                 break;
             case CommonConstants.ADD_PLAYER_COMMAND:
                 PlayerOperationsHandler.processPlayerManagement(p_command, p_gamePhaseHandler);
