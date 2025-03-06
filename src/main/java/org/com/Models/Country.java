@@ -27,6 +27,7 @@ public class Country implements Serializable {
      */
 
     public Country() {
+        this.d_continent = new Continent();
         this.d_neighbourCountryIds = new ArrayList<>();
     }
 
@@ -94,7 +95,9 @@ public class Country implements Serializable {
     public void removeNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.remove(p_neighbourCountryId);
     }
-
+    public Continent getContinent(){
+        return this.d_continent;
+    }
     public void addNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.add(p_neighbourCountryId);
     }
