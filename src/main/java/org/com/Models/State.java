@@ -2,6 +2,19 @@ package org.com.Models;
 
 import java.util.List;
 
+/**
+ * The 'State' class is used to represent the current state of the game.
+ * Contains the current state of all objects involved in the game.
+ *      - State of the Map on the current game
+ *      - Current Game Phase
+ *      - List of Players added to the game
+ *      - Current Player Turn
+ *
+ *  @author Devasenan Murugan
+ */
+
+
+// Has the basic setter and getter methods of each of the attributes
 public class State {
     private String d_gamePhase;
     private List<Player> d_playerList;

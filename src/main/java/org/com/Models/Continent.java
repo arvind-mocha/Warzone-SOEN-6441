@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The 'Continent' class represents the Continent in the game map.
+ * Contains the properties of a Continent.
+ * Continent is related to the Country and the Map classes
+ *
+ *  @author Devasenan Murugan
+ */
 
 public class Continent implements Serializable {
     private int d_id;
@@ -11,11 +18,21 @@ public class Continent implements Serializable {
     private int d_value;
     private List<Country> d_countries;
 
+    /**
+     * Default constructor for Continent class.
+     */
     public Continent() {
         d_countries = new ArrayList<>();
     }
-    public Continent(int p_id, int p_value){
-        d_id = p_id;
+
+    /**
+     * Constructor with parameters for Continent class.
+     *
+     * @param p_name    The ID of the continent
+     * @param p_value The value of the continent
+     */
+    public Continent(String p_name, int p_value){
+        d_name = p_name;
         d_value = p_value;
         d_countries = new ArrayList<>();
     }
