@@ -333,6 +333,11 @@ public class MapOperationsHandler {
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = p_map.getContinentMap();
         for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String[] l_borderInfoArray = p_file.get(l_lineNum).split(" ");
+
+            if (l_borderInfoArray.length == 1) {
+                return l_lineNum;
+            }
+
             Country l_currentCountry = p_map.getCountryById(Integer.parseInt(l_borderInfoArray[0]));
             List<Integer> l_neighbourCountryIDList = new ArrayList<>();
 
@@ -341,9 +346,8 @@ public class MapOperationsHandler {
                 l_neighbourCountryIDList.add(l_neighbourCountryID);
                 Country l_neighbourCountry = p_map.getCountryById(l_neighbourCountryID);
                 l_countryGraph.addEdge(l_currentCountry, l_neighbourCountry);
-
                 if (l_currentCountry.getContinentId() != l_neighbourCountry.getContinentId()) {
-                    l_continentGraph.addEdge(p_map.getContinentById(l_currentCountry.getContinentId()), p_map.getContinentById(l_neighbourCountry.getContinentId()));
+                    l_continentGraph.addEdge(l_currentCountry.getContinent(), l_neighbourCountry.getContinent());
                 }
             }
             l_currentCountry.setNeighbourCountryIds(l_neighbourCountryIDList);
@@ -363,13 +367,11 @@ public class MapOperationsHandler {
             String[] l_countryInfoArray = l_countryInfo.split(" ");
             Country l_country = new Country();
             Continent l_continent = p_map.getContinentById(Integer.parseInt(l_countryInfoArray[2]));
-            Integer l_continentId = Integer.parseInt(l_countryInfoArray[2]);
             l_country.setId(Integer.parseInt(l_countryInfoArray[0]));
             l_country.setName(l_countryInfoArray[1]);
-            l_country.setContinentId(l_continentId);
-            l_country.setContinentName(HelperUtil.getContinentById(p_map.getContinentMap().vertexSet(),l_continentId ));
-            l_countryGraph.addVertex(l_country);
+            l_country.setContinent(l_continent);
             l_continent.addCountry(l_country);
+            l_countryGraph.addVertex(l_country);
         }
         return p_lineNum;
     }
