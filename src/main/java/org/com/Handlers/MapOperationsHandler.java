@@ -287,7 +287,7 @@ public class MapOperationsHandler {
                 }
                 if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.CONTINENTS))
                 {
-                    l_lineNum = processContinents(l_file, l_gameMap);
+                    l_lineNum = processContinents(l_file, l_gameMap, l_lineNum+1);
                     LogUtil.Logger(CLASS_NAME, Level.INFO, "The continents object has been processed");
                 }
                 else if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.COUNTRIES))
@@ -368,10 +368,10 @@ public class MapOperationsHandler {
         return p_lineNum;
     }
 
-    private static int processContinents(List<String> p_file, Map p_map) {
+    private static int processContinents(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
-        for(int l_lineNum = 1; l_lineNum < p_file.size(); l_lineNum++) {
+        for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String l_continentInfo = p_file.get(l_lineNum);
             if (l_continentInfo.isEmpty()) {
                 return l_lineNum;
