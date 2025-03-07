@@ -5,6 +5,8 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.io.Serializable;
 import java.lang.classfile.instruction.ConstantInstruction;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,6 +24,7 @@ import java.lang.classfile.instruction.ConstantInstruction;
 public class Map implements Serializable {
     private DefaultDirectedGraph<Continent, DefaultEdge> d_continentMap;
     private DefaultDirectedGraph<Country, DefaultEdge> d_countryMap;
+    private List<Continent> d_continents = new ArrayList<>();
 
     public Map(){
         d_continentMap = new DefaultDirectedGraph<>(DefaultEdge.class);
@@ -71,6 +74,13 @@ public class Map implements Serializable {
 
     public DefaultDirectedGraph<Continent, DefaultEdge> getContinentMap(){
         return d_continentMap;
+    }
+    public List<Continent> getContinents() {
+        return d_continents;
+    }
+
+    public void setContinents(List<Continent> p_continents) {
+        this.d_continents = p_continents;
     }
 
     public void setContinentMap(DefaultDirectedGraph<Continent, DefaultEdge> p_continentMap){
