@@ -11,7 +11,27 @@ import org.com.Utils.ValidationUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * All operations related to a Player like<ul><li>Deploy</li></ul>command is written here
+ *
+ * @author Arvind Lakshmanan
+ * @author Barath Sundararaj
+ *
+ */
+
 public class PlayerOperationsHandler {
+
+    /**
+     * This method is used depicts the beginning of the player registration.
+     * Performs acctions like:
+     * <ul>
+     *     <li>Add New Player</li>
+     *     <li>Remove Existing Player</li>
+     * </ul>
+     * @param p_command The user input
+     * @param p_gamePhaseHandler Current Game Phase
+     * @throws Exception Error in case of a non-existing player is asked to be removed
+     */
     public static void processPlayerManagement(String p_command, GamePhaseHandler p_gamePhaseHandler) throws Exception
     {
         List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
@@ -41,6 +61,11 @@ public class PlayerOperationsHandler {
         }
     }
 
+    /**
+     * This method is used to divide the Loaded Map and <b>Assign Countries</b> among the registered players.
+     * @param p_gamePhaseHandler Game Phase
+     * @throws Exception
+     */
     public static void processAssignCountries(GamePhaseHandler p_gamePhaseHandler) throws Exception {
         List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
         ValidationUtil.validateAssignCountries(l_playerList);
@@ -78,7 +103,13 @@ public class PlayerOperationsHandler {
     }
 
 
-
+    /**
+     * This method marks the beginning of the game where players are asked to <b>deploy all of their armies in their own countries.</b>
+     * Only after a player <b>deploys all</b> of his/her armies, the next player's turn begins.
+     * @param p_gamePhaseHandler Game Phase
+     * @param p_commandArray User Input Command
+     * @throws Exception Invalid Deploy Command
+     */
     public static void processDeployArmies(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         if (p_commandArray.length != 3) {
             throw new Exception("Invalid deploy command. Usage: deploy <country_name> <num_armies>");
