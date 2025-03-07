@@ -45,7 +45,7 @@ class ShowMapTest {
     void testShowGameMap() throws Exception {
 
         // Load the Europe map before running the test
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_testMapFile, false);
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_testMapFile, false, false);
 
         // Ensure that the map has been successfully loaded
         assertNotNull(d_gamePhaseHandler.getGameMap(), "Game map should be loaded before calling showMap.");
