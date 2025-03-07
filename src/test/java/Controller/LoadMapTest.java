@@ -30,7 +30,7 @@ public class LoadMapTest {
     public void testValidMap() throws Exception {
 
         // Call method to load the map
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_validMap, false);
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_validMap, false, false);
 
         // Assertions to verify map is loaded and contains valid data
         assertNotNull(d_gamePhaseHandler.getGameMap(), "Game map should not be null after loading");
@@ -43,7 +43,7 @@ public class LoadMapTest {
     void testLoadNonExistentMap() throws Exception {
 
         // loading a non-existent map
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_invalidMap, false);
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_invalidMap, false, false);
 
         // Since processMap() does not throw an exception, we check if the map failed to load
         assertNull(d_gamePhaseHandler.getGameMap(), "Game map should be null for non-existent files.");
@@ -53,7 +53,7 @@ public class LoadMapTest {
     @Test
     void testLoadEmptyMap() {
         Exception exception = assertThrows(Exception.class, () -> {
-            MapOperationsHandler.processMap(d_gamePhaseHandler, l_emptyMap, false);
+            MapOperationsHandler.processMap(d_gamePhaseHandler, l_emptyMap, false, false);
         });
         System.out.println("Loading Map failed as Map should not be empty.");
     }
@@ -63,7 +63,7 @@ public class LoadMapTest {
     void testLoadMalformedMap() throws Exception {
 
         // Loading a malformed map
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_malformedMap, false);
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_malformedMap, false, false);
 
         // check if map is invalid
         assertTrue(d_gamePhaseHandler.getGameMap() == null ||
