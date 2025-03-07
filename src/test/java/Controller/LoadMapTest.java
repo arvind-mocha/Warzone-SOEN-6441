@@ -43,7 +43,7 @@ public class LoadMapTest {
     void testLoadNonExistentMap() throws Exception {
 
         // loading a non-existent map
-        MapOperationsHandler.processMap(d_gamePhaseHandler, l_invalidMap, false, false);
+        MapOperationsHandler.processMap(d_gamePhaseHandler, l_invalidMap, false,false);
 
         // Since processMap() does not throw an exception, we check if the map failed to load
         assertNull(d_gamePhaseHandler.getGameMap(), "Game map should be null for non-existent files.");
