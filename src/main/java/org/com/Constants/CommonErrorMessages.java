@@ -1,5 +1,12 @@
 package org.com.Constants;
 
+/**
+ * This class contains all global error messages.
+ *
+ * @author Arvind Lakshmanan
+ *
+ */
+
 public class CommonErrorMessages {
     public static final String INVALID_FILE = "Provide a valid file";
     public static final String INVALID_COMMAND = "Invalid command";
@@ -17,7 +24,6 @@ public class CommonErrorMessages {
     public static final String COUNTRY_ALREADY_EXISTS = "Country exists already";
     public static final String UNKNOWN_COUNTRY = "Country does not exist";
     public static final String UNKNOWN_CONTINENT = "Continent does not exist";
-    public static final String UNKNOWN_NEIGHBOUR = "Country does not exist";
     public static final String COUNTRY_SET_TO_UNKNOWN_CONTINENT = "Country set with unknown Continent";
     public static final String PLAYER_NOT_EXISTS_REMOVAL = "Player %s does not exist to be removed";
     public static final String NO_PLAYER_EXISTS = "No player exists to be removed";

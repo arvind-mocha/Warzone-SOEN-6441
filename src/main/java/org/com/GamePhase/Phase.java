@@ -1,9 +1,5 @@
 package org.com.GamePhase;
 
-import org.com.Constants.CommandOutputMessages;
-import org.com.Constants.CommonErrorMessages;
-import org.com.Handlers.GamePhaseHandler;
-
 import java.util.ArrayList;
 
 /**
@@ -14,15 +10,24 @@ import java.util.ArrayList;
  */
 public interface Phase {
 
+    /**
+     * Retrieves the next phase of the game.
+     *
+     * @return the next Phase object.
+     */
     Phase getNextPhase();
 
+    /**
+     * Retrieves valid commands of this phase.
+     *
+     * @return the next Phase object.
+     */
     ArrayList<String> getValidCommands();
 
-    String getHelpMessage();
     /**
-     * Default methods which doesn't need any separate implementation
+     * Retrieves commands applicable for this phase of the game.
+     *
+     * @return the next Phase object.
      */
-    default ArrayList<String> getCommonCommands(){
-        return null;
-    }
+    String getHelpMessage();
 }

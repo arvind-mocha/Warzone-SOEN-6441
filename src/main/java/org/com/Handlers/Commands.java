@@ -47,19 +47,41 @@ public enum Commands {
         this.d_attributesHashMap = p_attributesHashMap;
     }
 
+    /**
+     * Retrieves the name of the command.
+     *
+     * @return the name of the command.
+     */
     public String getName() {
         return d_name;
     }
 
+    /**
+     * Retrieves the attributes of the command.
+     *
+     * @return the name of the command.
+     */
     public HashMap<String, Integer> getAttributesHashMap() {
         return d_attributesHashMap;
     }
 
+    /**
+     * Checks if filename should be attached with the commands.
+     *
+     * @return the name of the command.
+     */
     public boolean isFileRequired()
     {
         return d_isFileRequired;
     }
 
+    /**
+     * Retrieves the command enum if name of the command is provided.
+     *
+     * @param p_name The name of the command.
+     *
+     * @return the name of the command.
+     */
     public static Commands getCommandByName(String p_name) {
         for (Commands command : Commands.values()) {
             if (command.getName().equalsIgnoreCase(p_name)) {
