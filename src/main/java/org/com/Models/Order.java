@@ -11,6 +11,9 @@ import java.io.Serializable;
  *   <li>Special Orders : usage of cards</li>
  * </ul>
  * Used in relation with the game <b>Controls.
+ *
+ * @author Barath Sundararaj
+ *
  */
 public class Order implements Serializable {
     private Country d_country;
