@@ -6,6 +6,14 @@ import org.com.Handlers.Commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Issue Order Phase implements the Phase interface and contains code related to the command given by the Player.
+ *
+ * @author Arvind Lakshmanan
+ * @author Barath Sundararaj
+ *
+ */
+
 public class IssueOrderPhase implements Phase {
     @Override
     public Phase getNextPhase() {
