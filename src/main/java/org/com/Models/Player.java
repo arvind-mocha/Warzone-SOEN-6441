@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * This java file is used to define a player in the game
  * Contains all the attributes of a player.
+ *
+ * @author Barath Sundararaj
  */
 
 public class Player implements Serializable {

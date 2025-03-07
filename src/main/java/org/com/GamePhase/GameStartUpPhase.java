@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 /**
  * Game startup phase related codes are present here.
+ * The <b>GameStartUpPhase</b> implements the <b>Phase Interface</b>
  *
  * @author Arvind Lakshmanan
  *

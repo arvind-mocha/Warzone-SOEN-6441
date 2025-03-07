@@ -23,7 +23,7 @@ public class CommandOutputMessages {
             "\n\t editneighbor -add <countryName> <neighborcountryNames> \n\t\t\t\t\t\t-remove <countryName> <neighborcountryNames>" +
             "\t\t\t\t: Add or Remove neighbour countries to the map" +
             "\n\t savemap <filename> :\tSaves the user-created map into a file path given" +
-            "\n\t validatemap \t\t:\tVerifies the correctness of the map" +
+            "\n\t validatemap <filename> \t\t:\tVerifies the correctness of the map" +
             "\n\t showmap\t: Displays the map that is loaded, if valid";
 
     // Game play commands help messages
