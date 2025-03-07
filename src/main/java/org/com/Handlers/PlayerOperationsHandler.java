@@ -226,7 +226,7 @@ public class PlayerOperationsHandler {
     }
 
     // Method to execute the buffered commands
-    private static void executeBufferedCommands(GamePhaseHandler p_gamePhaseHandler) throws Exception {
+    public static void executeBufferedCommands(GamePhaseHandler p_gamePhaseHandler) throws Exception {
         List<String[]> l_commands = p_gamePhaseHandler.getAdvanceCommandsBuffer();
         if (l_commands.isEmpty()) {
             System.console().println("No advance commands in buffer.");

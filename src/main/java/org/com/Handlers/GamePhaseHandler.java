@@ -47,7 +47,7 @@ public class GamePhaseHandler {
     }
 
     public void setPlayerList(List<Player> p_playerList) {
-        this.d_playerList = d_playerList;
+        this.d_playerList = p_playerList;
     }
 
     public int getCurrentPlayer() {
