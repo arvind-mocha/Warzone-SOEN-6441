@@ -155,6 +155,13 @@ public class PlayerOperationsHandler {
         }
     }
 
+    /**
+     * This method processes the advance command, which moves armies from one country to another.
+     * The command can either be to move armies or to commit buffered commands.
+     * @param p_gamePhaseHandler The current game phase handler
+     * @param p_commandArray The user input command array
+     * @throws Exception If the command is invalid or an error occurs during processing
+     */
     public static void processAdvanceCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         if (p_commandArray.length != 4 && !p_commandArray[0].equalsIgnoreCase("commit")) {
             throw new Exception("Invalid advance command. Usage: advance <source_country> <target_country> <num_armies> or commit");
@@ -225,8 +232,11 @@ public class PlayerOperationsHandler {
         }
     }
 
-    // Method to execute the buffered commands
-    public static void executeBufferedCommands(GamePhaseHandler p_gamePhaseHandler) throws Exception {
+    /**
+     * Method to execute the buffered advance commands.
+     * @param p_gamePhaseHandler The current game phase handler
+     * @throws Exception If an error occurs during command execution
+     */    public static void executeBufferedCommands(GamePhaseHandler p_gamePhaseHandler) throws Exception {
         List<String[]> l_commands = p_gamePhaseHandler.getAdvanceCommandsBuffer();
         if (l_commands.isEmpty()) {
             System.console().println("No advance commands in buffer.");
@@ -295,6 +305,10 @@ public class PlayerOperationsHandler {
         advanceTurn(p_gamePhaseHandler);
     }
 
+    /**
+     * Advances the turn to the next player.
+     * @param p_gamePhaseHandler The current game phase handler
+     */
     public static void advanceTurn(GamePhaseHandler p_gamePhaseHandler) {
         int l_nextPlayerIndex = (p_gamePhaseHandler.getCurrentPlayer() + 1) % p_gamePhaseHandler.getPlayerList().size();
         p_gamePhaseHandler.setCurrentPlayer(l_nextPlayerIndex);

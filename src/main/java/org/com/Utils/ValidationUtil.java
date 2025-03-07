@@ -8,14 +8,19 @@ import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
-import org.jgrapht.GraphTests;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * This class contains util method for validating.
+ *
+ * @author Arvind Lakshmanan
+ *
+ */
 public class ValidationUtil {
 
     /**
@@ -45,7 +50,6 @@ public class ValidationUtil {
         HashMap<String, Integer> l_attributesHashMap = l_commandEnum.getAttributesHashMap();
         // Validating the correctness of the file provided for required commands
         if (l_commandEnum.isFileRequired()) {
-//            if(p_commandsArray.length < 2 || !new File(CommonConstants.GAME_DATA_DIR + p_commandsArray[1]).exists())
             if (p_commandsArray.length < 2) {
                 throw new Exception(CommonErrorMessages.INVALID_FILE);// Thrown exception will be caught and proper error message will get displayed
             }
@@ -69,6 +73,12 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * Validates the game map based on filename provided.
+     *
+     * @param p_gameMap The game map to validate.
+     * @throws Exception if the map is invalid.
+     */
     public static void validateMap(Map p_gameMap) throws Exception {
         // Checking whether the map is empty
         if (p_gameMap == null) {
@@ -115,6 +125,15 @@ public class ValidationUtil {
         }
     }
 
+
+    /**
+     * Validates player management operations such as adding or removing players.
+     *
+     * @param p_playerList The list of players.
+     * @param p_operation  The operation to perform (add or remove).
+     * @param p_playerName The name of the player to add or remove.
+     * @throws Exception if the operation is invalid.
+     */
     public static void validatePlayerManagement(List<Player> p_playerList, String p_operation, String p_playerName) throws Exception {
         if (p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
             if (validatePlayerExistence(p_playerList, p_playerName)) {
@@ -130,6 +149,15 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * Validates continent management operations such as adding or removing continents.
+     *
+     * @param p_gameMap The game map.
+     * @param p_operation The operation to perform (add or remove).
+     * @param p_continentName The name of the continent.
+     * @param p_continentValue The value of the continent.
+     * @throws Exception if the operation is invalid.
+     */
     public static void validateContinentManagement(Map p_gameMap, String p_operation, String p_continentName, String p_continentValue) throws Exception {
         try {
             Integer l_continentValue = Integer.parseInt(p_continentValue);
@@ -149,6 +177,15 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * Validates country management operations such as adding or removing countries.
+     *
+     * @param p_gameMap The game map.
+     * @param p_operation The operation to perform (add or remove).
+     * @param p_countryName The name of the country.
+     * @param p_continentName The name of the continent.
+     * @throws Exception if the operation is invalid.
+     */
     public static void validateCountryManagement(Map p_gameMap, String p_operation, String p_countryName, String p_continentName) throws Exception {
         Continent l_checkContinentExists = p_gameMap.getContinentByName(p_continentName);
         Country l_checkCountryExists = p_gameMap.getCountryByName(p_countryName);
@@ -167,13 +204,25 @@ public class ValidationUtil {
         }
     }
 
-
+    /**
+     * Validates the assignment of countries to players.
+     *
+     * @param p_playerList The list of players.
+     * @throws Exception if the minimum player count is not reached.
+     */
     public static void validateAssignCountries(List<Player> p_playerList) throws Exception {
         if (p_playerList.size() < CommonConstants.MIN_PLAYER_COUNT) {
             throw new Exception(CommonErrorMessages.MIN_PLAYER_COUNT_NOT_REACHED);
         }
     }
 
+    /**
+     * Validates if a player with the given name exists in the player list.
+     *
+     * @param p_playerList The list of players.
+     * @param p_playerName The name of the player to check.
+     * @return true if the player exists, false otherwise.
+     */
     public static boolean validatePlayerExistence(List<Player> p_playerList, String p_playerName) {
         for (Player player : p_playerList) {
             if (player.get_name().equalsIgnoreCase(p_playerName)) {

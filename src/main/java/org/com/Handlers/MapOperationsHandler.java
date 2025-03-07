@@ -40,6 +40,7 @@ public class MapOperationsHandler {
      * Processes the map from the given file.
      *
      * @param p_fileName The name of the file containing the map data.
+     * @param p_gamePhaseHandler Game Phase.
      */
 
     public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
@@ -403,6 +404,14 @@ public class MapOperationsHandler {
         }
     }
 
+    /**
+     * Processes the borders from the given file and updates the map.
+     *
+     * @param p_file The list of strings representing the file content.
+     * @param p_map The map object to be updated.
+     * @param p_lineNum The starting line number for processing.
+     * @return The line number after processing the borders.
+     */
     private static int processBorders(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = p_map.getCountryMap();
@@ -431,6 +440,14 @@ public class MapOperationsHandler {
         return p_file.size();
     }
 
+    /**
+     * Processes the countries from the given file and updates the map.
+     *
+     * @param p_file The list of strings representing the file content.
+     * @param p_map The map object to be updated.
+     * @param p_lineNum The starting line number for processing.
+     * @return The line number after processing the countries.
+     */
     private static int processCountries(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
@@ -452,6 +469,14 @@ public class MapOperationsHandler {
         return p_lineNum;
     }
 
+    /**
+     * Processes the continents from the given file and updates the map.
+     *
+     * @param p_file The list of strings representing the file content.
+     * @param p_map The map object to be updated.
+     * @param p_lineNum The starting line number for processing.
+     * @return The line number after processing the continents.
+     */
     private static int processContinents(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
@@ -472,6 +497,13 @@ public class MapOperationsHandler {
         return CommonConstants.INTEGER_ZERO;
     }
 
+
+    /**
+     * Displays the current game map in a tabular format.
+     *
+     * @param p_gameMap Game phase.
+     * @throws Exception If the map is not loaded.
+     */
     public static void processShowGameMap(GamePhaseHandler p_gameMap) throws Exception {
         Map l_gameMap = p_gameMap.getGameMap();
         if (l_gameMap == null) {

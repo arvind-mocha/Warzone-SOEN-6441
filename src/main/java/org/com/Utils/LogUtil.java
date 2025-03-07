@@ -72,6 +72,9 @@ public class LogUtil {
         }
     }
 
+    /**
+     * Creates the log folder if it does not exist.
+     */
     public static void createLogFolder()
     {
         File l_logsDirectory = new File(LOG_FOLDER);

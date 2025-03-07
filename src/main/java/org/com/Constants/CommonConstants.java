@@ -3,7 +3,6 @@ package org.com.Constants;
 import org.com.Utils.HelperUtil;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 /**
  * This class contains all global constants.

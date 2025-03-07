@@ -3,6 +3,12 @@ package org.com.Utils;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * This class contains util method for displaying the map.
+ *
+ * @author Arvind Lakshmanan
+ *
+ */
 public class DisplayUtil {
 
     /**
