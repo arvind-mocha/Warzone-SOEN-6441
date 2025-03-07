@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 /**
- * All important methods which are used for processing a command are written here.
+ * All important methods which are used for processing a map related command are written here.
  *
  * @author Arvind Lakshmanan
  * @author Devasenan Murugan
@@ -34,12 +34,13 @@ import java.util.logging.Level;
 
 public class MapOperationsHandler {
 
+    private static String CLASS_NAME = MapOperationsHandler.class.getName();
+
     /**
      * Processes the map from the given file.
      *
      * @param p_fileName The name of the file containing the map data.
      */
-    private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
     public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
         var l_console = System.console();
@@ -57,6 +58,17 @@ public class MapOperationsHandler {
         }
     }
 
+
+    /**
+     * This method is used to perform the following operations after proper validation:
+     * <ul>
+     *     <li>Add Continent</li>
+     *     <li>Remove Continent</li>
+     * </ul>
+     * @param p_gamePhaseHandler Defines the current game phase
+     * @param p_command User Input Command
+     * @throws Exception Map Not loaded
+     */
     public static void editContinent(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
         var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
@@ -109,6 +121,17 @@ public class MapOperationsHandler {
         }
     }
 
+    /**
+     * This method is used to edit countries and perform the following actions after validation:
+     * <ul>
+     *     <li>Add Country</li>
+     *     <li>Remove Country</li>
+     * </ul>
+     *
+     * @param p_gamePhaseHandler Defines the Current Game Phase
+     * @param p_command User Input Command
+     * @throws Exception Map Not Loaded
+     */
     public static void editCountry(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
         var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
@@ -160,6 +183,13 @@ public class MapOperationsHandler {
         }
     }
 
+    /**
+     * This method is used to add or remove a specific country as a neighbour to an existing country in the map.
+     *
+     * @param p_gamePhaseHandler Defines the game phase
+     * @param p_command User Input Command
+     * @throws Exception Map Not Loaded
+     */
     public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
         var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
@@ -229,6 +259,13 @@ public class MapOperationsHandler {
         }
     }
 
+    /**
+     * Saves the edited map after proper validation.
+     *
+     * @param p_gamePhaseHandler Current Game Phase
+     * @param p_command User Input Command
+     * @throws Exception Map Not Loaded
+     */
     public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
         var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
@@ -293,6 +330,15 @@ public class MapOperationsHandler {
 
     }
 
+    /**
+     * This method is the key for processing a map for validation phase.
+     *
+     * @param p_gamePhaseHandler Game Phase
+     * @param p_fileName Map File Name
+     * @param p_isMapValidationCommand Boolean value depicting the validation.
+     * @param p_isEditMapCommand Boolean value depicting the edit map command.
+     * @throws Exception Failed to load the file
+     */
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand, boolean p_isEditMapCommand) throws Exception {
         Map l_gameMap = new Map();
         var l_console = System.console();
