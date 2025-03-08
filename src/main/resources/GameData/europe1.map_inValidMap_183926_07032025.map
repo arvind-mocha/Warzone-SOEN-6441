@@ -1,0 +1,43 @@
+[continents]
+europe 20
+asia 21
+
+[countries]
+1 austria 1
+2 bulgaria 1
+3 cyprus 1
+4 china 2
+5 india 2
+6 nepal 2
+7 bhutan 2
+8 japan 2
+9 malaysia 2
+10 singapore 2
+12 france 1
+13 germany 1
+14 denmark 1
+15 croatia 1
+16 finland 1
+17 hungary 1
+18 greece 1
+19 ireland 1
+
+[borders]
+1 3 2
+2 1 3
+3 1 2
+4 5 7
+5 4
+6 8 9
+7 4
+8 6 9
+9 8 6
+10
+12 14
+13 14
+14 12 13
+15 16
+16 15
+17
+18 19
+19 18
