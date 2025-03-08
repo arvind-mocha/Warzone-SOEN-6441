@@ -30,13 +30,14 @@ class MapOperationsHandlerTest {
     @Test
     void testEditContinent_Add() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add ContinentA 5"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add Continent A 5"));
+
     }
 
     @Test
     void testEditContinent_Remove() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "remove ContinentA"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "remove Continent A"));
     }
 
     @Test
@@ -54,13 +55,13 @@ class MapOperationsHandlerTest {
     @Test
     void testEditNeighbour_Add() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "add CountryA CountryB"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "add Country A Country B"));
     }
 
     @Test
     void testEditNeighbour_Remove() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "remove CountryA CountryB"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "remove Country A Country B"));
     }
 
     @Test
@@ -70,8 +71,32 @@ class MapOperationsHandlerTest {
     }
 
     @Test
-    void testSaveMap_Invalid() throws Exception {
+    void testSaveMap_InvalidWithNegativeContinentValue() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_map.map"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add InvalidContinent -5"));
+        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_negative_continent.map"));
+    }
+
+    @Test
+    void testSaveMap_InvalidWithEmptyContinentName() throws Exception {
+        gamePhaseHandler.setGameMap(new Map());
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add  10"));
+        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_empty_continent.map"));
+    }
+
+    @Test
+    void testSaveMap_InvalidWithNonExistentContinentForCountry() throws Exception {
+        gamePhaseHandler.setGameMap(new Map());
+        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country A NonExistentContinent"));
+        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_country_continent.map"));
+    }
+
+    @Test
+    void testSaveMap_InvalidWithIncorrectBorders() throws Exception {
+        gamePhaseHandler.setGameMap(new Map());
+        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country A Continent A"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country B Continent B"));
+        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "add Country A NonExistentCountry"));
+        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_borders.map"));
     }
 }

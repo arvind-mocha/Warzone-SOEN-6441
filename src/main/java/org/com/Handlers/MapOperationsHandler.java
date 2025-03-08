@@ -157,11 +157,13 @@ public class MapOperationsHandler {
             String l_attributeOperation = l_operationsArray[0];
             String l_countryName = l_operationsArray[1];
             String l_inContinent;
+
             try{
                 l_inContinent = l_operationsArray[2];
             }catch(IndexOutOfBoundsException e){
                 l_inContinent = "0";
             }
+
             ValidationUtil.validateCountryManagement(l_gameMap, l_attributeOperation, l_countryName, l_inContinent);
             l_countryID += 1;
 
@@ -176,6 +178,8 @@ public class MapOperationsHandler {
                 l_console.println(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Country l_country = l_gameMap.getCountryByName(l_countryName);
+                l_continentObj = l_country.getContinent();
+
                 l_countryGraph.removeVertex(l_country);
                 l_continentObj.removeCountry(l_country);
                 l_console.println(String.format("Country %d - %s has been removed", l_country.getId(), l_country.getName()));
