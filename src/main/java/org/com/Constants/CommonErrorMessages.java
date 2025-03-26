@@ -1,5 +1,7 @@
 package org.com.Constants;
 
+import java.util.Set;
+
 /**
  * This class contains all global error messages.
  *
@@ -27,4 +29,11 @@ public class CommonErrorMessages {
     public static final String COUNTRY_SET_TO_UNKNOWN_CONTINENT = "Country set with unknown Continent";
     public static final String PLAYER_NOT_EXISTS_REMOVAL = "Player %s does not exist to be removed";
     public static final String NO_PLAYER_EXISTS = "No player exists to be removed";
+    public static final String IMPROPER_OWNER_COUNTRY = "Country %s does not belong to the player %s";
+    public static final String ARMY_COUNT_EXCEEDS = "Deployable army count is less than the army count which you are trying to deploy";
+    public static final String NEUTRAL_COUNTRY_DEPLOYMENT = "Cannot deploy armies to a neutral country";
+    public static final String ARMY_COUNT_ZERO = "Army count of zero cannot be used for deployment";
+    public static final String INVALID_COUNTRY = "Country mentioned does not exists";
+    public static final String NO_ADVANCE_COMMAND = "Player %s as no advance commands to be executed";
+
 }

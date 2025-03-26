@@ -177,4 +177,15 @@ public class Country implements Serializable {
     public void addNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.add(p_neighbourCountryId);
     }
+
+    /**
+     * Checks if the country is neutral.
+     * A country is considered neutral if it has no owner.
+     *
+     * @return true if the country has no owner, false otherwise.
+     */
+    public boolean isCountryNeutral()
+    {
+        return this.d_owner == null;
+    }
 }

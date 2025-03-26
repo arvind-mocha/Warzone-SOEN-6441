@@ -1,5 +1,6 @@
 package org.com.Models;
 
+import org.com.Orders.Order;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,19 +42,6 @@ public class Player implements Serializable {
      */
     public void addCountry(Country p_country){
         this.d_countries.add(p_country);
-    }
-
-    /**
-     * <b>d_currentOrder.getD_armyCount() -></b> Input given by the user indicating the number of soldiers they want to deploy<br>
-     * <b>d_armyCount -></b> is the actual size of army present with the user
-     * <br>If successful, then the order is added to the order list and army count is reduced.
-     */
-    public void issueOrder(){
-        if(d_currentOrder.getD_armyCount() > d_armyCount){
-            throw new IllegalArgumentException("Not enough armies to issue order");
-        }
-        d_orderList.add(d_currentOrder);
-        d_armyCount -= d_currentOrder.getD_armyCount();
     }
 
 

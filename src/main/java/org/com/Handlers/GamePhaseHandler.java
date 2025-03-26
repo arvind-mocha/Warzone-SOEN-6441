@@ -26,7 +26,7 @@ public class GamePhaseHandler {
     private int d_currentPlayer;
     private Map d_gameMap;
     private String d_mapFileName;
-    private final List<String[]> d_advanceCommandsBuffer;
+    private int d_turnsCompleted;
 
     /**
      * Constructor for GamePhaseHandler.
@@ -35,7 +35,7 @@ public class GamePhaseHandler {
     public GamePhaseHandler() {
         this.d_gamePhase = new LoadMapPhase();
         this.d_playerList = new ArrayList<>();
-        this.d_advanceCommandsBuffer = new ArrayList<>();
+        this.d_turnsCompleted = 0;
     }
 
     /**
@@ -137,25 +137,27 @@ public class GamePhaseHandler {
             for (Continent l_continent : l_player.get_continents()) {
                 l_numArmies = l_numArmies + l_continent.getValue();
             }
-            l_player.set_armyCount(l_numArmies);
-            System.console().println("Army count assigned to player : "+l_player.get_name() + " is \t: " + l_player.get_armyCount());
+            l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
+            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
         }
         LogUtil.Logger(GamePhaseHandler.class.getName(), Level.INFO, "Armies have been assigned to all player");
     }
 
     /**
-     * Retrieves the buffer of advance commands.
+     * Retrieves the number of turns completed.
      *
-     * @return the list of advance commands.
+     * @return the number of turns completed.
      */
-    public List<String[]> getAdvanceCommandsBuffer() {
-        return d_advanceCommandsBuffer;
+    public int getTurnsCompleted() {
+        return d_turnsCompleted;
     }
 
     /**
-     * Clears the buffer of advance commands.
+     * Sets the number of turns completed.
+     *
+     * @param p_turnsCompleted the new number of turns completed to set.
      */
-    public void clearAdvanceCommandsBuffer() {
-        d_advanceCommandsBuffer.clear();
+    public void setTurnsCompleted(int p_turnsCompleted) {
+        this.d_turnsCompleted = p_turnsCompleted;
     }
 }
