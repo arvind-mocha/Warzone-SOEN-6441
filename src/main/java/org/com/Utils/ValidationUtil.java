@@ -4,6 +4,7 @@ import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
 import org.com.GamePhase.Phase;
 import org.com.Handlers.Commands;
+import org.com.Handlers.GamePhaseHandler;
 import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
@@ -44,6 +45,12 @@ public class ValidationUtil {
 
         // Validating commands based on each phase
         if (!p_currentGamePhase.getValidCommands().contains(l_baseCommand)) {
+            throw new Exception(CommonErrorMessages.INVALID_COMMAND);
+        }
+
+        // Validating commands length
+        Integer l_commandSize = l_commandEnum.getCommandSize();
+        if (l_commandSize != null && l_commandSize != p_commandsArray.length) {
             throw new Exception(CommonErrorMessages.INVALID_COMMAND);
         }
 
@@ -137,7 +144,7 @@ public class ValidationUtil {
     public static void validatePlayerManagement(List<Player> p_playerList, String p_operation, String p_playerName) throws Exception {
         if (p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
             if (validatePlayerExistence(p_playerList, p_playerName)) {
-                throw new Exception(CommonErrorMessages.PLAYER_ALREADY_EXISTS);
+                throw new Exception(String.format(CommonErrorMessages.PLAYER_ALREADY_EXISTS, p_playerName));
             }
             if (p_playerList.size() >= CommonConstants.MAX_PLAYER_COUNT) {
                 throw new Exception(CommonErrorMessages.MAX_PLAYER_COUNT_REACHED);
@@ -230,5 +237,97 @@ public class ValidationUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * Validates the deploy command and retrieves the target country.
+     *
+     * This method checks if the deploy command is valid and returns the target country
+     * where the armies are to be deployed. It ensures that the command has the correct
+     * number of arguments, the country name is valid, the player owns the target country,
+     * and the player has enough armies to deploy.
+     *
+     * @param p_gamePhaseHandler The current game phase handler.
+     * @param p_commandArray The user input command array.
+     * @return The target country where armies are to be deployed.
+     * @throws Exception If the command is invalid or an error occurs during validation.
+     */
+    public static Country validateDeployAndGetCountry(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+        String l_countryName = p_commandArray[1];
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        int l_numArmies = Integer.parseInt(p_commandArray[2]);
+        Country l_targetCountry = HelperUtil.getCountryByCountryName(l_countryName, l_gameMap);
+
+        if (p_commandArray.length != 3) {
+            throw new Exception("Invalid deploy command. Usage: deploy <country_name> <num_armies>");
+        }
+
+        if (l_targetCountry == null) {
+            throw new Exception("Invalid country name.");
+        }
+
+        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        if (l_targetCountry.getOwner() != l_currentPlayer) {
+            throw new Exception("You can only deploy armies to your own countries.");
+        }
+
+        if (l_numArmies > l_currentPlayer.get_armyCount()) {
+            throw new Exception("You don't have enough armies to deploy.");
+        }
+        return l_targetCountry;
+    }
+
+    /**
+     * Validates the advance command.
+     *
+     * This method checks if the advance command is valid. It ensures that the command has the correct
+     * number of arguments, the source and target country names are valid, the player owns the source country,
+     * and the target country is a neighbor of the source country if it is owned by the player.
+     *
+     * @param p_gamePhaseHandler The current game phase handler.
+     * @param p_commandArray The user input command array.
+     * @throws Exception If the command is invalid or an error occurs during validation.
+     */
+    public static void validateAdvanceCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());  //Added this line
+
+        String l_sourceCountryName = p_commandArray[1];
+        String l_targetCountryName = p_commandArray[2];
+        int l_numArmies = Integer.parseInt(p_commandArray[3]);
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        Country l_sourceCountry = null;
+        Country l_targetCountry = null;
+
+        // Find source country by name
+        l_sourceCountry = HelperUtil.getCountryByCountryName(l_sourceCountryName, l_gameMap);
+
+
+        // Find target country by name
+        l_targetCountry = HelperUtil.getCountryByCountryName(l_targetCountryName, l_gameMap);
+
+        if (l_sourceCountry == null) {
+            throw new Exception("Invalid source country name.");
+        }
+
+        if (l_targetCountry == null) {
+            throw new Exception("Invalid target country name.");
+        }
+
+        if (l_sourceCountry.getOwner() != l_currentPlayer) {
+            throw new Exception("You can only move armies from your own countries.");
+        }
+
+        if (l_targetCountry.getOwner() == l_currentPlayer) {
+            // Move armies between owned countries
+            if (!l_sourceCountry.getNeighbourCountryIds().contains(l_targetCountry.getId())) {
+                throw new Exception("Target country is not a neighbor of the source country.");
+            }
+
+            if (l_numArmies <= 0 || l_numArmies >= l_sourceCountry.getArmyCount()) {
+                throw new Exception("Invalid number of armies to move.  Must be greater than 0 and less than the source army count.");
+            }
+        } else {
+            System.out.println("You can only advance to your own country");
+        }
     }
 }

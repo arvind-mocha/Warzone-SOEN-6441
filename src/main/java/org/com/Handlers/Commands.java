@@ -12,27 +12,28 @@ import java.util.*;
  */
 
 public enum Commands {
-    HELP(CommonConstants.HELP_COMMAND, false, null),
-    EXIT(CommonConstants.EXIT_COMMAND, false, null),
-    SAVE_MAP(CommonConstants.SAVE_MAP_COMMAND, false, null),
-    EDIT_MAP(CommonConstants.EDIT_MAP_COMMAND, true, null),
-    LOAD_MAP(CommonConstants.LOAD_MAP_COMMAND, true, null),
-    SHOW_MAP(CommonConstants.SHOW_MAP_COMMAND, false, null),
-    VALIDATE_MAP(CommonConstants.VALIDATE_MAP_COMMAND, true, null),
-    EDIT_NEIGHBOUR(CommonConstants.EDIT_NEIGHBOUR_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_VALUE_EACH),
-    EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE),
-    EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE),
-    ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH),
-    ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null),
-    ADVANCE_ARMY_COMMAND(CommonConstants.ADVANCE_ARMY_COMMAND, false, null),
-    DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null),
-    COMMIT(CommonConstants.COMMIT, false, null),;
+    HELP(CommonConstants.HELP_COMMAND, false, null, null),
+    EXIT(CommonConstants.EXIT_COMMAND, false, null, null),
+    SAVE_MAP(CommonConstants.SAVE_MAP_COMMAND, false, null, null),
+    EDIT_MAP(CommonConstants.EDIT_MAP_COMMAND, true, null, null),
+    LOAD_MAP(CommonConstants.LOAD_MAP_COMMAND, true, null, null),
+    SHOW_MAP(CommonConstants.SHOW_MAP_COMMAND, false, null, null),
+    VALIDATE_MAP(CommonConstants.VALIDATE_MAP_COMMAND, true, null, null),
+    EDIT_NEIGHBOUR(CommonConstants.EDIT_NEIGHBOUR_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_VALUE_EACH, null),
+    EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE, null),
+    EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE, null),
+    ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH, null),
+    ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null, null),
+    ADVANCE_ARMY_COMMAND(CommonConstants.ADVANCE_ARMY_COMMAND, false, null, 4),
+    DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null, 3),
+    COMMIT(CommonConstants.COMMIT, false, null, null);
 
 
 
     private final String d_name;
     private final HashMap<String, Integer> d_attributesHashMap;
     private final boolean d_isFileRequired;
+    private final Integer d_commandSize;
 
     /**
      * Constructor for Commands enum.
@@ -41,10 +42,11 @@ public enum Commands {
      * @param p_isFileRequired Indicates if a file is required for the command.
      * @param p_attributesHashMap The list of valid attributes for the command.
      */
-    Commands(String p_name, boolean p_isFileRequired, HashMap<String, Integer> p_attributesHashMap) {
+    Commands(String p_name, boolean p_isFileRequired, HashMap<String, Integer> p_attributesHashMap, Integer p_commandSize) {
         this.d_name = p_name;
         this.d_isFileRequired = p_isFileRequired;
         this.d_attributesHashMap = p_attributesHashMap;
+        this.d_commandSize = p_commandSize;
     }
 
     /**
@@ -63,6 +65,15 @@ public enum Commands {
      */
     public HashMap<String, Integer> getAttributesHashMap() {
         return d_attributesHashMap;
+    }
+
+    /**
+     * Retrieves the command size.
+     *
+     * @return the command size.
+     */
+    public Integer getCommandSize() {
+        return d_commandSize;
     }
 
     /**

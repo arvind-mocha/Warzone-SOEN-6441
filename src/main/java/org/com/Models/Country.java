@@ -16,8 +16,6 @@ public class Country implements Serializable {
     private int d_id;
     private String d_name;
     private Continent d_continent;
-//    private int d_continentId;
-//    private String d_continentName;
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
     private int d_armyCount;

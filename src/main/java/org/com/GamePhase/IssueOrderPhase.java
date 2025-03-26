@@ -23,7 +23,6 @@ public class IssueOrderPhase implements Phase {
     @Override
     public ArrayList<String> getValidCommands() {
         return new ArrayList<>(Arrays.asList(Commands.DEPLOY_ARMY_COMMAND.getName(), Commands.ADVANCE_ARMY_COMMAND.getName(), Commands.COMMIT.getName()));
-
     }
 
     @Override

@@ -26,7 +26,7 @@ public class GamePhaseHandler {
     private int d_currentPlayer;
     private Map d_gameMap;
     private String d_mapFileName;
-    private List<String[]> d_advanceCommandsBuffer;
+    private final List<String[]> d_advanceCommandsBuffer;
 
     /**
      * Constructor for GamePhaseHandler.
@@ -35,7 +35,7 @@ public class GamePhaseHandler {
     public GamePhaseHandler() {
         this.d_gamePhase = new LoadMapPhase();
         this.d_playerList = new ArrayList<>();
-        d_advanceCommandsBuffer = new ArrayList<>();
+        this.d_advanceCommandsBuffer = new ArrayList<>();
     }
 
     /**
@@ -132,13 +132,13 @@ public class GamePhaseHandler {
      * Assigns reinforcements to all players based on the number of countries they own and the continents they control.
      */
     public void assignReinforcements() {
-        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()), 3);
+        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
         for (Player l_player : d_playerList) {
-            l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
-            System.console().println("Army count assigned to player : "+l_player.get_name() + " is \t: " + l_player.get_armyCount());
             for (Continent l_continent : l_player.get_continents()) {
-                l_player.set_armyCount(l_player.get_armyCount() + l_continent.getValue());
+                l_numArmies = l_numArmies + l_continent.getValue();
             }
+            l_player.set_armyCount(l_numArmies);
+            System.console().println("Army count assigned to player : "+l_player.get_name() + " is \t: " + l_player.get_armyCount());
         }
         LogUtil.Logger(GamePhaseHandler.class.getName(), Level.INFO, "Armies have been assigned to all player");
     }

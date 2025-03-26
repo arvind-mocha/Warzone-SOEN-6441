@@ -1,6 +1,9 @@
 package org.com.Utils;
 
 import org.com.Models.Continent;
+import org.com.Models.Country;
+import org.com.Models.Map;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -41,6 +44,17 @@ public class HelperUtil {
         for (Continent l_continent : p_continents) {
             if (l_continent.getId() == p_id) {
                 return l_continent.getName();
+            }
+        }
+        return null;
+    }
+
+    public static Country getCountryByCountryName(String p_countryName, Map p_gameMap)
+    {
+        // Find the country by name
+        for (Country l_country : p_gameMap.getCountryMap().vertexSet()) {
+            if (l_country.getName().equalsIgnoreCase(p_countryName)) {
+                return l_country;
             }
         }
         return null;
