@@ -4,6 +4,7 @@ import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
 import org.com.GamePhase.Phase;
 import org.com.Handlers.Commands;
+import org.com.Handlers.GamePhaseHandler;
 import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
@@ -44,6 +45,12 @@ public class ValidationUtil {
 
         // Validating commands based on each phase
         if (!p_currentGamePhase.getValidCommands().contains(l_baseCommand)) {
+            throw new Exception(CommonErrorMessages.INVALID_COMMAND);
+        }
+
+        // Validating commands length
+        Integer l_commandSize = l_commandEnum.getCommandSize();
+        if (l_commandSize != null && l_commandSize != p_commandsArray.length) {
             throw new Exception(CommonErrorMessages.INVALID_COMMAND);
         }
 
@@ -137,7 +144,7 @@ public class ValidationUtil {
     public static void validatePlayerManagement(List<Player> p_playerList, String p_operation, String p_playerName) throws Exception {
         if (p_operation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
             if (validatePlayerExistence(p_playerList, p_playerName)) {
-                throw new Exception(CommonErrorMessages.PLAYER_ALREADY_EXISTS);
+                throw new Exception(String.format(CommonErrorMessages.PLAYER_ALREADY_EXISTS, p_playerName));
             }
             if (p_playerList.size() >= CommonConstants.MAX_PLAYER_COUNT) {
                 throw new Exception(CommonErrorMessages.MAX_PLAYER_COUNT_REACHED);

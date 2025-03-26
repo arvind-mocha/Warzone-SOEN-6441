@@ -16,8 +16,6 @@ public class Country implements Serializable {
     private int d_id;
     private String d_name;
     private Continent d_continent;
-//    private int d_continentId;
-//    private String d_continentName;
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
     private int d_armyCount;
@@ -178,5 +176,16 @@ public class Country implements Serializable {
      */
     public void addNeighbourCountryId(int p_neighbourCountryId){
         d_neighbourCountryIds.add(p_neighbourCountryId);
+    }
+
+    /**
+     * Checks if the country is neutral.
+     * A country is considered neutral if it has no owner.
+     *
+     * @return true if the country has no owner, false otherwise.
+     */
+    public boolean isCountryNeutral()
+    {
+        return this.d_owner == null;
     }
 }

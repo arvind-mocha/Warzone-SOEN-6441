@@ -65,11 +65,13 @@ public class CommandHandler {
                 PlayerOperationsHandler.processAssignCountries(p_gamePhaseHandler);
                 break;
             case CommonConstants.DEPLOY_ARMIES_COMMAND:
-                PlayerOperationsHandler.processDeployArmies(p_gamePhaseHandler, l_commandArray);
+                IssueOrderHandler.processDeployArmies(p_gamePhaseHandler, l_commandArray);
                 break;
-            case CommonConstants.ADVANCE_ARMY_COMMAND, CommonConstants.COMMIT:
-                PlayerOperationsHandler.processAdvanceCommand(p_gamePhaseHandler, l_commandArray);
+            case CommonConstants.ADVANCE_ARMY_COMMAND:
+                IssueOrderHandler.processAdvanceCommand(p_gamePhaseHandler, l_commandArray);
                 break;
+            case CommonConstants.COMMIT:
+                IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
         }
     }
 }

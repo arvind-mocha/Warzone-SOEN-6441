@@ -40,10 +40,11 @@ public class CommandOutputMessages {
     // Issue order help message
     public static final String ISSUE_ORDER_HELP = "usage: " +
             "\n\t deploy <countryName> <num> \t: deploys armies to mentioned countries" +
-            "\n\t commit \t: to commit the current command before deploying the entire army (can be used after 1st round)"+
-            "\n\t advance <countryfromName> <countrytoName> <num> \t: attacks an unowned country" +
+            "\n\t commit \t: to execute the set of buffered advanced command"+
+            "\n\t advance <countryfromName> <countrytoName> <num> \t: attacks an unowned neighbouring country" +
             "\n\t showmap \t\t\t\t\t: show all countries and continents, armies on each country, ownership, and connectivity in a way that\n" +
             "\t\t\t\t\t\t\t\t enables efficient game play";
 
-    public static final String PLAYER_TURN_INDICATOR = "Player %s Time to make your move!";
+    public static final String PLAYER_TURN_INDICATOR = "Player %s time to make your move! Deployable army count: %d";
+    public static final String PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT = "Successfully deployed %d armies to %s. Deployable army %d";
 }

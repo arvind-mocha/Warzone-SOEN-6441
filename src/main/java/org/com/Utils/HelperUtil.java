@@ -1,6 +1,10 @@
 package org.com.Utils;
 
 import org.com.Models.Continent;
+import org.com.Models.Country;
+import org.com.Models.Map;
+import org.com.Models.Player;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -44,5 +48,27 @@ public class HelperUtil {
             }
         }
         return null;
+    }
+
+    public static Country getCountryByCountryName(String p_countryName, Map p_gameMap)
+    {
+        // Find the country by name
+        for (Country l_country : p_gameMap.getCountryMap().vertexSet()) {
+            if (l_country.getName().equalsIgnoreCase(p_countryName)) {
+                return l_country;
+            }
+        }
+        return null;
+    }
+
+    public static void setCountryOwner(Player p_player, Country p_country, boolean p_isOwner)
+    {
+        if(p_isOwner) {
+            p_player.get_countries().add(p_country);
+            p_country.setOwner(p_player);
+        } else {
+            p_player.get_countries().remove(p_country);
+            p_country.setOwner(null);
+        }
     }
 }

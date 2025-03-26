@@ -1,6 +1,7 @@
 package org.com.test;
 
 import org.com.Handlers.GamePhaseHandler;
+import org.com.Handlers.IssueOrderHandler;
 import org.com.Handlers.PlayerOperationsHandler;
 import org.com.Models.Country;
 import org.com.Models.Map;
@@ -84,7 +85,7 @@ class PlayerOperationsHandlerTest {
         int initialPlayerArmies = player.get_armyCount();
         int initialCountryArmies = country.getArmyCount();
 
-        PlayerOperationsHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "3"});
+        IssueOrderHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "3"});
 
         assertEquals(initialCountryArmies + 3, country.getArmyCount());
         assertEquals(initialPlayerArmies - 3, player.get_armyCount());
@@ -94,7 +95,7 @@ class PlayerOperationsHandlerTest {
     void deployArmies_UnownedCountry() {
         gamePhaseHandler.setPlayerList(new ArrayList<>(List.of(new Player("player1"))));
         assertThrows(Exception.class, () ->
-                PlayerOperationsHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "3"})
+                IssueOrderHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "3"})
         );
     }
 
@@ -107,7 +108,7 @@ class PlayerOperationsHandlerTest {
         gamePhaseHandler.assignReinforcements();
 
         assertThrows(Exception.class, () ->
-                PlayerOperationsHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "10"})
+                IssueOrderHandler.processDeployArmies(gamePhaseHandler, new String[]{"deploy", "CountryA", "10"})
         );
     }
 
@@ -121,11 +122,11 @@ class PlayerOperationsHandlerTest {
         });
         gamePhaseHandler.setPlayerList(new ArrayList<>(List.of(player)));
 
-        PlayerOperationsHandler.processAdvanceCommand(gamePhaseHandler,
+        IssueOrderHandler.processAdvanceCommand(gamePhaseHandler,
                 new String[]{"advance", "CountryA", "CountryB", "2"}
         );
 
-        PlayerOperationsHandler.executeBufferedCommands(gamePhaseHandler);
+//        IssueOrderHandler.executeBufferedCommands(gamePhaseHandler);
 
         assertEquals(3, countries.get(0).getArmyCount());
         assertEquals(7, countries.get(1).getArmyCount());
@@ -138,7 +139,7 @@ class PlayerOperationsHandlerTest {
         gamePhaseHandler.setPlayerList(new ArrayList<>(List.of(player)));
 
         assertThrows(Exception.class, () ->
-                PlayerOperationsHandler.processAdvanceCommand(gamePhaseHandler,
+                IssueOrderHandler.processAdvanceCommand(gamePhaseHandler,
                         new String[]{"advance", "CountryA", "CountryC", "2"}
                 )
         );
@@ -151,7 +152,7 @@ class PlayerOperationsHandlerTest {
         players.add(new Player("player2"));
         gamePhaseHandler.setPlayerList(players);
 
-        PlayerOperationsHandler.advanceTurn(gamePhaseHandler);
+        IssueOrderHandler.advanceTurn(gamePhaseHandler);
         assertEquals(1, gamePhaseHandler.getCurrentPlayer());
     }
 
@@ -163,7 +164,7 @@ class PlayerOperationsHandlerTest {
         gamePhaseHandler.setPlayerList(players);
         gamePhaseHandler.setCurrentPlayer(1);
 
-        PlayerOperationsHandler.advanceTurn(gamePhaseHandler);
+        IssueOrderHandler.advanceTurn(gamePhaseHandler);
         assertEquals(0, gamePhaseHandler.getCurrentPlayer());
     }
 }
