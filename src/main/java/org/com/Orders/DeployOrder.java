@@ -5,6 +5,12 @@ import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Country;
 import org.com.Models.Player;
 
+/**
+ * Bomb order command functionality and validation are present in this class
+ *
+ *
+ * @author Arvind Nachiappan
+ */
 public class DeployOrder implements Order{
 
     private Player d_player;

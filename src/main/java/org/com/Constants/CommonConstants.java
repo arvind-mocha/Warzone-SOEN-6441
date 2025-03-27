@@ -32,6 +32,7 @@ public class CommonConstants {
     public static final String BLOCKADE_COMMAND = "blockade";
     public static final String NEGOTIATE_COMMAND = "negotiate";
     public static final String BOMB_COMMAND = "bomb";
+    public static final String AIRLIFT_COMMAND = "airlift";
 
 
     // Directories

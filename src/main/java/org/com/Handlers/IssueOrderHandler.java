@@ -6,6 +6,12 @@ import org.com.Models.Player;
 import org.com.Orders.*;
 import org.com.Utils.HelperUtil;
 
+/**
+ *
+ * Order related functions are present in this class
+ *
+ * @author Arvind Nachiappan
+ */
 public class IssueOrderHandler {
     /**
      * This method marks the beginning of the game where players are asked to <b>deploy all of their armies in their own countries.</b>
@@ -56,6 +62,13 @@ public class IssueOrderHandler {
         GamePlayHandler.advanceTurn(p_gamePhaseHandler);
     }
 
+    /**
+     * This method processes the commit command, which finalizes the player's turn.
+     * It ensures that all armies are deployed before committing the changes.
+     *
+     * @param p_gamePhaseHandler The current game phase handler
+     * @throws Exception If there are remaining deployable armies or an error occurs during processing
+     */
     public static void processBlockadeCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         Country l_country = HelperUtil.getCountryByCountryName(p_commandArray[1], l_gameMap);
@@ -66,6 +79,13 @@ public class IssueOrderHandler {
         System.console().println(String.format("Order to blockade country %s as been saved", l_country.getName()));
     }
 
+    /**
+     * This method processes the negotiate command, which allows a player to negotiate peace with another player.
+     *
+     * @param p_gamePhaseHandler The current game phase handler
+     * @param p_commandArray     The user input command array
+     * @throws Exception If the command is invalid or an error occurs during processing
+     */
     public static void processNegotiateCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         Player l_targetPlayer = HelperUtil.getPlayerByName(p_commandArray[1], p_gamePhaseHandler.getPlayerList());
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
@@ -75,6 +95,13 @@ public class IssueOrderHandler {
         System.console().println(String.format("Order to negotiate peace with player %s as been saved", l_targetPlayer.get_name()));
     }
 
+    /**
+     * This method processes the bomb command, which allows a player to bomb a country.
+     *
+     * @param p_gamePhaseHandler The current game phase handler
+     * @param p_commandArray     The user input command array
+     * @throws Exception If the command is invalid or an error occurs during processing
+     */
     public static void processBombCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         Country l_country = HelperUtil.getCountryByCountryName(p_commandArray[1], l_gameMap);
@@ -83,5 +110,24 @@ public class IssueOrderHandler {
         l_bombOrder.isValid();
         l_player.get_orderList().add(l_bombOrder);
         System.console().println(String.format("Order to bomb country country %s as been saved", l_country.getName()));
+    }
+
+    /**
+     * This method processes the airlift command, which allows a player to airlift armies from one country to another.
+     *
+     * @param p_gamePhaseHandler The current game phase handler
+     * @param p_commandArray     The user input command array
+     * @throws Exception If the command is invalid or an error occurs during processing
+     */
+    public static void processAirLiftCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
+        Map l_gameMap = p_gamePhaseHandler.getGameMap();
+        Country l_sourceCountry = HelperUtil.getCountryByCountryName(p_commandArray[1], l_gameMap);
+        Country l_targetCountry = HelperUtil.getCountryByCountryName(p_commandArray[2], l_gameMap);
+        int l_numArmies = Integer.parseInt(p_commandArray[3]);
+        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        Order l_airLiftOrder = new AirLiftOrder(l_currentPlayer, l_sourceCountry, l_targetCountry, l_numArmies);
+        l_airLiftOrder.isValid();
+        l_currentPlayer.get_orderList().add(l_airLiftOrder);
+        System.console().println(String.format("Order to airlift %d armies from %s to %s as been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
     }
 }

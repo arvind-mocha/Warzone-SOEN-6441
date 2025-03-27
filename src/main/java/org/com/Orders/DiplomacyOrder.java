@@ -5,6 +5,12 @@ import org.com.Models.Player;
 
 import java.util.HashMap;
 
+/**
+ * Diplomacy order command functionality and validation are present in this class
+ *
+ *
+ * @author Arvind Nachiappan
+ */
 public class DiplomacyOrder implements Order{
     private final Player d_player;
     private final Player d_targetPlayer;
