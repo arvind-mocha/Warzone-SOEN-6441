@@ -33,15 +33,27 @@ public class AdvanceOrder implements Order {
             System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
         }
 
-        d_sourceCountry.setArmyCount(d_sourceCountry.getArmyCount() - d_armies);
+        int l_ArmyCount = d_sourceCountry.getArmyCount();
+        int l_tempArmyCount = d_sourceCountry.getTurnArmyCount();
+        int l_toMoveCount = 0;
+
+        if (l_tempArmyCount > d_armies ){
+            l_toMoveCount = d_armies;
+        } else {
+            l_toMoveCount = l_tempArmyCount - 1;
+        }
+
+        d_sourceCountry.setTurnArmyCount(l_tempArmyCount - l_toMoveCount);
+        d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
+
         if (d_targetCountry.isCountryNeutral()) {
             HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
-            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
+            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
         } else if (d_targetPlayer.equals(d_player)) {
-            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
+            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
         } else {
-            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - d_armies;
-            if (d_armies > d_targetCountry.getArmyCount()) {
+            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
+            if (l_toMoveCount > d_targetCountry.getArmyCount()) {
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
                 l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
             } else if (l_armyCountAfterAdvance == 0) {
@@ -49,6 +61,8 @@ public class AdvanceOrder implements Order {
             }
             d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
         }
+
+        d_targetCountry.setTurnArmyCount(d_targetCountry.getArmyCount());
     }
 
     @Override

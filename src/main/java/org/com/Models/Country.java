@@ -19,6 +19,7 @@ public class Country implements Serializable {
     private Player d_owner;
     private List<Integer> d_neighbourCountryIds;
     private int d_armyCount;
+    private int d_turnArmyCount;
 
     /**
      * Default constructor for the Country class
@@ -120,6 +121,16 @@ public class Country implements Serializable {
      */
     public void setArmyCount(int p_soldierCount){
         d_armyCount = p_soldierCount;
+    }
+
+    public int getTurnArmyCount(){ return d_turnArmyCount; }
+
+    /**
+     * Sets the number of armies in the country.
+     * @param p_soldierCount the new army count.
+     */
+    public void setTurnArmyCount(int p_soldierCount){
+        d_turnArmyCount = p_soldierCount;
     }
 
     /**

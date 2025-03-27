@@ -31,8 +31,11 @@ public class IssueOrderHandler {
         Order l_deployOrder = new DeployOrder(l_currentPlayer, l_targetCountry, l_numArmies);
         l_deployOrder.isValid();
         l_currentPlayer.get_orderList().add(l_deployOrder);
-        GamePlayHandler.issueOrder(l_currentPlayer);
+//        GamePlayHandler.issueOrder(l_currentPlayer);
+        l_deployOrder.execute();
+        l_currentPlayer.get_orderList().remove(l_deployOrder);
     }
+
 
     /**
      * This method processes the advance command, which moves armies from one country to another.
