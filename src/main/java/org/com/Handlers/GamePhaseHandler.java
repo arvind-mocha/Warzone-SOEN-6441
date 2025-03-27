@@ -136,8 +136,9 @@ public class GamePhaseHandler {
             }
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
+            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
         }
-        LogManager.logAction("Armies have been assigned to all player");
+        LogManager.logAction("Armies have been assigned to all player\n");
     }
 
     /**

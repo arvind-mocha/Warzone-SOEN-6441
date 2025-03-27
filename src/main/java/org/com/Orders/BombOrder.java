@@ -2,6 +2,7 @@ package org.com.Orders;
 
 import org.com.Constants.Cards;
 import org.com.Constants.CommandOutputMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 
@@ -28,15 +29,27 @@ public class BombOrder implements Order{
         Player d_targetPlayer = d_targetCountry.getOwner();
         if (d_player.get_negotiationPlayer() != null && d_player.get_negotiationPlayer().contains(d_targetPlayer)) {
             System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
+            LogManager.logAction(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
             return;
         }
 
-        d_player.get_cards().compute(Cards.BOMB_CARD, (k, l_numOfCards) -> l_numOfCards - 1);
-        if (d_targetCountry.getArmyCount() == 0)
-        {
+//        d_player.get_cards().compute(Cards.BOMB_CARD, (k, l_numOfCards) -> l_numOfCards - 1);
+        if (d_targetCountry.getArmyCount() == 0) {
             return;
         }
         d_targetCountry.setArmyCount(Math.floorDivExact(d_targetCountry.getArmyCount(), 2));
+
+        LogManager.logAction(String.format("%s Dropped Bomb on %s, reducing the armies count to half.", d_player.get_name(), d_targetCountry.getName()));
+        System.out.println(String.format("%s Dropped Bomb on %s, reducing the armies count to half.", d_player.get_name(), d_targetCountry.getName()));
+
+        int l_numOfCards = d_player.get_cards().get(Cards.BOMB_CARD);
+        if(l_numOfCards == 0){
+            d_player.get_cards().remove(Cards.BOMB_CARD);
+        }else{
+            d_player.get_cards().put(Cards.BOMB_CARD, l_numOfCards - 1);
+        }
+
+
     }
 
     @Override

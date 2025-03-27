@@ -3,6 +3,7 @@ package org.com.Handlers;
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.ValidationUtil;
@@ -48,6 +49,7 @@ public class PlayerOperationsHandler {
                     Player l_player = new Player(l_playerName);
                     l_playerList.add(l_player);
                     System.console().println(String.format("Player %s has been added successfully", l_playerName));
+                    LogManager.logAction(String.format("Player %s has been added successfully", l_playerName));
                 } else if (l_attributeOperation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
                     if(!ValidationUtil.validatePlayerExistence(l_playerList, l_playerName))
                     {
@@ -55,6 +57,7 @@ public class PlayerOperationsHandler {
                     }
                     l_playerList.removeIf(l_player -> l_player.get_name().equalsIgnoreCase(l_playerName));
                     System.console().println(String.format("Player %s! has been removed successfully", l_playerName));
+                    LogManager.logAction(String.format("Player %s! has been removed successfully", l_playerName));
                 }
             }
         }
@@ -80,12 +83,14 @@ public class PlayerOperationsHandler {
             l_currentCountry.setOwner(l_player);
         }
         System.console().println("Game has begun!");
+        LogManager.logAction("Game has begun!");
         p_gamePhaseHandler.assignReinforcements();
 
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
         Player l_currentPlayer = l_playerList.get(l_currentPlayerTurn);
         System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        LogManager.logAction(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
         p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
     }
 }

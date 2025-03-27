@@ -2,6 +2,7 @@ package org.com.Orders;
 
 import org.com.Constants.Cards;
 import org.com.Constants.CommandOutputMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
@@ -29,11 +30,19 @@ public class BlockadeOrder implements Order {
         Player d_targetPlayer = d_targetCountry.getOwner();
         if (d_player.get_negotiationPlayer() != null && d_player.get_negotiationPlayer().contains(d_targetPlayer)) {
             System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
+            LogManager.logAction(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
         }
 
-        int l_numOfCards = d_player.get_cards().get(Cards.BLOCKADE_CARD);
         HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
-        d_player.get_cards().put(Cards.BLOCKADE_CARD, l_numOfCards - 1);
+        System.out.println(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
+        LogManager.logAction(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
+
+        int l_numOfCards = d_player.get_cards().get(Cards.BLOCKADE_CARD);
+        if(l_numOfCards == 0){
+            d_player.get_cards().remove(Cards.BLOCKADE_CARD);
+        }else{
+            d_player.get_cards().put(Cards.BLOCKADE_CARD, l_numOfCards - 1);
+        }
     }
 
     @Override

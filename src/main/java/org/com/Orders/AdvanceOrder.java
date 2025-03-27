@@ -2,6 +2,7 @@ package org.com.Orders;
 
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonErrorMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
@@ -31,12 +32,12 @@ public class AdvanceOrder implements Order {
         Player d_targetPlayer = d_targetCountry.getOwner();
         if (d_player.get_negotiationPlayer() != null && d_player.get_negotiationPlayer().equals(d_targetPlayer)) {
             System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
+            LogManager.logAction(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
         }
 
         int l_ArmyCount = d_sourceCountry.getArmyCount();
         int l_tempArmyCount = d_sourceCountry.getTurnArmyCount();
         int l_toMoveCount = 0;
-
         if (l_tempArmyCount > d_armies ){
             l_toMoveCount = d_armies;
         } else {
@@ -63,6 +64,10 @@ public class AdvanceOrder implements Order {
         }
 
         d_targetCountry.setTurnArmyCount(d_targetCountry.getArmyCount());
+
+        LogManager.logAction(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+        System.out.println(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+
     }
 
     @Override

@@ -53,6 +53,7 @@ public class MapOperationsHandler {
             l_map = new Map();
             p_gamePhaseHandler.setGameMap(l_map);
             l_console.println("A new map has been loaded to be edited..");
+            LogManager.logAction("A new map has been loaded to be edited..");
             l_console.println("Try executing the editcontinent, editcountry, editneighbor commands!");
         }
     }
@@ -106,10 +107,12 @@ public class MapOperationsHandler {
                 l_continent.setId(l_continentID);
                 l_continentGraph.addVertex(l_continent);
                 l_console.println(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
+                LogManager.logAction(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Continent l_continent = l_gameMap.getContinentByName(l_continentName);
                 l_continentGraph.removeVertex(l_continent);
                 l_console.println(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
+                LogManager.logAction(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
 
                 for (Country l_c: l_gameMap.getCountryMap().vertexSet()){
                     if(l_c.getContinentId() == l_continent.getId()){
@@ -175,6 +178,7 @@ public class MapOperationsHandler {
                 l_countryGraph.addVertex(l_country);
                 l_continentObj.addCountry(l_country);
                 l_console.println(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
+                LogManager.logAction(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
                 Country l_country = l_gameMap.getCountryByName(l_countryName);
                 l_continentObj = l_country.getContinent();
@@ -182,6 +186,7 @@ public class MapOperationsHandler {
                 l_countryGraph.removeVertex(l_country);
                 l_continentObj.removeCountry(l_country);
                 l_console.println(String.format("Country %d - %s has been removed", l_country.getId(), l_country.getName()));
+                LogManager.logAction(String.format("Country %d - %s has been removed", l_country.getId(), l_country.getName()));
             }
         }
     }
@@ -223,6 +228,7 @@ public class MapOperationsHandler {
 
                 if (l_neighbourCountry == null){
                     l_console.println(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
+                    LogManager.logAction(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
                 } else if (l_neighbourCountry.getName().equalsIgnoreCase(l_country.getName())){
                     continue;
                 } else {
@@ -256,8 +262,10 @@ public class MapOperationsHandler {
 
             if(l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)){
                 l_console.println("Added the given Neighbour Countries!");
+                LogManager.logAction("Added the given Neighbour Countries!");
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                 l_console.println("Removed the listed Neighbour Countries!");
+                LogManager.logAction("Removed the listed Neighbour Countries!");
             }
         }
     }
@@ -287,6 +295,7 @@ public class MapOperationsHandler {
         try {
             ValidationUtil.validateMap(l_gameMap);
             l_console.println("The map has been validated!");
+            LogManager.logAction("The map has been validated!");
         } catch (Exception e){
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss_ddMMyyyy");
@@ -327,8 +336,10 @@ public class MapOperationsHandler {
                 l_writer.write("\n");
             }
             System.out.println(String.format("Map saved successfully as %s!", l_fileName));
+            LogManager.logAction(String.format("Map saved successfully as %s!", l_fileName));
         } catch (Exception l_e) {
             System.out.println("Error saving the map: " + l_e.getMessage());
+            LogManager.logAction("Error saving the map: " + l_e.getMessage());
         }
 
     }
@@ -346,6 +357,7 @@ public class MapOperationsHandler {
         Map l_gameMap = new Map();
         var l_console = System.console();
         l_console.println("Processing the map from " + p_fileName + " ...");
+        LogManager.logAction("Processing the map from " + p_fileName + " ...");
 
         try {
             List<String> l_file = Files.readAllLines(Paths.get(CommonConstants.GAME_DATA_DIR + p_fileName));
@@ -375,11 +387,14 @@ public class MapOperationsHandler {
                 ValidationUtil.validateMap(l_gameMap);
             } catch (Exception e){
                 l_console.println("The Map Validation has failed and has the following error");
+                LogManager.logAction("The Map Validation has failed and has the following error");
                 if(p_isEditMapCommand){
                     l_console.println(e);
+                    LogManager.logAction(e.toString());
                     p_gamePhaseHandler.setGameMap(l_gameMap);
                     p_gamePhaseHandler.setMapFileName(p_fileName);
                     l_console.println("Map has to be edited accordingly to play with this map!");
+                    LogManager.logAction("Map has to be edited accordingly to play with this map!");
                     return;
                 }
                 throw e;
@@ -401,8 +416,10 @@ public class MapOperationsHandler {
 
             p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
             l_console.println("The Map has been loaded");
+            LogManager.logAction("The Map has been loaded");
         } catch (IOException e) {
             l_console.println("Failed to load the file: " + e.getMessage());
+            LogManager.logAction("Failed to load the file: " + e.getMessage());
         }
     }
 

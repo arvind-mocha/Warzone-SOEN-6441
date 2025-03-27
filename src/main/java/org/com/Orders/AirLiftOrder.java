@@ -1,8 +1,11 @@
 package org.com.Orders;
 
+import org.com.Constants.Cards;
 import org.com.Constants.CommonErrorMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
+import org.com.Utils.HelperUtil;
 
 /**
  * Airlift order command functionality and validation are present in this class
@@ -26,8 +29,32 @@ public class AirLiftOrder implements Order{
 
     @Override
     public void execute() {
-        d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
-        d_sourceCountry.setArmyCount(d_sourceCountry.getArmyCount() - d_armies);
+
+        int l_numOfCards = d_player.get_cards().get(Cards.AIRLIFT_CARD);
+        if(l_numOfCards == 0){
+            d_player.get_cards().remove(Cards.AIRLIFT_CARD);
+        }else{
+            d_player.get_cards().put(Cards.AIRLIFT_CARD, l_numOfCards - 1);
+        }
+
+        int l_ArmyCount = d_sourceCountry.getArmyCount();
+        int l_tempArmyCount = d_sourceCountry.getTurnArmyCount();
+        int l_toMoveCount = 0;
+        if (l_tempArmyCount > d_armies ){
+            l_toMoveCount = d_armies;
+        } else {
+            l_toMoveCount = l_tempArmyCount - 1;
+        }
+
+        d_sourceCountry.setTurnArmyCount(l_tempArmyCount - l_toMoveCount);
+        d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
+
+        d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
+        d_targetCountry.setTurnArmyCount(d_targetCountry.getArmyCount());
+
+        LogManager.logAction(String.format("%s Airlifted %d armies from %s to %s", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+        System.out.println(String.format("%s Airlifted %d armies from %s to %s", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+
     }
 
     @Override

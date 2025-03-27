@@ -46,6 +46,6 @@ public class CommandOutputMessages {
             "\t\t\t\t\t\t\t\t enables efficient game play";
 
     public static final String PLAYER_TURN_INDICATOR = "Player %s time to make your move! Deployable army count: %d. Available cards %s";
-    public static final String PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT = "Successfully deployed %d armies to %s. Deployable army %d";
+    public static final String PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT = "%s Successfully deployed %d armies to %s. Deployable army %d";
     public static final String PLAYER_DIPLOMACY = "Diplomacy card has been used. Can't perform attack on player %s";
 }

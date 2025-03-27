@@ -1,6 +1,7 @@
 package org.com.Orders;
 
 import org.com.Constants.Cards;
+import org.com.GameLog.LogManager;
 import org.com.Models.Player;
 
 import java.util.HashMap;
@@ -22,10 +23,19 @@ public class DiplomacyOrder implements Order{
 
     @Override
     public void execute() {
-        int l_numOfCards = d_player.get_cards().get(Cards.DIPLOMACY_CARD);
+
         d_player.get_negotiationPlayer().add(d_targetPlayer);
         d_targetPlayer.get_negotiationPlayer().add(d_player);
-        d_player.get_cards().put(Cards.DIPLOMACY_CARD, l_numOfCards - 1);
+
+        int l_numOfCards = d_player.get_cards().get(Cards.DIPLOMACY_CARD);
+        if(l_numOfCards == 0){
+            d_player.get_cards().remove(Cards.DIPLOMACY_CARD);
+        }else{
+            d_player.get_cards().put(Cards.DIPLOMACY_CARD, l_numOfCards - 1);
+        }
+
+        System.out.println(String.format("%s negotiated with %s", d_player.get_name(), d_targetPlayer.get_name()));
+        LogManager.logAction(String.format("%s negotiated with %s", d_player.get_name(), d_targetPlayer.get_name()));
     }
 
     @Override
