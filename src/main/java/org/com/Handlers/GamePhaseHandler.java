@@ -1,17 +1,14 @@
 package org.com.Handlers;
 
+import org.com.GameLog.LogManager;
 import org.com.GamePhase.LoadMapPhase;
 import org.com.GamePhase.Phase;
 import org.com.Models.Continent;
 import org.com.Models.Map;
 import org.com.Models.Player;
-import org.com.Utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Handles the game phase and changes after each players turn.
  *
@@ -140,7 +137,7 @@ public class GamePhaseHandler {
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
         }
-        LogUtil.Logger(GamePhaseHandler.class.getName(), Level.INFO, "Armies have been assigned to all player");
+        LogManager.logAction("Armies have been assigned to all player");
     }
 
     /**

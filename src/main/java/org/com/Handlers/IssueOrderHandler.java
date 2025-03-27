@@ -31,7 +31,6 @@ public class IssueOrderHandler {
         Order l_deployOrder = new DeployOrder(l_currentPlayer, l_targetCountry, l_numArmies);
         l_deployOrder.isValid();
         l_currentPlayer.get_orderList().add(l_deployOrder);
-//        GamePlayHandler.issueOrder(l_currentPlayer);
         l_deployOrder.execute();
         l_currentPlayer.get_orderList().remove(l_deployOrder);
     }
@@ -78,6 +77,7 @@ public class IssueOrderHandler {
         Player l_player = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
         Order l_blockadeOrder = new BlockadeOrder(l_country, l_player);
         l_blockadeOrder.isValid();
+        l_player.set_cardPlayedInTurn(l_blockadeOrder);
         l_player.get_orderList().add(l_blockadeOrder);
         System.console().println(String.format("Order to blockade country %s as been saved", l_country.getName()));
     }
@@ -91,10 +91,11 @@ public class IssueOrderHandler {
      */
     public static void processNegotiateCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         Player l_targetPlayer = HelperUtil.getPlayerByName(p_commandArray[1], p_gamePhaseHandler.getPlayerList());
-        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        Order l_diplomacyOrder = new DiplomacyOrder(l_currentPlayer, l_targetPlayer);
+        Player l_player = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        Order l_diplomacyOrder = new DiplomacyOrder(l_player, l_targetPlayer);
         l_diplomacyOrder.isValid();
-        l_currentPlayer.get_orderList().add(l_diplomacyOrder);
+        l_player.set_cardPlayedInTurn(l_diplomacyOrder);
+        l_player.get_orderList().add(l_diplomacyOrder);
         System.console().println(String.format("Order to negotiate peace with player %s as been saved", l_targetPlayer.get_name()));
     }
 
@@ -111,6 +112,7 @@ public class IssueOrderHandler {
         Player l_player = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
         Order l_bombOrder = new BombOrder(l_player, l_country);
         l_bombOrder.isValid();
+        l_player.set_cardPlayedInTurn(l_bombOrder);
         l_player.get_orderList().add(l_bombOrder);
         System.console().println(String.format("Order to bomb country country %s as been saved", l_country.getName()));
     }
@@ -127,10 +129,11 @@ public class IssueOrderHandler {
         Country l_sourceCountry = HelperUtil.getCountryByCountryName(p_commandArray[1], l_gameMap);
         Country l_targetCountry = HelperUtil.getCountryByCountryName(p_commandArray[2], l_gameMap);
         int l_numArmies = Integer.parseInt(p_commandArray[3]);
-        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        Order l_airLiftOrder = new AirLiftOrder(l_currentPlayer, l_sourceCountry, l_targetCountry, l_numArmies);
+        Player l_player = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
+        Order l_airLiftOrder = new AirLiftOrder(l_player, l_sourceCountry, l_targetCountry, l_numArmies);
         l_airLiftOrder.isValid();
-        l_currentPlayer.get_orderList().add(l_airLiftOrder);
+        l_player.set_cardPlayedInTurn(l_airLiftOrder);
+        l_player.get_orderList().add(l_airLiftOrder);
         System.console().println(String.format("Order to airlift %d armies from %s to %s as been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
     }
 }

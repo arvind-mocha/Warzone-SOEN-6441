@@ -51,5 +51,8 @@ public class BombOrder implements Order{
         if (d_targetCountry.getOwner().equals(d_player)){
             throw new Exception("Cannot bomb your own country");
         }
+        if (d_player.get_cardPlayedInTurn() != null){
+            throw new Exception("Cannot play multiple power cards in a turn!");
+        }
     }
 }

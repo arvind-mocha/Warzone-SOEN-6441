@@ -1,11 +1,10 @@
 package org.com.Handlers;
 
 import org.com.Constants.CommonConstants;
+import org.com.GameLog.LogManager;
 import org.com.GamePhase.Phase;
-import org.com.Utils.LogUtil;
 import org.com.Utils.ValidationUtil;
 
-import java.util.logging.Level;
 
 /**
  * This class handles all commands and invocation of all command methods take place here.
@@ -28,7 +27,7 @@ public class CommandHandler {
         String[] l_commandArray = p_command.split("\\s+");
         Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
         ValidationUtil.validateCommand(l_currentGamePhase, l_commandArray, p_command);
-        LogUtil.Logger(CommandHandler.class.getName(), Level.INFO, "Processing the command: " + p_command);
+        LogManager.logAction("Processing the command: " + p_command);
         switch(l_commandArray[0].toLowerCase())
         {
             case CommonConstants.HELP_COMMAND:

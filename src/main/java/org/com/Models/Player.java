@@ -24,6 +24,7 @@ public class Player implements Serializable {
     private Order d_currentOrder;
     private HashMap<String, Integer> d_cards;
     private Set<Player> d_negotiatedPlayer;
+    private Order d_cardPlayedInTurn;
 
     /**
      * This is a default constructor which is used in the beginning of the game to get player's name and
@@ -38,7 +39,10 @@ public class Player implements Serializable {
         this.d_orderList = new ArrayList<>();
         this.d_cards = new HashMap<String, Integer>();
         this.d_negotiatedPlayer = null;
+        this.d_cardPlayedInTurn = null;
     }
+
+
     /**
      * When a player takes over a country, this method is used to add that country in their Country list.
      * Can also be used to add country to player's list.
@@ -61,6 +65,16 @@ public class Player implements Serializable {
             d_orderList.remove(0);
         }
         return l_order;
+    }
+
+
+    public Order get_cardPlayedInTurn() {
+        return d_cardPlayedInTurn;
+    }
+
+
+    public void set_cardPlayedInTurn(Order p_cardPlayed) {
+        this.d_cardPlayedInTurn = p_cardPlayed;
     }
 
 

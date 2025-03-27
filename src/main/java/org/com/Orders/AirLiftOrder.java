@@ -49,5 +49,8 @@ public class AirLiftOrder implements Order{
         } else if (d_targetCountry.isCountryNeutral() || !d_targetCountry.getOwner().equals(d_player)) {
             throw new Exception("Airlift can only be performed on your own countries");
         }
+        if (d_player.get_cardPlayedInTurn() != null){
+            throw new Exception("Cannot play multiple power cards in a turn!");
+        }
     }
 }

@@ -31,16 +31,10 @@ public class GamePlayHandler {
         if (l_nextPlayerIndex == 0) {
             for (Player l_player : p_gamePhaseHandler.getPlayerList()) {
                 int l_numberOfCountriesBeforeExecution = l_player.get_countries().size();
-
-                //
-                List<Order> l_orderList = l_player.get_orderList();
-                for (Order l_order : l_orderList) {
-                    l_order.execute();
-                }
-                //
-
+                issueOrder(l_player);
                 issueCards(l_player, l_numberOfCountriesBeforeExecution);
                 l_player.set_orderList(new ArrayList<>());
+                l_player.set_cardPlayedInTurn(null);
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
             System.console().println(String.format("Turn %d completed. All buffered commands have been executed", p_gamePhaseHandler.getTurnsCompleted()));
@@ -82,16 +76,19 @@ public class GamePlayHandler {
             }
 
             l_cardPlays.forEach(Order::execute);
+//            String l_playedCardOnce = null;
+//            for(Order l_card: l_cardPlays ){
+//                if (l_playedCardOnce == null){
+//                    l_playedCardOnce = l_card.getClass().getName();
+//                    l_card.execute();
+//                }
+//                else{
+//                    System.console().println(String.format(CommonErrorMessages.PLAYED_MORE_THAN_ONE_POWER_CARD, l_card.getClass().getName(), l_playedCardOnce));
+//                }
+//            }
             l_advancePlays.forEach(Order::execute);
 
         }
-//        l_ordersList.stream()
-//                .filter(order -> !(order instanceof AdvanceOrder))
-//                .forEach(Order::execute);
-//
-//        l_ordersList.stream()
-//                .filter(order -> order instanceof AdvanceOrder)
-//                .forEach(Order::execute);
 //        p_player.set_negotiationPlayer(new HashSet<>());
 //        p_player.set_orderList(new ArrayList<>());
     }

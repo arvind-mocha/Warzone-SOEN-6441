@@ -39,5 +39,8 @@ public class DiplomacyOrder implements Order{
         {
             throw new Exception("The player you're trying to negotiate does not exists");
         }
+        if (d_player.get_cardPlayedInTurn() != null){
+            throw new Exception("Cannot play multiple power cards in a turn!");
+        }
     }
 }
