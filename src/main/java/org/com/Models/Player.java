@@ -3,6 +3,7 @@ package org.com.Models;
 import org.com.Orders.Order;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class Player implements Serializable {
     private List<Continent>d_continents;        //Continents owned by a particular player
     private List<Order> d_orderList;            //An order list to contain all the orders given by the current player
     private Order d_currentOrder;
-
+    private HashMap<String, Integer> d_cards;
 
     /**
      * This is a default constructor which is used in the beginning of the game to get player's name and
@@ -33,8 +34,8 @@ public class Player implements Serializable {
         this.d_countries = new ArrayList<>();
         this.d_continents = new ArrayList<>();
         this.d_orderList = new ArrayList<>();
+        this.d_cards = new HashMap<String, Integer>();
     }
-
     /**
      * When a player takes over a country, this method is used to add that country in their Country list.
      * Can also be used to add country to player's list.
@@ -166,5 +167,14 @@ public class Player implements Serializable {
      */
     public void set_continents(List<Continent> p_continents) {
         this.d_continents = p_continents;
+    }
+
+    /**
+     * Gets the list of cards held by the player
+     *
+     * @return d_cards List of cards the player owns
+     */
+    public HashMap<String, Integer> get_cards() {
+        return d_cards;
     }
 }

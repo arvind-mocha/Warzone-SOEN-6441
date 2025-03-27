@@ -61,14 +61,15 @@ public class HelperUtil {
         return null;
     }
 
-    public static void setCountryOwner(Player p_player, Country p_country, boolean p_isOwner)
+    public static void setCountryOwnerShip(Player p_player, Country p_country, boolean p_isNeutralize)
     {
-        if(p_isOwner) {
-            p_player.get_countries().add(p_country);
-            p_country.setOwner(p_player);
-        } else {
+        if(p_isNeutralize) {
             p_player.get_countries().remove(p_country);
             p_country.setOwner(null);
+            p_country.setArmyCount(0);
+        } else {
+            p_player.get_countries().add(p_country);
+            p_country.setOwner(p_player);
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.com.test;
 
 import org.com.Handlers.GamePhaseHandler;
+import org.com.Handlers.GamePlayHandler;
 import org.com.Handlers.IssueOrderHandler;
 import org.com.Handlers.PlayerOperationsHandler;
 import org.com.Models.Country;
@@ -152,7 +153,7 @@ class PlayerOperationsHandlerTest {
         players.add(new Player("player2"));
         gamePhaseHandler.setPlayerList(players);
 
-        IssueOrderHandler.advanceTurn(gamePhaseHandler);
+        GamePlayHandler.advanceTurn(gamePhaseHandler);
         assertEquals(1, gamePhaseHandler.getCurrentPlayer());
     }
 
@@ -164,7 +165,7 @@ class PlayerOperationsHandlerTest {
         gamePhaseHandler.setPlayerList(players);
         gamePhaseHandler.setCurrentPlayer(1);
 
-        IssueOrderHandler.advanceTurn(gamePhaseHandler);
+        GamePlayHandler.advanceTurn(gamePhaseHandler);
         assertEquals(0, gamePhaseHandler.getCurrentPlayer());
     }
 }

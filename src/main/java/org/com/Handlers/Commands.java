@@ -26,6 +26,7 @@ public enum Commands {
     ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null, null),
     ADVANCE_ARMY_COMMAND(CommonConstants.ADVANCE_ARMY_COMMAND, false, null, 4),
     DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null, 3),
+    BLOCKADE_COMMAND(CommonConstants.BLOCKADE_COMMAND, false, null, 2),
     COMMIT(CommonConstants.COMMIT, false, null, null);
 
 

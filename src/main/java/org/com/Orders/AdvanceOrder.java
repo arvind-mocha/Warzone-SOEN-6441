@@ -1,6 +1,5 @@
 package org.com.Orders;
 
-import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Country;
 import org.com.Models.Player;
@@ -97,16 +96,16 @@ public class AdvanceOrder implements Order {
         d_sourceCountry.setArmyCount(d_sourceCountry.getArmyCount() - d_armies);
 
         if(d_targetCountry.isCountryNeutral()) {
-            HelperUtil.setCountryOwner(d_player, d_targetCountry, true);
+            HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
             d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
         } else if (d_targetCountry.getOwner().equals(d_player)) {
             d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
         } else {
             int l_armyCountAfterAdvance = Math.abs(d_targetCountry.getArmyCount() - d_armies);
             if(d_armies > d_targetCountry.getArmyCount()) {
-                HelperUtil.setCountryOwner(d_player, d_targetCountry, true);
+                HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
             } else if (l_armyCountAfterAdvance == 0) {
-                HelperUtil.setCountryOwner(d_player, d_targetCountry, false);
+                HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
             }
             d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
         }
