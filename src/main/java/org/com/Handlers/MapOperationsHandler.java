@@ -2,13 +2,12 @@ package org.com.Handlers;
 
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 import org.com.Utils.DisplayUtil;
-import org.com.Utils.HelperUtil;
-import org.com.Utils.LogUtil;
 import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -22,7 +21,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 
 /**
  * All important methods which are used for processing a map related command are written here.
@@ -358,20 +356,20 @@ public class MapOperationsHandler {
                 if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.CONTINENTS))
                 {
                     l_lineNum = processContinents(l_file, l_gameMap, l_lineNum+1);
-                    LogUtil.Logger(CLASS_NAME, Level.INFO, "The continents object has been processed");
+                    LogManager.logAction("The continents object has been processed");
                 }
                 else if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.COUNTRIES))
                 {
                     l_lineNum = processCountries(l_file, l_gameMap, l_lineNum+1);
-                    LogUtil.Logger(CLASS_NAME, Level.INFO, "The countries object has been processed");
+                    LogManager.logAction("The countries object has been processed");
                 }
                 else if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.BORDERS))
                 {
                     l_lineNum = processBorders(l_file, l_gameMap, l_lineNum+1);
-                    LogUtil.Logger(CLASS_NAME, Level.INFO, "The continents and countries has been has connected using borders");
+                    LogManager.logAction("The continents and countries has been has connected using borders");
                 }
             }
-            LogUtil.Logger(CLASS_NAME, Level.INFO, "The map object has been constructed");
+            LogManager.logAction("The map object has been constructed");
 
             try{
                 ValidationUtil.validateMap(l_gameMap);
@@ -392,7 +390,7 @@ public class MapOperationsHandler {
             }
 
             l_console.println("The Map has been validated and constructed successfully!");
-            LogUtil.Logger(CLASS_NAME, Level.INFO, "The map has been validated");
+            LogManager.logAction("The map has been validated");
 
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);

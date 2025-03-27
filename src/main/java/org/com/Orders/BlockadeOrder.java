@@ -51,5 +51,8 @@ public class BlockadeOrder implements Order {
         {
             throw new Exception("Cannot neutralize a country does not have any ownership");
         }
+        if (d_player.get_cardPlayedInTurn() != null){
+            throw new Exception("Cannot play multiple power cards in a turn!");
+        }
     }
 }

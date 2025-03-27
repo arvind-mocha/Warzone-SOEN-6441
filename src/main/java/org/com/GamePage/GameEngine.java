@@ -4,7 +4,8 @@ import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
-import org.com.Utils.LogUtil;
+import org.com.GameLog.LogManager;
+//import org.com.Utils.LogUtil;
 
 import java.io.Serializable;
 import java.util.Scanner;
@@ -30,13 +31,11 @@ public class GameEngine implements Serializable {
         l_console.println("Welcome to the WarZone edition of Risk.");
         l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
 
-        //Creating Logs folder if it does not exist
-        LogUtil.createLogFolder();
 
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
         GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
-        LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has begun!!");
+        LogManager.logAction("Game has begun!!");
         String l_inputCommand;
         do {
             l_console.print("> ");
@@ -49,7 +48,7 @@ public class GameEngine implements Serializable {
             }
         } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));
 
-        LogUtil.Logger(GameEngine.class.getName(), Level.INFO, "Game has been ended");
+        LogManager.logAction("Game has been ended");
         l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
     }
 }
