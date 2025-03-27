@@ -1,5 +1,6 @@
 package org.com.Orders;
 
+import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonErrorMessages;
 import org.com.Models.Country;
 import org.com.Models.Player;
@@ -93,17 +94,22 @@ public class AdvanceOrder implements Order {
 
     @Override
     public void execute() {
-        d_sourceCountry.setArmyCount(d_sourceCountry.getArmyCount() - d_armies);
+        Player d_targetPlayer = d_targetCountry.getOwner();
+        if (d_player.get_negotiationPlayer() != null && d_player.get_negotiationPlayer().equals(d_targetPlayer)) {
+            System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
+        }
 
-        if(d_targetCountry.isCountryNeutral()) {
+        d_sourceCountry.setArmyCount(d_sourceCountry.getArmyCount() - d_armies);
+        if (d_targetCountry.isCountryNeutral()) {
             HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
             d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
-        } else if (d_targetCountry.getOwner().equals(d_player)) {
+        } else if (d_targetPlayer.equals(d_player)) {
             d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + d_armies);
         } else {
-            int l_armyCountAfterAdvance = Math.abs(d_targetCountry.getArmyCount() - d_armies);
-            if(d_armies > d_targetCountry.getArmyCount()) {
+            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - d_armies;
+            if (d_armies > d_targetCountry.getArmyCount()) {
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
+                l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
             } else if (l_armyCountAfterAdvance == 0) {
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
             }
@@ -127,6 +133,8 @@ public class AdvanceOrder implements Order {
             throw new Exception(String.format("You do not have the required army count to advance. Source army count: %s", d_sourceCountry.getArmyCount()));
         } else if(d_armies == 0){
             throw new Exception(CommonErrorMessages.ARMY_COUNT_ZERO);
+        } else if (d_armies == d_sourceCountry.getArmyCount()) {
+            throw new Exception(String.format("At least one army my be present in source country. Source army count: %s", d_sourceCountry.getArmyCount()));
         }
     }
 }

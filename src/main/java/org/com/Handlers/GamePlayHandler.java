@@ -8,6 +8,7 @@ import org.com.Orders.AdvanceOrder;
 import org.com.Orders.Order;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class GamePlayHandler {
@@ -58,6 +59,7 @@ public class GamePlayHandler {
                 .filter(order -> order instanceof AdvanceOrder)
                 .forEach(Order::execute);
 
+        p_player.set_negotiationPlayer(new HashSet<>());
         p_player.set_orderList(new ArrayList<>());
     }
 

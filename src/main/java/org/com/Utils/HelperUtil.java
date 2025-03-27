@@ -6,6 +6,7 @@ import org.com.Models.Map;
 import org.com.Models.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 
@@ -56,6 +57,17 @@ public class HelperUtil {
         for (Country l_country : p_gameMap.getCountryMap().vertexSet()) {
             if (l_country.getName().equalsIgnoreCase(p_countryName)) {
                 return l_country;
+            }
+        }
+        return null;
+    }
+
+    public static Player getPlayerByName(String p_playerName, List<Player> p_playersList)
+    {
+        for (Player l_player : p_playersList) {
+            if(l_player.get_name().equals(p_playerName))
+            {
+                return l_player;
             }
         }
         return null;

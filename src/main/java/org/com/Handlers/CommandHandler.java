@@ -73,6 +73,12 @@ public class CommandHandler {
             case CommonConstants.BLOCKADE_COMMAND:
                 IssueOrderHandler.processBlockadeCommand(p_gamePhaseHandler, l_commandArray);
                 break;
+            case CommonConstants.NEGOTIATE_COMMAND:
+                IssueOrderHandler.processNegotiateCommand(p_gamePhaseHandler, l_commandArray);
+                break;
+            case CommonConstants.BOMB_COMMAND:
+                IssueOrderHandler.processBombCommand(p_gamePhaseHandler, l_commandArray);
+                break;
             case CommonConstants.COMMIT:
                 IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
         }
