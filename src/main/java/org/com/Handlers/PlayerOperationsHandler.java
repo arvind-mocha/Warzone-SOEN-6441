@@ -85,7 +85,7 @@ public class PlayerOperationsHandler {
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
         Player l_currentPlayer = l_playerList.get(l_currentPlayerTurn);
-        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount()));
+        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
         p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
     }
 }

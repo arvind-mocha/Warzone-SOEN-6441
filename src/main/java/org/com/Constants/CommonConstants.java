@@ -29,6 +29,9 @@ public class CommonConstants {
     public static final String DEPLOY_ARMIES_COMMAND = "deploy";
     public static final String ADVANCE_ARMY_COMMAND = "advance";
     public static final String COMMIT = "commit";
+    public static final String BLOCKADE_COMMAND = "blockade";
+    public static final String NEGOTIATE_COMMAND = "negotiate";
+    public static final String BOMB_COMMAND = "bomb";
 
 
     // Directories

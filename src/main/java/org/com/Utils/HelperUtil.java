@@ -6,6 +6,7 @@ import org.com.Models.Map;
 import org.com.Models.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 
@@ -61,14 +62,26 @@ public class HelperUtil {
         return null;
     }
 
-    public static void setCountryOwner(Player p_player, Country p_country, boolean p_isOwner)
+    public static Player getPlayerByName(String p_playerName, List<Player> p_playersList)
     {
-        if(p_isOwner) {
-            p_player.get_countries().add(p_country);
-            p_country.setOwner(p_player);
-        } else {
+        for (Player l_player : p_playersList) {
+            if(l_player.get_name().equals(p_playerName))
+            {
+                return l_player;
+            }
+        }
+        return null;
+    }
+
+    public static void setCountryOwnerShip(Player p_player, Country p_country, boolean p_isNeutralize)
+    {
+        if(p_isNeutralize) {
             p_player.get_countries().remove(p_country);
             p_country.setOwner(null);
+            p_country.setArmyCount(0);
+        } else {
+            p_player.get_countries().add(p_country);
+            p_country.setOwner(p_player);
         }
     }
 }

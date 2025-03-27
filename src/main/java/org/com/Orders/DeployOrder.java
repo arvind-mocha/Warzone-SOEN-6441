@@ -81,7 +81,7 @@ public class DeployOrder implements Order{
         } else if (!d_player.get_countries().contains(d_country)) {
             throw new Exception(String.format(CommonErrorMessages.IMPROPER_OWNER_COUNTRY, d_country.getName(), d_player.get_name()));
         } else if(d_army > d_player.get_armyCount()) {
-            throw new Exception(CommonErrorMessages.ARMY_COUNT_EXCEEDS);
+            throw new Exception(String.format(CommonErrorMessages.ARMY_COUNT_EXCEEDS, d_player.get_armyCount()));
         } else if(d_army == 0){
             throw new Exception(CommonErrorMessages.ARMY_COUNT_ZERO);
         }
