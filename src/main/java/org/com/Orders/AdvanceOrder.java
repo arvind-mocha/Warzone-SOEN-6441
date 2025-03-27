@@ -47,7 +47,7 @@ public class AdvanceOrder implements Order {
         d_sourceCountry.setTurnArmyCount(l_tempArmyCount - l_toMoveCount);
         d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
 
-        if (d_targetCountry.isCountryNeutral()) {
+        if (d_targetCountry.isCountryNeutral() && l_toMoveCount > 0) {
             HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
             d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
         } else if (d_targetPlayer.equals(d_player)) {
