@@ -69,10 +69,10 @@ public class IssueOrderHandler {
     public static void processNegotiateCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {
         Player l_targetPlayer = HelperUtil.getPlayerByName(p_commandArray[1], p_gamePhaseHandler.getPlayerList());
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        Order l_diplomacyOrder = new DiplomacyOrder(l_targetPlayer, l_currentPlayer);
+        Order l_diplomacyOrder = new DiplomacyOrder(l_currentPlayer, l_targetPlayer);
         l_diplomacyOrder.isValid();
         l_currentPlayer.get_orderList().add(l_diplomacyOrder);
-        System.console().println(String.format("Order to negotiate with player %s as been saved", l_targetPlayer.get_name()));
+        System.console().println(String.format("Order to negotiate peace with player %s as been saved", l_targetPlayer.get_name()));
     }
 
     public static void processBombCommand(GamePhaseHandler p_gamePhaseHandler, String[] p_commandArray) throws Exception {

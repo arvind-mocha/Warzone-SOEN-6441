@@ -22,10 +22,10 @@ public class BombOrder implements Order{
         Player d_targetPlayer = d_targetCountry.getOwner();
         if (d_player.get_negotiationPlayer() != null && d_player.get_negotiationPlayer().contains(d_targetPlayer)) {
             System.out.println(String.format(CommandOutputMessages.PLAYER_DIPLOMACY, d_targetPlayer.get_name()));
+            return;
         }
 
-        int l_numOfCards = d_player.get_cards().get(Cards.BOMB_CARD);
-        d_player.get_cards().put(Cards.BOMB_CARD, l_numOfCards - 1);
+        d_player.get_cards().compute(Cards.BOMB_CARD, (k, l_numOfCards) -> l_numOfCards - 1);
         if (d_targetCountry.getArmyCount() == 0)
         {
             return;
