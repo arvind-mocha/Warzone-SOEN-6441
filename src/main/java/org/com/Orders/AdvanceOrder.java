@@ -6,6 +6,12 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+/**
+ * Advance order command functionality and validation are present in this class
+ *
+ *
+ * @author Arvind Nachiappan
+ */
 public class AdvanceOrder implements Order {
 
     private Player d_player;
@@ -18,78 +24,6 @@ public class AdvanceOrder implements Order {
         this.d_sourceCountry = d_sourceCountry;
         this.d_targetCountry = d_targetCountry;
         this.d_armies = d_armies;
-    }
-
-    /**
-     * Gets the player.
-     *
-     * @return the player
-     */
-    public Player getPlayer() {
-        return d_player;
-    }
-
-    /**
-     * Sets the player.
-     *
-     * @param p_player the player to set
-     */
-    public void setPlayer(Player p_player) {
-        this.d_player = p_player;
-    }
-
-    /**
-     * Gets the source country.
-     *
-     * @return the source country
-     */
-    public Country getSourceCountry() {
-        return d_sourceCountry;
-    }
-
-    /**
-     * Sets the source country.
-     *
-     * @param p_sourceCountry the source country to set
-     */
-    public void setSourceCountry(Country p_sourceCountry) {
-        this.d_sourceCountry = p_sourceCountry;
-    }
-
-    /**
-     * Gets the target country.
-     *
-     * @return the target country
-     */
-    public Country getTargetCountry() {
-        return d_targetCountry;
-    }
-
-    /**
-     * Sets the target country.
-     *
-     * @param p_targetCountry the target country to set
-     */
-    public void setTargetCountry(Country p_targetCountry) {
-        this.d_targetCountry = p_targetCountry;
-    }
-
-    /**
-     * Gets the number of armies.
-     *
-     * @return the number of armies
-     */
-    public int getNum() {
-        return d_armies;
-    }
-
-    /**
-     * Sets the number of armies.
-     *
-     * @param p_num the number of armies to set
-     */
-    public void setNum(int p_num) {
-        this.d_armies = p_num;
     }
 
     @Override

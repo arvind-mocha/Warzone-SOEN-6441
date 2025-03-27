@@ -7,6 +7,12 @@ import org.com.Models.Player;
 
 import java.util.HashMap;
 
+/**
+ * Bomb order command functionality and validation are present in this class
+ *
+ *
+ * @author Arvind Nachiappan
+ */
 public class BombOrder implements Order{
 
     private final Player d_player;

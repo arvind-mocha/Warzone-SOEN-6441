@@ -8,6 +8,12 @@ import org.com.Utils.HelperUtil;
 
 import java.util.HashMap;
 
+/**
+ * Blockade order command functionality and validation are present in this class
+ *
+ *
+ * @author Arvind Nachiappan
+ */
 public class BlockadeOrder implements Order {
 
     private Country d_targetCountry;

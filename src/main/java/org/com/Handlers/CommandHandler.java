@@ -79,6 +79,9 @@ public class CommandHandler {
             case CommonConstants.BOMB_COMMAND:
                 IssueOrderHandler.processBombCommand(p_gamePhaseHandler, l_commandArray);
                 break;
+            case CommonConstants.AIRLIFT_COMMAND:
+                IssueOrderHandler.processAirLiftCommand(p_gamePhaseHandler, l_commandArray);
+                break;
             case CommonConstants.COMMIT:
                 IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
         }

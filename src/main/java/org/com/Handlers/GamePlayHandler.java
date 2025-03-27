@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ *
+ * Gameplay related codes are present in this class
+ *
+ * @author Arvind Nachiappan
+ */
 public class GamePlayHandler {
     /**
      * Advances the turn to the next player.
