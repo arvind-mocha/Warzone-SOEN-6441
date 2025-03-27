@@ -27,7 +27,7 @@ public class CommandHandler {
         String[] l_commandArray = p_command.split("\\s+");
         Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
         ValidationUtil.validateCommand(l_currentGamePhase, l_commandArray, p_command);
-        LogManager.logAction("Processing the command: " + p_command);
+        LogManager.logAction("\nProcessing the command: " + p_command);
         switch(l_commandArray[0].toLowerCase())
         {
             case CommonConstants.HELP_COMMAND:

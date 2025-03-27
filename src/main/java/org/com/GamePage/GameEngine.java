@@ -44,6 +44,7 @@ public class GameEngine implements Serializable {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             } catch (Exception e) {
                 l_console.println("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
+                LogManager.logAction("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
                 l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
         } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));

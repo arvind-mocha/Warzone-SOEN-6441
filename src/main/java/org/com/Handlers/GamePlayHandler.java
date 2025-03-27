@@ -3,6 +3,7 @@ package org.com.Handlers;
 import org.com.Constants.Cards;
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonErrorMessages;
+import org.com.GameLog.LogManager;
 import org.com.Models.Player;
 import org.com.Orders.AdvanceOrder;
 import org.com.Orders.DeployOrder;
@@ -38,10 +39,12 @@ public class GamePlayHandler {
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
             System.console().println(String.format("Turn %d completed. All buffered commands have been executed", p_gamePhaseHandler.getTurnsCompleted()));
+            LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
         }
 
         System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        LogManager.logAction(String.format("\n", CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
     }
 
     /**
@@ -53,6 +56,7 @@ public class GamePlayHandler {
         List<Order> l_ordersList = p_player.get_orderList();
         if (l_ordersList.isEmpty()) {
             System.console().println(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
+            LogManager.logAction(String.format("\n", CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
             return;
         }
 
