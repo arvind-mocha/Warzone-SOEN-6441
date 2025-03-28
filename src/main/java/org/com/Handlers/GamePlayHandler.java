@@ -43,8 +43,8 @@ public class GamePlayHandler {
             p_gamePhaseHandler.assignReinforcements();
         }
 
-        System.console().println(String.format("\n", CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
-        LogManager.logAction(String.format("\n", CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        LogManager.logAction(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
     }
 
     /**
@@ -55,8 +55,8 @@ public class GamePlayHandler {
     {
         List<Order> l_ordersList = p_player.get_orderList();
         if (l_ordersList.isEmpty()) {
-            System.console().println(String.format("\n", CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
-            LogManager.logAction(String.format("\n", CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
+            System.console().println(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
+            LogManager.logAction(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
             return;
         }
 

@@ -36,37 +36,36 @@ public class AdvanceOrder implements Order {
         }
 
         int l_ArmyCount = d_sourceCountry.getArmyCount();
-        int l_tempArmyCount = d_sourceCountry.getTurnArmyCount();
         int l_toMoveCount = 0;
-        if (l_tempArmyCount > d_armies ){
+        if (l_ArmyCount > d_armies ){
             l_toMoveCount = d_armies;
         } else {
-            l_toMoveCount = l_tempArmyCount - 1;
+            l_toMoveCount = l_ArmyCount - 1;
         }
 
-        d_sourceCountry.setTurnArmyCount(l_tempArmyCount - l_toMoveCount);
         d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
 
-        if (d_targetCountry.isCountryNeutral() && l_toMoveCount > 0) {
-            HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
-            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
-        } else if (d_targetPlayer.equals(d_player)) {
-            d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
-        } else {
-            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
-            if (l_toMoveCount > d_targetCountry.getArmyCount()) {
+        if(l_toMoveCount > 0) {
+            if (d_targetCountry.isCountryNeutral()) {
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
-                l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
-            } else if (l_armyCountAfterAdvance == 0) {
-                HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
+                d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
+            } else if (d_targetPlayer.equals(d_player)) {
+                d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
+            } else {
+                int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
+                if (l_armyCountAfterAdvance < 0) {
+                    HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
+                    l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
+                } else if (l_armyCountAfterAdvance == 0) {
+                    HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
+                }
+                d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
             }
-            d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
+
+            LogManager.logAction(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+            System.out.println(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
+
         }
-
-        d_targetCountry.setTurnArmyCount(d_targetCountry.getArmyCount());
-
-        LogManager.logAction(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
-        System.out.println(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
 
     }
 

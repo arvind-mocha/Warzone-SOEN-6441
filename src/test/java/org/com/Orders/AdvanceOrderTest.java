@@ -33,7 +33,6 @@ public class AdvanceOrderTest {
     @Test
     public void testValidAdvanceOrder() throws Exception {
         sourceCountry.setArmyCount(10);
-        sourceCountry.setTurnArmyCount(10);
         targetCountry.setArmyCount(5);
         sourceCountry.addNeighbourCountryId(targetCountry.getId());
 
@@ -76,7 +75,6 @@ public class AdvanceOrderTest {
     public void testAdvanceToNeutralCountry() throws Exception {
         targetCountry.setOwner(null); // Neutral country
         sourceCountry.setArmyCount(10);
-        sourceCountry.setTurnArmyCount(10);
         sourceCountry.addNeighbourCountryId(targetCountry.getId());
 
         advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 5);
