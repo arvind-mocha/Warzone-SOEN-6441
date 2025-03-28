@@ -17,11 +17,20 @@ public class DiplomacyOrder implements Order{
     private final Player d_player;
     private final Player d_targetPlayer;
 
+    /**
+     * Constructor for the Negotiate class
+     *
+     * @param d_player      The player giving the Negotiate order
+     * @param d_targetPlayer   The Player to whom Negotiation is done
+     */
     public DiplomacyOrder(Player d_player, Player d_targetPlayer) {
         this.d_player = d_player;
         this.d_targetPlayer = d_targetPlayer;
     }
 
+    /**
+     * Executes the DiplomacyOrder command
+     */
     @Override
     public void execute() {
 
@@ -35,17 +44,20 @@ public class DiplomacyOrder implements Order{
         d_player.get_negotiationPlayer().add(d_targetPlayer);
         d_targetPlayer.get_negotiationPlayer().add(d_player);
 
-        int l_numOfCards = d_player.get_cards().get(Cards.DIPLOMACY_CARD);
+        int l_numOfCards = d_player.get_cards().get(Cards.DIPLOMACY_CARD) - 1;
         if(l_numOfCards == 0){
             d_player.get_cards().remove(Cards.DIPLOMACY_CARD);
         }else{
-            d_player.get_cards().put(Cards.DIPLOMACY_CARD, l_numOfCards - 1);
+            d_player.get_cards().put(Cards.DIPLOMACY_CARD, l_numOfCards);
         }
 
         System.out.println(String.format("%s negotiated with %s", d_player.get_name(), d_targetPlayer.get_name()));
         LogManager.logAction(String.format("%s negotiated with %s", d_player.get_name(), d_targetPlayer.get_name()));
     }
 
+    /**
+     * Validates the DiplomacyOrder command against the player
+     */
     @Override
     public void isValid() throws Exception {
         HashMap<String, Integer> l_cards = d_player.get_cards();

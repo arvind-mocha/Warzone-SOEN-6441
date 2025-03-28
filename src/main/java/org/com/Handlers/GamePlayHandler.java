@@ -18,6 +18,7 @@ import java.util.List;
  * Gameplay related codes are present in this class
  *
  * @author Arvind Nachiappan
+ * @author Devasenan Murugan
  */
 public class GamePlayHandler {
     /**
@@ -98,6 +99,8 @@ public class GamePlayHandler {
         if (l_numberOfCountriesAfterExecution > p_initialNumberOfCountries) {
             String l_randomCard = Cards.getRandomCard();
             p_player.get_cards().merge(l_randomCard, 1, Integer::sum);
+            System.console().println(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
+            LogManager.logAction(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
         }
     }
 }

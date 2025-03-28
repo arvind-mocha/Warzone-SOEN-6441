@@ -19,11 +19,20 @@ public class BombOrder implements Order{
     private final Player d_player;
     private final Country d_targetCountry;
 
+    /**
+     * Constructor for the BombOrder class
+     *
+     * @param d_player      The player giving the Bomb order
+     * @param d_targetCountry   The country to which Bomb is dropped on
+     */
     public BombOrder(Player d_player, Country d_targetCountry) {
         this.d_player = d_player;
         this.d_targetCountry = d_targetCountry;
     }
 
+    /**
+     * Executes the BombOrder command
+     */
     @Override
     public void execute() {
         Player d_targetPlayer = d_targetCountry.getOwner();
@@ -33,7 +42,6 @@ public class BombOrder implements Order{
             return;
         }
 
-//        d_player.get_cards().compute(Cards.BOMB_CARD, (k, l_numOfCards) -> l_numOfCards - 1);
         if (d_targetCountry.getArmyCount() == 0) {
             return;
         }
@@ -42,16 +50,19 @@ public class BombOrder implements Order{
         LogManager.logAction(String.format("%s Dropped Bomb on %s, reducing the armies count to half.", d_player.get_name(), d_targetCountry.getName()));
         System.out.println(String.format("%s Dropped Bomb on %s, reducing the armies count to half.", d_player.get_name(), d_targetCountry.getName()));
 
-        int l_numOfCards = d_player.get_cards().get(Cards.BOMB_CARD);
+        int l_numOfCards = d_player.get_cards().get(Cards.BOMB_CARD) - 1;
         if(l_numOfCards == 0){
             d_player.get_cards().remove(Cards.BOMB_CARD);
         }else{
-            d_player.get_cards().put(Cards.BOMB_CARD, l_numOfCards - 1);
+            d_player.get_cards().put(Cards.BOMB_CARD, l_numOfCards);
         }
 
 
     }
 
+    /**
+     * Validates the BomdOrder command against the player
+     */
     @Override
     public void isValid() throws Exception {
         HashMap<String, Integer> l_cards = d_player.get_cards();

@@ -171,7 +171,7 @@ public class MapOperationsHandler {
 
             Continent l_continentObj = l_gameMap.getContinentByName(l_inContinent);
             if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
-                int l_defaultSoldierCount = 0;
+                int l_defaultSoldierCount = 2;
                 Country l_country = new Country(l_countryName, l_continentObj, l_defaultSoldierCount);
                 l_country.setId(l_countryID);
 
@@ -470,6 +470,7 @@ public class MapOperationsHandler {
     private static int processCountries(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        int l_defaultCountryArmyCount = 2;
         for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String l_countryInfo = p_file.get(l_lineNum);
             if (l_countryInfo.isEmpty()) {
@@ -482,6 +483,7 @@ public class MapOperationsHandler {
             l_country.setId(Integer.parseInt(l_countryInfoArray[0]));
             l_country.setName(l_countryInfoArray[1]);
             l_country.setContinent(l_continent);
+            l_country.setArmyCount(l_defaultCountryArmyCount);
             l_continent.addCountry(l_country);
             l_countryGraph.addVertex(l_country);
         }

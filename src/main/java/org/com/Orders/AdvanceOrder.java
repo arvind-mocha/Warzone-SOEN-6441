@@ -12,6 +12,7 @@ import org.com.Utils.HelperUtil;
  *
  *
  * @author Arvind Nachiappan
+ * @author Devasenan Murugan
  */
 public class AdvanceOrder implements Order {
 
@@ -20,13 +21,24 @@ public class AdvanceOrder implements Order {
     private Country d_targetCountry;
     private int d_armies;
 
-    public AdvanceOrder(Player d_player, Country d_sourceCountry, Country d_targetCountry, int d_armies) {
-        this.d_player = d_player;
-        this.d_sourceCountry = d_sourceCountry;
-        this.d_targetCountry = d_targetCountry;
-        this.d_armies = d_armies;
+    /**
+     * Constructor for the AdvanceOrder class
+     *
+     * @param p_player      The player giving the advance order
+     * @param p_sourceCountry The country from which armies would be advanced
+     * @param p_targetCountry   The country to which armies would be advanced
+     * @param p_armies         The number of armies involved
+     */
+    public AdvanceOrder(Player p_player, Country p_sourceCountry, Country p_targetCountry, int p_armies) {
+        this.d_player = p_player;
+        this.d_sourceCountry = p_sourceCountry;
+        this.d_targetCountry = p_targetCountry;
+        this.d_armies = p_armies;
     }
 
+    /**
+        * Executes the AdvanceOrder command
+     */
     @Override
     public void execute() {
         Player d_targetPlayer = d_targetCountry.getOwner();
@@ -69,6 +81,9 @@ public class AdvanceOrder implements Order {
 
     }
 
+    /**
+     * Validates the AdvanceOrder command against the player
+     */
     @Override
     public void isValid() throws Exception {
         if (d_sourceCountry == null) {

@@ -1,6 +1,7 @@
 package org.com.Constants;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -26,6 +27,7 @@ public class Cards {
 
     public static String getRandomCard()
     {
+        Collections.shuffle(CARDS_LIST);
         Random random = new Random();
         int index = random.nextInt(CARDS_LIST.size());
         return CARDS_LIST.get(index);
