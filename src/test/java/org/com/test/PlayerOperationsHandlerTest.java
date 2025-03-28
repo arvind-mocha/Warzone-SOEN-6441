@@ -1,5 +1,6 @@
 package org.com.test;
 
+import org.com.Constants.Cards;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.Handlers.GamePlayHandler;
 import org.com.Handlers.IssueOrderHandler;
@@ -13,6 +14,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +50,47 @@ class PlayerOperationsHandlerTest {
 
         map.setCountryMap(countryMap);
         gamePhaseHandler.setGameMap(map);
+    }
+
+    @Test
+    void blockadeOrder_NoCardAvailable() {
+
+        Player player = new Player("player1");
+        Country targetCountry = new Country();
+        targetCountry.setId(3);
+        targetCountry.setName("CountryC");
+        targetCountry.setArmyCount(5);
+        targetCountry.setOwner(new Player("enemy")); // Country owned by another player
+
+        // Player has no blockade cards
+        player.get_cards().put(Cards.BLOCKADE_CARD, 0);  // Player has 0 blockade cards
+
+        // Printing players card count before using Blockade
+        System.out.println("Player's Cards before Blockade: " + player.get_cards());
+
+        // Setting up map & game phase
+        GamePhaseHandler handler = new GamePhaseHandler();
+        Map map = new Map();
+        DefaultDirectedGraph<Country, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        graph.addVertex(targetCountry);
+        map.setCountryMap(graph);
+        handler.setGameMap(map);
+        handler.setPlayerList(new ArrayList<>(List.of(player)));
+
+        // Exception is thrown when trying to use the blockade card
+        Exception exception = assertThrows(Exception.class, () -> {
+            IssueOrderHandler.processBlockadeCommand(handler, new String[]{"blockade", "CountryC"});
+        });
+
+        // Message should display that no blockade card is available
+        assertTrue(exception.getMessage().contains("You don't have a blockade card to use"));
+
+        // Verify the player’s card count is 0 and no blockade was made
+        System.out.println("Player's Cards after Blockade attempt: " + player.get_cards());
+        assertEquals(0, player.get_cards().get(Cards.BLOCKADE_CARD));  // Ensure no card was used
+
+        // Verify that the country is not neutralized
+        assertFalse(targetCountry.isCountryNeutral(), "The country should not be neutralized as the player had no cards.");
     }
 
     @Test
