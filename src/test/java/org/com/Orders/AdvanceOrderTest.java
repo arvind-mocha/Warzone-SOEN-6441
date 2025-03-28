@@ -46,4 +46,44 @@ public class AdvanceOrderTest {
         assertEquals(player.get_name(), targetCountry.getOwner().get_name()); // Ownership should transfer
     }
 
+    @Test(expected = Exception.class)
+    public void testAdvanceWithZeroArmies() throws Exception {
+        advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 0);
+        advanceOrder.isValid();
+    }
+
+    @Test(expected = Exception.class)
+    public void testAdvanceWithoutOwnership() throws Exception {
+        sourceCountry.setOwner(opponent);
+        advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 5);
+        advanceOrder.isValid();
+    }
+
+    @Test(expected = Exception.class)
+    public void testAdvanceToNonNeighbor() throws Exception {
+        advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 5);
+        advanceOrder.isValid();
+    }
+
+    @Test(expected = Exception.class)
+    public void testAdvanceMoreThanAvailableArmies() throws Exception {
+        sourceCountry.setArmyCount(3);
+        advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 5);
+        advanceOrder.isValid();
+    }
+
+    @Test
+    public void testAdvanceToNeutralCountry() throws Exception {
+        targetCountry.setOwner(null); // Neutral country
+        sourceCountry.setArmyCount(10);
+        sourceCountry.setTurnArmyCount(10);
+        sourceCountry.addNeighbourCountryId(targetCountry.getId());
+
+        advanceOrder = new AdvanceOrder(player, sourceCountry, targetCountry, 5);
+        advanceOrder.isValid();
+        advanceOrder.execute();
+
+        assertEquals(player, targetCountry.getOwner()); // Ownership should transfer
+        assertEquals(7, targetCountry.getArmyCount());
+    }
 }
