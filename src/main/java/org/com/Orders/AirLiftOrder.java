@@ -40,19 +40,16 @@ public class AirLiftOrder implements Order{
         }
 
         int l_ArmyCount = d_sourceCountry.getArmyCount();
-        int l_tempArmyCount = d_sourceCountry.getTurnArmyCount();
         int l_toMoveCount = 0;
-        if (l_tempArmyCount > d_armies ){
+        if (l_ArmyCount > d_armies ){
             l_toMoveCount = d_armies;
         } else {
-            l_toMoveCount = l_tempArmyCount - 1;
+            l_toMoveCount = l_ArmyCount - 1;
         }
 
-        d_sourceCountry.setTurnArmyCount(l_tempArmyCount - l_toMoveCount);
         d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
 
         d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
-        d_targetCountry.setTurnArmyCount(d_targetCountry.getArmyCount());
 
         LogManager.logAction(String.format("%s Airlifted %d armies from %s to %s", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
         System.out.println(String.format("%s Airlifted %d armies from %s to %s", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
