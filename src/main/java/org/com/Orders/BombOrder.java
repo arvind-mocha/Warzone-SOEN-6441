@@ -55,8 +55,9 @@ public class BombOrder implements Order{
     @Override
     public void isValid() throws Exception {
         HashMap<String, Integer> l_cards = d_player.get_cards();
-        if(!l_cards.containsKey(Cards.BOMB_CARD) || (l_cards.containsKey(Cards.BOMB_CARD) && l_cards.get(Cards.BOMB_CARD) == 0)) {
-            throw new Exception("You do not have bomb card to negotiate peace");
+        if(!l_cards.containsKey(Cards.BOMB_CARD) || (l_cards.containsKey(Cards.BOMB_CARD) && l_cards.get(Cards.BOMB_CARD) == 0))
+        {
+            throw new Exception(String.format("You don't have a bomb card to use. Available cards %s", d_player.get_cards().toString()));
         }
         if(d_targetCountry.isCountryNeutral()){
             throw new Exception("Cannot bomb neutral countries");

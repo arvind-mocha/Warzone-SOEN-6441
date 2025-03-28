@@ -43,7 +43,7 @@ public class DiplomacyOrder implements Order{
         HashMap<String, Integer> l_cards = d_player.get_cards();
         if(!l_cards.containsKey(Cards.DIPLOMACY_CARD) || (l_cards.containsKey(Cards.DIPLOMACY_CARD) && l_cards.get(Cards.DIPLOMACY_CARD) == 0))
         {
-            throw new Exception("You do not have diplomacy card to negotiate peace");
+            throw new Exception(String.format("You don't have a diplomacy card to use. Available cards %s", d_player.get_cards().toString()));
         }
         if (d_targetPlayer == null)
         {

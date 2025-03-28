@@ -29,7 +29,7 @@ public enum Commands {
     BLOCKADE_COMMAND(CommonConstants.BLOCKADE_COMMAND, false, null, 2),
     NEGOTIATE_COMMAND(CommonConstants.NEGOTIATE_COMMAND, false, null, 2),
     BOMB_COMMAND(CommonConstants.BOMB_COMMAND, false, null, 2),
-    AIRLIFT_COMMAND(CommonConstants.AIRLIFT_COMMAND, false, null, 2),
+    AIRLIFT_COMMAND(CommonConstants.AIRLIFT_COMMAND, false, null, 4),
     COMMIT(CommonConstants.COMMIT, false, null, null);
 
     private final String d_name;

@@ -7,6 +7,8 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+import java.util.HashMap;
+
 /**
  * Airlift order command functionality and validation are present in this class
  *
@@ -59,7 +61,12 @@ public class AirLiftOrder implements Order{
 
     @Override
     public void isValid() throws Exception {
-        if (d_sourceCountry == null) {
+        HashMap<String, Integer> l_cards = d_player.get_cards();
+        if(!l_cards.containsKey(Cards.AIRLIFT_CARD) || (l_cards.containsKey(Cards.AIRLIFT_CARD) && l_cards.get(Cards.AIRLIFT_CARD) == 0))
+        {
+            throw new Exception(String.format("You don't have an airlift card to use. Available cards %s", d_player.get_cards().toString()));
+        }
+        else if (d_sourceCountry == null) {
             throw new Exception("Source country does not exists.");
         } else if (d_targetCountry == null) {
             throw new Exception("Target country does not exists.");
