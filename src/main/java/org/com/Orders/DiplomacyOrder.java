@@ -5,6 +5,7 @@ import org.com.GameLog.LogManager;
 import org.com.Models.Player;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Diplomacy order command functionality and validation are present in this class
@@ -23,6 +24,13 @@ public class DiplomacyOrder implements Order{
 
     @Override
     public void execute() {
+
+        if (d_player.get_negotiationPlayer() == null) {
+            d_player.set_negotiationPlayer(new HashSet<>());  // Assuming setter exists
+        }
+        if (d_targetPlayer.get_negotiationPlayer() == null) {
+            d_targetPlayer.set_negotiationPlayer(new HashSet<>());
+        }
 
         d_player.get_negotiationPlayer().add(d_targetPlayer);
         d_targetPlayer.get_negotiationPlayer().add(d_player);
