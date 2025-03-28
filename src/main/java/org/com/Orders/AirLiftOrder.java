@@ -84,16 +84,16 @@ public class AirLiftOrder implements Order{
             throw new Exception("Target country does not exists.");
         } else if (d_sourceCountry.getName().equals(d_targetCountry.getName())) {
             throw new Exception("Target and source country cannot be the same");
-        } else if (d_sourceCountry.getOwner() != d_player) {
-            throw new Exception("You can only move armies from your own countries.");
+//        } else if (d_sourceCountry.getOwner() != d_player) {
+//            throw new Exception("You can only move armies from your own countries.");
         }else if(d_armies > d_sourceCountry.getArmyCount()) {
             throw new Exception(String.format("You do not have the required army count to airlift. Source army count: %s", d_sourceCountry.getArmyCount()));
         } else if(d_armies == 0){
             throw new Exception(CommonErrorMessages.ARMY_COUNT_ZERO);
         } else if (d_armies == d_sourceCountry.getArmyCount()) {
             throw new Exception(String.format("At least one army my be present in source country. Source army count: %s", d_sourceCountry.getArmyCount()));
-        } else if (d_targetCountry.isCountryNeutral() || !d_targetCountry.getOwner().equals(d_player)) {
-            throw new Exception("Airlift can only be performed on your own countries");
+//        } else if (d_targetCountry.isCountryNeutral() || !d_targetCountry.getOwner().equals(d_player)) {
+//            throw new Exception("Airlift can only be performed on your own countries");
         }
         if (d_player.get_cardPlayedInTurn() != null){
             throw new Exception("Cannot play multiple power cards in a turn!");
