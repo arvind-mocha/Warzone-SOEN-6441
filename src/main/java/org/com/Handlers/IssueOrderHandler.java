@@ -54,8 +54,8 @@ public class IssueOrderHandler {
         Order l_advanceOrder = new AdvanceOrder(l_currentPlayer, l_sourceCountry, l_targetCountry, l_numArmies);
         l_advanceOrder.isValid();
         l_currentPlayer.get_orderList().add(l_advanceOrder);
-        System.console().println(String.format("Order to advance %d armies from %s to %s as been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
-        LogManager.logAction(String.format("Order to advance %d armies from %s to %s as been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+        System.console().println(String.format("Order to advance %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+        LogManager.logAction(String.format("Order to advance %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
     }
 
     public static void processCommitCommand(GamePhaseHandler p_gamePhaseHandler) throws Exception {
@@ -64,7 +64,6 @@ public class IssueOrderHandler {
             throw new Exception(String.format("Deploy all armies to commit your changes. Remaining deployable armies: %s", l_currentPlayer.get_armyCount()));
         }
         GamePlayHandler.advanceTurn(p_gamePhaseHandler);
-
     }
 
     /**
