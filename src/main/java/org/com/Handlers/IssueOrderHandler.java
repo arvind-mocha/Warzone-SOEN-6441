@@ -99,9 +99,12 @@ public class IssueOrderHandler {
         Order l_diplomacyOrder = new DiplomacyOrder(l_player, l_targetPlayer);
         l_diplomacyOrder.isValid();
         l_player.set_cardPlayedInTurn(l_diplomacyOrder);
+
         l_player.get_orderList().add(l_diplomacyOrder);
-        System.console().println(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
-        LogManager.logAction(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
+        l_diplomacyOrder.execute();
+        l_player.get_orderList().remove(l_diplomacyOrder);
+//        System.console().println(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
+//        LogManager.logAction(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
     }
 
     /**
