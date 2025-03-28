@@ -37,8 +37,9 @@ public class BlockadeOrder implements Order {
     @Override
     public void execute() {
 
+        int d_blockadeCount = d_targetCountry.getArmyCount()*3;
         HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
-        d_targetCountry.setArmyCount(d_targetCountry.getArmyCount()*3);
+        d_targetCountry.setArmyCount(d_blockadeCount*3);
 
         System.out.println(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
         LogManager.logAction(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
@@ -62,7 +63,7 @@ public class BlockadeOrder implements Order {
             throw new Exception(String.format("You don't have a blockade card to use. Available cards %s", d_player.get_cards().toString()));
         }
 //        if(!d_player.get_countries().contains(d_targetCountry))
-        if(!d_targetCountry.getOwner().equals(d_player))
+        if(d_targetCountry.getOwner() == null)
         {
             throw new Exception("Can only be played on your territory");
         }
