@@ -4,11 +4,14 @@ import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
 import org.com.GameLog.LogManager;
+import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.ValidationUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,6 +19,7 @@ import java.util.List;
  *
  * @author Arvind Lakshmanan
  * @author Barath Sundararaj
+ * @author Devasenan Murugan
  *
  */
 
@@ -71,20 +75,25 @@ public class PlayerOperationsHandler {
     public static void processAssignCountries(GamePhaseHandler p_gamePhaseHandler)throws Exception {
         List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
         ValidationUtil.validateAssignCountries(l_playerList);
-        ArrayList<Country> l_countryArray = new ArrayList<>(p_gamePhaseHandler.getGameMap().getCountryMap().vertexSet());
-        Integer l_totalCountries = l_countryArray.size();
-        int l_countrySplitValue = Math.floorDivExact(l_countryArray.size(), l_playerList.size());
 
-        for (int l_playerIndex = 0; l_playerIndex < l_playerList.size(); l_playerIndex++) {
-            Player l_player = l_playerList.get(l_playerIndex);
-            int l_currentCountryId = l_countrySplitValue * (l_playerIndex);
-            Country l_currentCountry = l_countryArray.get(l_currentCountryId >  l_totalCountries ? l_totalCountries : l_currentCountryId);
-            l_player.addCountry(l_currentCountry);
-            l_currentCountry.setOwner(l_player);
+        ArrayList<Continent> l_continentsArray = new ArrayList<>(p_gamePhaseHandler.getGameMap().getContinentMap().vertexSet());
+        Collections.shuffle(l_continentsArray);
+        for (int i=0; i < l_playerList.size(); i++){
+            Continent l_randomContinent = l_continentsArray.get(i);
+            Player l_player = l_playerList.get(i);
+            ArrayList<Country> l_countryArray = new ArrayList<>(l_randomContinent.getCountries());
+            Collections.shuffle(l_countryArray);
+            for(int j = 0; j < l_countryArray.size()/2; j++){
+                Country l_country = l_countryArray.get(j);
+                l_player.addCountry(l_country);
+                l_country.setOwner(l_player);
+                l_country.setArmyCount(0);
+            }
         }
+
         System.console().println("Game has begun!");
         LogManager.logAction("Game has begun!");
-        p_gamePhaseHandler.assignReinforcements();
+        p_gamePhaseHandler.assignReinforcements(true);
 
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();

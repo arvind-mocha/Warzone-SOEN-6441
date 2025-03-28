@@ -13,6 +13,7 @@ import java.util.List;
  * Handles the game phase and changes after each players turn.
  *
  * @author Arvind Lakshmanan
+ * @author Devasenan Murugan
  *
  */
 
@@ -129,17 +130,35 @@ public class GamePhaseHandler {
      * Assigns reinforcements to all players based on the number of countries they own and the continents they control.
      */
     public void assignReinforcements() {
-        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
+
         for (Player l_player : d_playerList) {
+            int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
+
             for (Continent l_continent : l_player.get_continents()) {
                 l_numArmies = l_numArmies + l_continent.getValue();
             }
+
+            if(l_numArmies < 5){
+                l_numArmies = 5;
+            }
+
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
             LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
         }
         LogManager.logAction("Armies have been assigned to all player\n");
     }
+    public void assignReinforcements(boolean startupPhase) {
+        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
+
+        for (Player l_player : d_playerList) {
+            l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
+            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
+            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
+        }
+        LogManager.logAction("Armies have been assigned to all player\n");
+    }
+
 
     /**
      * Retrieves the number of turns completed.

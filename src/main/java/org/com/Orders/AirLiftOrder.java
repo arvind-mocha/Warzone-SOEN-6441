@@ -14,6 +14,7 @@ import java.util.HashMap;
  *
  *
  * @author Arvind Nachiappan
+ * @author Devasenan Murugan
  */
 public class AirLiftOrder implements Order{
 
@@ -22,6 +23,14 @@ public class AirLiftOrder implements Order{
     private Country d_targetCountry;
     private int d_armies;
 
+    /**
+     * Constructor for the AirLift class
+     *
+     * @param p_player      The player giving the AirLift order
+     * @param p_sourceCountry The country from which armies would be airlifted
+     * @param p_targetCountry   The country to which armies would be airlifted
+     * @param p_armies         The number of armies involved
+     */
     public AirLiftOrder(Player p_player, Country p_sourceCountry, Country p_targetCountry, int p_armies) {
         this.d_player = p_player;
         this.d_sourceCountry = p_sourceCountry;
@@ -29,14 +38,17 @@ public class AirLiftOrder implements Order{
         this.d_armies = p_armies;
     }
 
+    /**
+     * Executes the AirLiftOrder command
+     */
     @Override
     public void execute() {
 
-        int l_numOfCards = d_player.get_cards().get(Cards.AIRLIFT_CARD);
+        int l_numOfCards = d_player.get_cards().get(Cards.AIRLIFT_CARD) - 1;
         if(l_numOfCards == 0){
             d_player.get_cards().remove(Cards.AIRLIFT_CARD);
         }else{
-            d_player.get_cards().put(Cards.AIRLIFT_CARD, l_numOfCards - 1);
+            d_player.get_cards().put(Cards.AIRLIFT_CARD, l_numOfCards);
         }
 
         int l_ArmyCount = d_sourceCountry.getArmyCount();
@@ -56,6 +68,9 @@ public class AirLiftOrder implements Order{
 
     }
 
+    /**
+     * Validates the AirLiftOrder command against the player
+     */
     @Override
     public void isValid() throws Exception {
         HashMap<String, Integer> l_cards = d_player.get_cards();
