@@ -6,6 +6,7 @@ import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -66,12 +67,23 @@ public class BombOrder implements Order{
     @Override
     public void isValid() throws Exception {
         HashMap<String, Integer> l_cards = d_player.get_cards();
+
+        ArrayList<Integer> l_tempList = new ArrayList<>(d_targetCountry.getNeighbourCountryIds());
+        ArrayList<Integer> l_templist2 = new ArrayList<>();
+        for(Country l_cont : d_player.get_countries()){
+            l_templist2.add(l_cont.getId());
+        }
+        l_tempList.retainAll(l_templist2);
+
         if(!l_cards.containsKey(Cards.BOMB_CARD) || (l_cards.containsKey(Cards.BOMB_CARD) && l_cards.get(Cards.BOMB_CARD) == 0))
         {
             throw new Exception(String.format("You don't have a bomb card to use. Available cards %s", d_player.get_cards().toString()));
         }
         if(d_targetCountry.isCountryNeutral()){
             throw new Exception("Cannot bomb neutral countries");
+        }
+        if (l_tempList.isEmpty()) {
+            throw new Exception("Target country is not a neighbour of the source country.");
         }
         if (d_targetCountry.getOwner().equals(d_player)){
             throw new Exception("Cannot bomb your own country");

@@ -58,21 +58,14 @@ public class AdvanceOrder implements Order {
         d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
 
         if(l_toMoveCount > 0) {
-            if (d_targetCountry.isCountryNeutral()) {
+            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
+            if (l_armyCountAfterAdvance == 0){
+                HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
+            } else if (l_armyCountAfterAdvance < 0){
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
-                d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
-            } else if (d_targetPlayer.equals(d_player)) {
-                d_targetCountry.setArmyCount(d_targetCountry.getArmyCount() + l_toMoveCount);
-            } else {
-                int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
-                if (l_armyCountAfterAdvance < 0) {
-                    HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, false);
-                    l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
-                } else if (l_armyCountAfterAdvance == 0) {
-                    HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
-                }
-                d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
             }
+            l_armyCountAfterAdvance = Math.abs(l_armyCountAfterAdvance);
+            d_targetCountry.setArmyCount(l_armyCountAfterAdvance);
 
             LogManager.logAction(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
             System.out.println(String.format("Player %s successfully advanced %d armies from %s to %s!", d_player.get_name(), l_toMoveCount, d_sourceCountry.getName(), d_targetCountry.getName()));
