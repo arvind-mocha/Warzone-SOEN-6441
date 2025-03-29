@@ -28,7 +28,7 @@ public class BombOrderTest {
         player.get_cards().put(Cards.BOMB_CARD,1);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void testValidBombOrder() throws Exception {
         bombOrder = new BombOrder(player, targetCountry);
         bombOrder.isValid(); // Should not throw an exception

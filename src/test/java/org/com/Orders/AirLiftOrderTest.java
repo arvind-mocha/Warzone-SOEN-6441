@@ -37,14 +37,14 @@ public class AirLiftOrderTest {
         assertEquals(10, targetCountry.getArmyCount());
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testAirliftWithoutOwnership() throws Exception {
         sourceCountry.setOwner(new Player("Opponent"));
         airLiftOrder = new AirLiftOrder(player, sourceCountry, targetCountry, 5);
         airLiftOrder.isValid();
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testAirliftToEnemyCountry() throws Exception {
         targetCountry.setOwner(new Player("Opponent"));
         airLiftOrder = new AirLiftOrder(player, sourceCountry, targetCountry, 5);

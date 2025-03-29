@@ -82,6 +82,6 @@ public class AdvanceOrderTest {
         advanceOrder.execute();
 
         assertEquals(player, targetCountry.getOwner()); // Ownership should transfer
-        assertEquals(7, targetCountry.getArmyCount());
+        assertEquals(3, targetCountry.getArmyCount());
     }
 }

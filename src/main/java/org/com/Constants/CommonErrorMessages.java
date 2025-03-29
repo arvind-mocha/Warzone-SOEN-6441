@@ -1,7 +1,5 @@
 package org.com.Constants;
 
-import java.util.Set;
-
 /**
  * This class contains all global error messages.
  *
@@ -34,6 +32,6 @@ public class CommonErrorMessages {
     public static final String NEUTRAL_COUNTRY_DEPLOYMENT = "Cannot deploy armies to a neutral country";
     public static final String ARMY_COUNT_ZERO = "Army count of zero cannot be used for deployment";
     public static final String INVALID_COUNTRY = "Country mentioned does not exists";
-    public static final String NO_ADVANCE_COMMAND = "Player %s as no advance commands to be executed";
+    public static final String NO_ADVANCE_COMMAND = "Player %s has no advance commands to be executed";
     public static final String PLAYED_MORE_THAN_ONE_POWER_CARD = "%s cannot be played, as only one power can be played in a turn. %s has already been played!";
 }
