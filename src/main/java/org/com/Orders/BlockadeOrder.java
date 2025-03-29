@@ -39,7 +39,7 @@ public class BlockadeOrder implements Order {
 
         int d_blockadeCount = d_targetCountry.getArmyCount()*3;
         HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
-        d_targetCountry.setArmyCount(d_blockadeCount*3);
+        d_targetCountry.setArmyCount(d_blockadeCount);
 
         System.out.println(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
         LogManager.logAction(String.format("%s played Blockade card on %s, neutralizing the country", d_player.get_name(), d_targetCountry.getName()));
