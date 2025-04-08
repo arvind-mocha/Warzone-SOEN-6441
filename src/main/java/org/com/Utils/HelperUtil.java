@@ -4,6 +4,7 @@ import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
+import org.com.Orders.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -133,5 +134,15 @@ public class HelperUtil {
             }
         }
         return l_selectedCountry;
+    }
+
+    public static Boolean hasPlayerExecutedCard(Player p_currentPlayer)
+    {
+        return p_currentPlayer.get_orderList().stream().anyMatch(order ->
+                order instanceof BombOrder ||
+                        order instanceof BlockadeOrder ||
+                        order instanceof AirLiftOrder ||
+                        order instanceof DiplomacyOrder
+        );
     }
 }

@@ -39,7 +39,7 @@ public class GameEngine implements Serializable {
         Scanner l_scanner = new Scanner(System.in);
         GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
         LogManager.logAction("Game has begun!!");
-        String l_inputCommand;
+        List<String> l_inputCommand;
         do {
             boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
             List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
