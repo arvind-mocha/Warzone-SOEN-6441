@@ -2,11 +2,16 @@ package org.com.GamePage;
 
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
+import org.com.GamePhase.IssueOrderPhase;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.GameLog.LogManager;
+import org.com.Models.Player;
+import org.com.Strategies.HumanStrategy;
+import org.com.Strategies.Strategy;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -36,8 +41,19 @@ public class GameEngine implements Serializable {
         LogManager.logAction("Game has begun!!");
         String l_inputCommand;
         do {
-            l_console.print("> ");
-            l_inputCommand = l_scanner.nextLine();
+            boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
+            List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
+            Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
+            if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
+            {
+                Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
+                l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
+            }
+            else
+            {
+                l_console.print("> ");
+                l_inputCommand = l_scanner.nextLine();
+            }
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             } catch (Exception e) {

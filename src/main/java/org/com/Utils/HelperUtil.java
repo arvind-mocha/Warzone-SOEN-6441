@@ -84,4 +84,54 @@ public class HelperUtil {
             p_country.setOwner(p_player);
         }
     }
+
+    public static Country getPlayerHighestArmyCountry(Player l_player)
+    {
+        return l_player.get_countries().stream()
+                .max((c1, c2) -> Integer.compare(c1.getArmyCount(), c2.getArmyCount()))
+                .orElse(null);
+    }
+
+    /**
+     * Retrieves the country with the most armies owned by a player other than the current player.
+     *
+     * @param p_currentPlayer The current player.
+     * @param p_playersList   The list of all players.
+     * @return The country with the most armies owned by another player, or null if not found.
+     */
+    public static Country getStrongestCountryOtherThanCurrentPlayer(Player p_currentPlayer, List<Player> p_playersList) {
+        Country l_strongestCountry = null;
+        for (Player l_player : p_playersList) {
+            if (!l_player.equals(p_currentPlayer)) {
+                for (Country l_country : l_player.get_countries()) {
+                    if (l_strongestCountry == null || l_country.getArmyCount() > l_strongestCountry.getArmyCount()) {
+                        l_strongestCountry = l_country;
+                    }
+                }
+            }
+        }
+        return l_strongestCountry;
+    }
+
+    public static Country getRandomNeighbour(Country p_country, Map p_gameMap, Player p_currentPlayer) {
+        List<Integer> l_neighbourIds = p_country.getNeighbourCountryIds();
+        Country l_selectedCountry = null;
+        int l_maxUnownedNeighbours = -1;
+
+        for (int l_neighbourId : l_neighbourIds) {
+            Country l_neighbour = p_gameMap.getCountryById(l_neighbourId);
+            if (l_neighbour != null) {
+                int l_unownedNeighboursCount = (int) l_neighbour.getNeighbourCountryIds().stream()
+                        .map(p_gameMap::getCountryById)
+                        .filter(l_neighbourObj -> l_neighbourObj != null && !p_currentPlayer.equals(l_neighbourObj.getOwner()))
+                        .count();
+
+                if (l_unownedNeighboursCount > l_maxUnownedNeighbours) {
+                    l_maxUnownedNeighbours = l_unownedNeighboursCount;
+                    l_selectedCountry = l_neighbour;
+                }
+            }
+        }
+        return l_selectedCountry;
+    }
 }

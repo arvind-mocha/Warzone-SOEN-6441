@@ -3,6 +3,7 @@ package org.com.Handlers;
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.Constants.StrategyConstants;
 import org.com.GameLog.LogManager;
 import org.com.Models.Continent;
 import org.com.Models.Country;
@@ -47,13 +48,15 @@ public class PlayerOperationsHandler {
                 String[] l_operationsArray = l_attribute.split(" ");
                 String l_attributeOperation = l_operationsArray[0];
                 String l_playerName = l_operationsArray[1];
+                String l_playerStrategy = l_operationsArray[2];
                 ValidationUtil.validatePlayerManagement(l_playerList, l_attributeOperation, l_playerName);
 
                 if (l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
                     Player l_player = new Player(l_playerName);
+                    l_player.set_playerStrategy(StrategyConstants.getStrategyByName(l_playerStrategy));
                     l_playerList.add(l_player);
-                    System.console().println(String.format("Player %s has been added successfully", l_playerName));
-                    LogManager.logAction(String.format("Player %s has been added successfully", l_playerName));
+                    System.console().println(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
+                    LogManager.logAction(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
                 } else if (l_attributeOperation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
                     if(!ValidationUtil.validatePlayerExistence(l_playerList, l_playerName))
                     {

@@ -48,17 +48,20 @@ public class CommonConstants {
     public static final String COUNTRIES = "[countries]";
     public static final String BORDERS = "[borders]";
 
+    // Computer Commands
+    public static final String DEPLOY = DEPLOY_ARMIES_COMMAND + " %s %d";
+    public static final String ADVANCE = ADVANCE_ARMY_COMMAND + " %s %s %d";
+    public static final String BOMB = BOMB_COMMAND + " %s";
+
     // Attributes
     public static final String ADD_ATTRIBUTE = "add";
     public static final String REMOVE_ATTRIBUTE = "remove";
     public static final HashMap<String, Integer> TWO_ATTRIBUTES_TWO_ONE_VALUE;
-    public static final HashMap<String, Integer> TWO_ATTRIBUTES_ONE_VALUE_EACH;
     public static final HashMap<String, Integer> TWO_ATTRIBUTES_TWO_VALUE_EACH;
 
 
     static {
         TWO_ATTRIBUTES_TWO_ONE_VALUE = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{2,1}, 2);
-        TWO_ATTRIBUTES_ONE_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{1,1}, 2);
         TWO_ATTRIBUTES_TWO_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{2,2}, 2);
     }
 }

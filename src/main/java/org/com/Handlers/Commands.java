@@ -22,7 +22,7 @@ public enum Commands {
     EDIT_NEIGHBOUR(CommonConstants.EDIT_NEIGHBOUR_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_VALUE_EACH, null),
     EDIT_COUNTRY(CommonConstants.EDIT_COUNTRY_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE, null),
     EDIT_CONTINENT(CommonConstants.EDIT_CONTINENT_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE, null),
-    ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_ONE_VALUE_EACH, null),
+    ADD_PLAYER(CommonConstants.ADD_PLAYER_COMMAND, false, CommonConstants.TWO_ATTRIBUTES_TWO_ONE_VALUE, null),
     ASSIGN_COUNTRIES(CommonConstants.ASSIGN_COUNTRIES_COMMAND, false, null, null),
     ADVANCE_ARMY_COMMAND(CommonConstants.ADVANCE_ARMY_COMMAND, false, null, 4),
     DEPLOY_ARMY_COMMAND(CommonConstants.DEPLOY_ARMIES_COMMAND, false, null, 3),
