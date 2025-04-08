@@ -11,6 +11,7 @@ import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,7 +53,7 @@ public class GameEngine implements Serializable {
             else
             {
                 l_console.print("> ");
-                l_inputCommand = l_scanner.nextLine();
+                l_inputCommand = Arrays.asList(l_scanner.nextLine());
             }
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
