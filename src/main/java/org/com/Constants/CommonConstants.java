@@ -52,6 +52,10 @@ public class CommonConstants {
     public static final String DEPLOY = DEPLOY_ARMIES_COMMAND + " %s %d";
     public static final String ADVANCE = ADVANCE_ARMY_COMMAND + " %s %s %d";
     public static final String BOMB = BOMB_COMMAND + " %s";
+    public static final String BLOCKADE = BLOCKADE_COMMAND + " %s";
+    public static final String AIRLIFT = AIRLIFT_COMMAND + " %s %s %d";
+    public static final String NEGOTIATE = NEGOTIATE_COMMAND + " %s";
+
 
     // Attributes
     public static final String ADD_ATTRIBUTE = "add";
