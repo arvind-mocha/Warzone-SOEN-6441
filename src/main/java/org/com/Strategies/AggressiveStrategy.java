@@ -29,14 +29,14 @@ public class AggressiveStrategy implements Strategy {
         } else if (!l_hasPlayerExecutedCard && !p_currentPlayer.get_cards().isEmpty() && !p_currentPlayer.get_countries().isEmpty()) {
             return Arrays.asList(generateCardOrder(p_gamePhaseHandler, p_currentPlayer, Cards.BOMB_CARD));
         } else if(!l_hasPlayerExecutedAdvance) {
+            List<String> commands = new ArrayList<>();
             List<Integer> l_neighbours = l_strongestCountry.getNeighbourCountryIds();
             // Attacking unowned country from the strongest country
             Country l_randomNeighbour = HelperUtil.getRandomNeighbour(l_strongestCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
-            List<String> commands = new ArrayList<>();
             commands.add(String.format(CommonConstants.ADVANCE, l_strongestCountry.getName(), l_randomNeighbour.getName(), l_strongestCountry.getArmyCount() - 1));
             for (int l_neighborCountryID : l_neighbours) {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
-                if (l_neighborCountry.getArmyCount() > 1 && l_neighborCountry.getOwner().equals(p_currentPlayer)) {
+                if (l_neighborCountry.getArmyCount() > 1 && p_currentPlayer.equals(l_neighborCountry.getOwner())) {
                     commands.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_strongestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
                 }
             }

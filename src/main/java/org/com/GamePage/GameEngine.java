@@ -62,7 +62,7 @@ public class GameEngine implements Serializable {
                 LogManager.logAction("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
                 l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
-        } while (!l_inputCommand.equalsIgnoreCase(CommonConstants.EXIT_COMMAND));
+        } while (!l_inputCommand.get(l_inputCommand.size()-1).equalsIgnoreCase(CommonConstants.EXIT_COMMAND));
 
         LogManager.logAction("Game has been ended");
         l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");

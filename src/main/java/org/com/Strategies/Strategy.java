@@ -28,16 +28,15 @@ public interface Strategy {
             switch (l_card) {
                 case Cards.BOMB_CARD:
                     Country l_countryToBomb = HelperUtil.getStrongestCountryOtherThanCurrentPlayer(p_currentPlayer, p_gameManager.getPlayerList());
-                    return String.format(CommonConstants.BOMB, l_countryToBomb);
+                    return String.format(CommonConstants.BOMB, l_countryToBomb.getName());
                 case Cards.AIRLIFT_CARD:
                     if (p_currentPlayer.get_countries().size() == 1) break;
                     Country l_randCountryFrom = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
                     Country l_randCountryTo;
                     do {
-                        l_randCountryTo = p_currentPlayer.get_countries().get(
-                                l_random.nextInt(p_currentPlayer.get_countries().size()));
+                        l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
                     } while (l_randCountryTo != l_randCountryFrom);
-                    return String.format(CommonConstants.AIRLIFT, l_randCountryFrom, l_randCountryTo, l_randCountryFrom.getArmyCount());
+                    return String.format(CommonConstants.AIRLIFT, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randCountryFrom.getArmyCount());
                 case Cards.DIPLOMACY_CARD:
                     Player l_oppPlayer;
                     do {
@@ -47,7 +46,7 @@ public interface Strategy {
                 case Cards.BLOCKADE_CARD:
                     Country l_randCountry = p_currentPlayer.get_countries().get(
                             l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    return String.format(CommonConstants.BLOCKADE, l_randCountry);
+                    return String.format(CommonConstants.BLOCKADE, l_randCountry.getName());
             }
         }
         return null;

@@ -21,7 +21,7 @@ public class CommandHandler {
      * Processes the given command based on the current game phase.
      *
      * @param p_gamePhaseHandler The game phase manager handling the current game phase.
-     * @param p_command The command entered by the user.
+     * @param p_commandList The command entered by the user.
      */
     public static void processCommand(GamePhaseHandler p_gamePhaseHandler, List<String> p_commandList)throws Exception
     {
