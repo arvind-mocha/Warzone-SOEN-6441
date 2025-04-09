@@ -3,6 +3,7 @@ package org.com.GamePhase;
 import org.com.Constants.CommandOutputMessages;
 import org.com.Handlers.Commands;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,7 +14,7 @@ import java.util.Arrays;
  * @author Arvind Lakshmanan
  *
  */
-public class GameStartUpPhase implements Phase {
+public class GameStartUpPhase implements Phase, Serializable {
 
     @Override
     public Phase getNextPhase() {
