@@ -44,6 +44,7 @@ public class AggressiveStrategy implements Strategy {
                     commands.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_strongestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
                 }
             }
+            p_currentPlayer.set_advanceExecuted(true);
             return commands;
         }
         return Arrays.asList(CommonConstants.COMMIT);
@@ -81,6 +82,7 @@ public class AggressiveStrategy implements Strategy {
      */
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
         Random l_random = new Random();
+        p_currentPlayer.set_cardsExecuted(true);
         if (!p_currentPlayer.get_cards().isEmpty()) {
             String l_card = p_currentPlayer.get_cards().containsKey(p_prioritizeCard) ? p_prioritizeCard : p_currentPlayer.get_cards().keySet().iterator().next();
             Country l_strongestCountry = HelperUtil.getStrongestCountryOtherThanCurrentPlayer(p_currentPlayer, p_gameManager.getPlayerList());
