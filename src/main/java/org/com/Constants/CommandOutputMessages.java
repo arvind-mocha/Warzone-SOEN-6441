@@ -28,7 +28,7 @@ public class CommandOutputMessages {
 
     // Game play commands help messages
     public static final String GAME_PLAY_HELP = "usage: " +
-            "\n\t gameplayer -add <playername> -remove <playername>  :\tAdd or Remove player from the game " +
+            "\n\t gameplayer -add <playername> <strategy> -remove <playername>  :\tAdd or Remove player from the game " +
             "\n\t assigncountries\t\t\t\t\t\t\t:\tAssigns random countries to the players, and starts the game\n";
 
     // Exit command help message

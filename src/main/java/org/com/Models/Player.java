@@ -1,6 +1,9 @@
 package org.com.Models;
 
 import org.com.Orders.Order;
+import org.com.Strategies.HumanStrategy;
+import org.com.Strategies.Strategy;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +28,9 @@ public class Player implements Serializable {
     private HashMap<String, Integer> d_cards;
     private Set<Player> d_negotiatedPlayer;
     private Order d_cardPlayedInTurn;
+    private Strategy d_playerStrategy;
+    private Boolean d_cardsExecuted;
+    private Boolean d_advanceExecuted;
 
     /**
      * This is a default constructor which is used in the beginning of the game to get player's name and
@@ -40,6 +46,9 @@ public class Player implements Serializable {
         this.d_cards = new HashMap<String, Integer>();
         this.d_negotiatedPlayer = null;
         this.d_cardPlayedInTurn = null;
+        this.d_playerStrategy = new HumanStrategy();
+        this.d_cardsExecuted = false;
+        this.d_advanceExecuted = false;
     }
 
 
@@ -211,5 +220,39 @@ public class Player implements Serializable {
      */
     public void set_negotiationPlayer(Set<Player> p_negotiationList) {
         this.d_negotiatedPlayer = p_negotiationList;
+    }
+
+    /**
+     * Gets the player's strategy
+     *
+     * @return d_playerStrategy The strategy of the player
+     */
+    public Strategy get_playerStrategy() {
+        return d_playerStrategy;
+    }
+
+    /**
+     * Sets the player's strategy
+     *
+     * @param p_playerStrategy The strategy to be set for the player
+     */
+    public void set_playerStrategy(Strategy p_playerStrategy) {
+        this.d_playerStrategy = p_playerStrategy;
+    }
+
+    public Boolean get_cardsExecuted() {
+        return d_cardsExecuted;
+    }
+
+    public void set_cardsExecuted(Boolean p_cardsExecuted) {
+        this.d_cardsExecuted = p_cardsExecuted;
+    }
+
+    public Boolean get_advanceExecuted() {
+        return d_advanceExecuted;
+    }
+
+    public void set_advanceExecuted(Boolean p_advanceExecuted) {
+        this.d_advanceExecuted = p_advanceExecuted;
     }
 }

@@ -1,8 +1,13 @@
 package org.com.Constants;
 
+import org.com.Orders.AdvanceOrder;
+import org.com.Orders.BombOrder;
+import org.com.Orders.Order;
 import org.com.Utils.HelperUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class contains all global constants.
@@ -24,6 +29,7 @@ public class CommonConstants {
     public static final String EDIT_COUNTRY_COMMAND = "editcountry";
     public static final String EDIT_NEIGHBOUR_COMMAND = "editneighbour";
     public static final String EDIT_CONTINENT_COMMAND = "editcontinent";
+    public static final String TOURNAMENT_COMMAND = "tournament";
     public static final String ADD_PLAYER_COMMAND = "gameplayer";
     public static final String ASSIGN_COUNTRIES_COMMAND = "assigncountries";
     public static final String DEPLOY_ARMIES_COMMAND = "deploy";
@@ -48,17 +54,30 @@ public class CommonConstants {
     public static final String COUNTRIES = "[countries]";
     public static final String BORDERS = "[borders]";
 
+    // Computer Commands
+    public static final String DEPLOY = DEPLOY_ARMIES_COMMAND + " %s %d";
+    public static final String ADVANCE = ADVANCE_ARMY_COMMAND + " %s %s %d";
+    public static final String BOMB = BOMB_COMMAND + " %s";
+    public static final String BLOCKADE = BLOCKADE_COMMAND + " %s";
+    public static final String AIRLIFT = AIRLIFT_COMMAND + " %s %s %d";
+    public static final String NEGOTIATE = NEGOTIATE_COMMAND + " %s";
+
+
     // Attributes
     public static final String ADD_ATTRIBUTE = "add";
     public static final String REMOVE_ATTRIBUTE = "remove";
+    public static final String MAP_ATTRIBUTE = "M";
+    public static final String PLAYER_ATTRIBUTE = "P";
+    public static final String GAME_ATTRIBUTE = "G";
+    public static final String TURNS_ATTRIBUTE = "D";
     public static final HashMap<String, Integer> TWO_ATTRIBUTES_TWO_ONE_VALUE;
-    public static final HashMap<String, Integer> TWO_ATTRIBUTES_ONE_VALUE_EACH;
     public static final HashMap<String, Integer> TWO_ATTRIBUTES_TWO_VALUE_EACH;
+    public static final HashMap<String, Integer> FOUR_ATTRIBUTES_ONE_VALUE_EACH;
 
 
     static {
-        TWO_ATTRIBUTES_TWO_ONE_VALUE = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{2,1}, 2);
-        TWO_ATTRIBUTES_ONE_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{1,1}, 2);
-        TWO_ATTRIBUTES_TWO_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{CommonConstants.ADD_ATTRIBUTE, CommonConstants.REMOVE_ATTRIBUTE}, new Integer[]{2,2}, 2);
+        TWO_ATTRIBUTES_TWO_ONE_VALUE = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2,1}, 2);
+        TWO_ATTRIBUTES_TWO_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2,2}, 2);
+        FOUR_ATTRIBUTES_ONE_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{MAP_ATTRIBUTE, PLAYER_ATTRIBUTE, GAME_ATTRIBUTE, TURNS_ATTRIBUTE}, new Integer[]{1,1,1,1}, 4);
     }
 }

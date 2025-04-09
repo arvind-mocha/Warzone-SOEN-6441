@@ -1,9 +1,6 @@
 package org.com.Constants;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Cards {
     /**
@@ -23,13 +20,30 @@ public class Cards {
      */
     public static final String DIPLOMACY_CARD = "diplomacy-card";
 
+    /**
+     * List of all card constants
+     */
     public static final List<String> CARDS_LIST = Arrays.asList(BOMB_CARD, BLOCKADE_CARD, AIRLIFT_CARD, DIPLOMACY_CARD);
 
-    public static String getRandomCard()
+    /**
+     * Retrieves a random card from the list of card constants.
+     *
+     * @return A randomly selected card constant.
+     */
+    public static String getRandomCard(HashMap<String, Integer> p_cards)
     {
-        Collections.shuffle(CARDS_LIST);
         Random random = new Random();
+        if (p_cards != null) {
+            if(p_cards.isEmpty())
+            {
+                return null;
+            }
+            List<String> l_availableCards = new ArrayList<>(p_cards.keySet());
+            int index = random.nextInt(l_availableCards.size());
+            return l_availableCards.get(index);
+        }
         int index = random.nextInt(CARDS_LIST.size());
+        Collections.shuffle(CARDS_LIST);
         return CARDS_LIST.get(index);
     }
 }

@@ -6,6 +6,7 @@ import org.com.GamePhase.Phase;
 import org.com.Models.Continent;
 import org.com.Models.Map;
 import org.com.Models.Player;
+import org.com.Strategies.CheaterStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class GamePhaseHandler {
     private Map d_gameMap;
     private String d_mapFileName;
     private int d_turnsCompleted;
+    private String d_winnerPlayer;
 
     /**
      * Constructor for GamePhaseHandler.
@@ -132,8 +134,13 @@ public class GamePhaseHandler {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
-            int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
+            if(l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy)
+            {
+                System.console().println(String.format("Cheater player %s get no army", l_player.get_name()));
+                continue;
+            }
 
+            int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
             for (Continent l_continent : l_player.get_continents()) {
                 l_numArmies = l_numArmies + l_continent.getValue();
             }
@@ -152,6 +159,11 @@ public class GamePhaseHandler {
         int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
 
         for (Player l_player : d_playerList) {
+            if(l_player.get_playerStrategy() instanceof CheaterStrategy)
+            {
+                System.console().println(String.format("No army will be assigned to Cheater player %s", l_player.get_name()));
+                continue;
+            }
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
             LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
@@ -176,5 +188,23 @@ public class GamePhaseHandler {
      */
     public void setTurnsCompleted(int p_turnsCompleted) {
         this.d_turnsCompleted = p_turnsCompleted;
+    }
+
+    /**
+     * Retrieves the winner player.
+     *
+     * @return the name of the winner player.
+     */
+    public String getWinnerPlayer() {
+        return d_winnerPlayer;
+    }
+
+    /**
+     * Sets the winner player.
+     *
+     * @param p_winnerPlayer the name of the winner player to set.
+     */
+    public void setWinnerPlayer(String p_winnerPlayer) {
+        this.d_winnerPlayer = p_winnerPlayer;
     }
 }

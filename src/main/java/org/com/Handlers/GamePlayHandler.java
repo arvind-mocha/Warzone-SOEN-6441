@@ -40,6 +40,7 @@ public class GamePlayHandler {
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
             System.console().println(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
+            System.console().println("\u001B[32m================================================================\n\u001B[0m");
             LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
         }
@@ -61,14 +62,10 @@ public class GamePlayHandler {
             return;
         }
 
-
         Order l_order = p_player.nextOrder();
-
         if(l_order instanceof DeployOrder){
             l_order.execute();
-        }
-
-        else {
+        } else {
             List<Order> l_cardPlays = new ArrayList<>();
             List<Order> l_advancePlays = new ArrayList<>();
             while (l_order != null) {
@@ -82,7 +79,8 @@ public class GamePlayHandler {
 
             l_cardPlays.forEach(Order::execute);
             l_advancePlays.forEach(Order::execute);
-
+            p_player.set_cardsExecuted(false);
+            p_player.set_advanceExecuted(false);
         }
 //        p_player.set_negotiationPlayer(new HashSet<>());
 //        p_player.set_orderList(new ArrayList<>());
@@ -97,7 +95,7 @@ public class GamePlayHandler {
     {
         int l_numberOfCountriesAfterExecution = p_player.get_countries().size();
         if (l_numberOfCountriesAfterExecution > p_initialNumberOfCountries) {
-            String l_randomCard = Cards.getRandomCard();
+            String l_randomCard = Cards.getRandomCard(null);
             p_player.get_cards().merge(l_randomCard, 1, Integer::sum);
             System.console().println(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
             LogManager.logAction(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
