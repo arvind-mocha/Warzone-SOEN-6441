@@ -132,8 +132,12 @@ public class GamePhaseHandler {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
-            int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
+            if(l_player.get_countries().isEmpty())
+            {
+                break;
+            }
 
+            int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
             for (Continent l_continent : l_player.get_continents()) {
                 l_numArmies = l_numArmies + l_continent.getValue();
             }

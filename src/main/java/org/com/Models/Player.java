@@ -29,6 +29,8 @@ public class Player implements Serializable {
     private Set<Player> d_negotiatedPlayer;
     private Order d_cardPlayedInTurn;
     private Strategy d_playerStrategy;
+    private Boolean d_cardsExecuted;
+    private Boolean d_advanceExecuted;
 
     /**
      * This is a default constructor which is used in the beginning of the game to get player's name and
@@ -45,6 +47,8 @@ public class Player implements Serializable {
         this.d_negotiatedPlayer = null;
         this.d_cardPlayedInTurn = null;
         this.d_playerStrategy = new HumanStrategy();
+        this.d_cardsExecuted = false;
+        this.d_advanceExecuted = false;
     }
 
 
@@ -234,5 +238,21 @@ public class Player implements Serializable {
      */
     public void set_playerStrategy(Strategy p_playerStrategy) {
         this.d_playerStrategy = p_playerStrategy;
+    }
+
+    public Boolean get_cardsExecuted() {
+        return d_cardsExecuted;
+    }
+
+    public void set_cardsExecuted(Boolean p_cardsExecuted) {
+        this.d_cardsExecuted = p_cardsExecuted;
+    }
+
+    public Boolean get_advanceExecuted() {
+        return d_advanceExecuted;
+    }
+
+    public void set_advanceExecuted(Boolean p_advanceExecuted) {
+        this.d_advanceExecuted = p_advanceExecuted;
     }
 }

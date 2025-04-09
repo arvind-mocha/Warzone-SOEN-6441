@@ -25,6 +25,10 @@ public class CommandHandler {
      */
     public static void processCommand(GamePhaseHandler p_gamePhaseHandler, List<String> p_commandList)throws Exception
     {
+        if(p_commandList.isEmpty())
+        {
+            IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
+        }
         var l_console = System.console();
         for(String l_command : p_commandList) {
             String[] l_commandArray = l_command.split("\\s+");

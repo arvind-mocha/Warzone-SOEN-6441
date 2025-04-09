@@ -113,36 +113,4 @@ public class HelperUtil {
         }
         return l_strongestCountry;
     }
-
-    public static Country getRandomNeighbour(Country p_country, Map p_gameMap, Player p_currentPlayer) {
-        List<Integer> l_neighbourIds = p_country.getNeighbourCountryIds();
-        Country l_selectedCountry = null;
-        int l_maxUnownedNeighbours = -1;
-
-        for (int l_neighbourId : l_neighbourIds) {
-            Country l_neighbour = p_gameMap.getCountryById(l_neighbourId);
-            if (l_neighbour != null) {
-                int l_unownedNeighboursCount = (int) l_neighbour.getNeighbourCountryIds().stream()
-                        .map(p_gameMap::getCountryById)
-                        .filter(l_neighbourObj -> l_neighbourObj != null && !p_currentPlayer.equals(l_neighbourObj.getOwner()))
-                        .count();
-
-                if (l_unownedNeighboursCount > l_maxUnownedNeighbours) {
-                    l_maxUnownedNeighbours = l_unownedNeighboursCount;
-                    l_selectedCountry = l_neighbour;
-                }
-            }
-        }
-        return l_selectedCountry;
-    }
-
-    public static Boolean hasPlayerExecutedCard(Player p_currentPlayer)
-    {
-        return p_currentPlayer.get_orderList().stream().anyMatch(order ->
-                order instanceof BombOrder ||
-                        order instanceof BlockadeOrder ||
-                        order instanceof AirLiftOrder ||
-                        order instanceof DiplomacyOrder
-        );
-    }
 }

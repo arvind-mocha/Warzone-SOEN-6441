@@ -40,7 +40,7 @@ public class GamePlayHandler {
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
             System.console().println(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
-            System.console().println("\u001B[32m---------------\u001B[0m");
+            System.console().println("\u001B[32m================================================================\n\u001B[0m");
             LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
         }

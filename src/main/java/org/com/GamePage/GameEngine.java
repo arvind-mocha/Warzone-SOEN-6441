@@ -45,7 +45,16 @@ public class GameEngine implements Serializable {
             boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
             List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
             Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
-            if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
+            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
+            {
+                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
+                l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
+            }
+            else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
+            {
+                l_inputCommand = Arrays.asList(CommonConstants.COMMIT);
+            }
+            else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
             {
                 Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
                 l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
