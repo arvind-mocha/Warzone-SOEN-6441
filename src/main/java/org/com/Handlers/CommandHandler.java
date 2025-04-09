@@ -25,9 +25,10 @@ public class CommandHandler {
      */
     public static void processCommand(GamePhaseHandler p_gamePhaseHandler, List<String> p_commandList)throws Exception
     {
-        if(p_commandList == null || p_commandList.isEmpty())
+        if(p_commandList == null || p_commandList.isEmpty() || p_commandList.contains(null))
         {
             IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
+            return;
         }
         var l_console = System.console();
         for(String l_command : p_commandList) {

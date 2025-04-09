@@ -17,8 +17,9 @@ public class CheaterStrategy implements Strategy {
         for (Country l_country : l_currentPlayer.get_countries()) {
             for (int l_neighbourCountryId : l_country.getNeighbourCountryIds()) {
                 Country l_neighbour = p_gamePhaseHandler.getGameMap().getCountryById(l_neighbourCountryId);
-                if (l_neighbour.getOwner() != l_currentPlayer)
+                if (l_neighbour.getOwner() != l_currentPlayer && !l_neighbour.isCountryNeutral()) {
                     l_neighbour.getOwner().get_countries().remove(l_neighbour);
+                }
                 l_neighbour.setOwner(l_currentPlayer);
                 LogManager.logAction("CountryID " + l_neighbour.getId() + " conquered by " + l_currentPlayer.get_name());
             }

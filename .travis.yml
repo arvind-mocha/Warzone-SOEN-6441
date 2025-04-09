@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - openjdk23
+
+# Caching to speed up build time
+cache:
+  directories:
+    - $HOME/.m2
+
+# Run tests and build
+script:
+  - mvn clean install
+  - if [ "$TRAVIS_BRANCH" == "main" ]; then
+    mvn clean test;
+    fi

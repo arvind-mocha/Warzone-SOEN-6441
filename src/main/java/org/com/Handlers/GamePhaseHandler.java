@@ -6,6 +6,7 @@ import org.com.GamePhase.Phase;
 import org.com.Models.Continent;
 import org.com.Models.Map;
 import org.com.Models.Player;
+import org.com.Strategies.CheaterStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,9 +133,10 @@ public class GamePhaseHandler {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
-            if(l_player.get_countries().isEmpty())
+            if(l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy)
             {
-                break;
+                System.console().println(String.format("Cheater player %s get no army", l_player.get_name()));
+                continue;
             }
 
             int l_numArmies = Math.floorDiv(l_player.get_countries().size(), 3);
@@ -156,6 +158,11 @@ public class GamePhaseHandler {
         int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
 
         for (Player l_player : d_playerList) {
+            if(l_player.get_playerStrategy() instanceof CheaterStrategy)
+            {
+                System.console().println(String.format("No army will be assigned to Cheater player %s", l_player.get_name()));
+                continue;
+            }
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
             LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
