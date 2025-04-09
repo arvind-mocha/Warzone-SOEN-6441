@@ -5,9 +5,10 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class HumanStrategy implements Strategy{
+public class HumanStrategy implements Strategy, Serializable {
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
         return null;

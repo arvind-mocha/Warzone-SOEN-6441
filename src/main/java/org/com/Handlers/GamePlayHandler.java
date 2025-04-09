@@ -9,6 +9,7 @@ import org.com.Orders.AdvanceOrder;
 import org.com.Orders.DeployOrder;
 import org.com.Orders.Order;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Arvind Nachiappan
  * @author Devasenan Murugan
  */
-public class GamePlayHandler {
+public class GamePlayHandler implements Serializable {
     /**
      * Advances the turn to the next player.
      * @param p_gamePhaseHandler The current game phase handler

@@ -1,5 +1,6 @@
 package org.com.GameLog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
      * @author Devasenan Murugan
      */
 
-    public class LogEntryBuffer implements Observable {
+    public class LogEntryBuffer implements Observable, Serializable {
         private final List<Observer> d_observers;
         private String d_actionInfo;
 

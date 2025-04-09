@@ -1,11 +1,12 @@
 package org.com.GameLog;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class LogFileWriter implements Observer{
+public class LogFileWriter implements Observer, Serializable {
     private final Path d_logFilePath;
 
 

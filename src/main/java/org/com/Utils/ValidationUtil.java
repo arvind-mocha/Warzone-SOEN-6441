@@ -12,6 +12,7 @@ import org.com.Models.Player;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * @author Arvind Lakshmanan
  *
  */
-public class ValidationUtil {
+public class ValidationUtil implements Serializable {
 
     /**
      * Validates the given command based on the current game phase.

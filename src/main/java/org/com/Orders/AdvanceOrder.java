@@ -7,6 +7,8 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
+
 /**
  * Advance order command functionality and validation are present in this class
  *
@@ -14,7 +16,7 @@ import org.com.Utils.HelperUtil;
  * @author Arvind Nachiappan
  * @author Devasenan Murugan
  */
-public class AdvanceOrder implements Order {
+public class AdvanceOrder implements Order , Serializable {
 
     private Player d_player;
     private Country d_sourceCountry;
