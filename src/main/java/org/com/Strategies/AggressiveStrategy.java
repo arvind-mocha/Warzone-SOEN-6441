@@ -6,7 +6,6 @@ import org.com.Handlers.GamePhaseHandler;
 import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
-import org.com.Orders.AdvanceOrder;
 import org.com.Utils.HelperUtil;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class AggressiveStrategy implements Strategy {
         for(Country l_country: p_currentPlayer.get_countries()){
             for (int l_neighborID: l_country.getNeighbourCountryIds()){
                 l_neighbor = p_gameMap.getCountryById(l_neighborID);
-                if(!l_neighbor.getOwner().equals(p_currentPlayer)){
+                if(!p_currentPlayer.equals(l_neighbor.getOwner())){
                     return l_neighbor;
                 }
             }
@@ -85,7 +84,7 @@ public class AggressiveStrategy implements Strategy {
         p_currentPlayer.set_cardsExecuted(true);
         if (!p_currentPlayer.get_cards().isEmpty()) {
             String l_card = p_currentPlayer.get_cards().containsKey(p_prioritizeCard) ? p_prioritizeCard : p_currentPlayer.get_cards().keySet().iterator().next();
-            Country l_strongestCountry = HelperUtil.getStrongestCountryOtherThanCurrentPlayer(p_currentPlayer, p_gameManager.getPlayerList());
+            Country l_strongestCountry = HelperUtil.getStrongestNeighbouringEnemyCountry(p_currentPlayer, p_gameManager.getGameMap());
             switch (l_card) {
                 case Cards.BOMB_CARD:
                     return String.format(CommonConstants.BOMB, l_strongestCountry.getName());
@@ -96,7 +95,7 @@ public class AggressiveStrategy implements Strategy {
                     return String.format(CommonConstants.AIRLIFT, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randCountryFrom.getArmyCount());
                 case Cards.DIPLOMACY_CARD:
                     Player l_oppPlayer = p_gameManager.getPlayerList().get(l_random.nextInt(p_gameManager.getPlayerList().size()));
-                    return String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name());
+                    return p_currentPlayer.equals(l_oppPlayer) ? null : String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name());
                 case Cards.BLOCKADE_CARD:
                     Country l_randCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
                     return String.format(CommonConstants.BLOCKADE, l_randCountry.getName());

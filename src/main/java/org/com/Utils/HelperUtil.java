@@ -4,11 +4,8 @@ import org.com.Models.Continent;
 import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
-import org.com.Orders.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -88,29 +85,57 @@ public class HelperUtil {
 
     public static Country getPlayerHighestArmyCountry(Player l_player)
     {
-        return l_player.get_countries().stream()
-                .max((c1, c2) -> Integer.compare(c1.getArmyCount(), c2.getArmyCount()))
-                .orElse(null);
+        Country l_highestArmyCountry = null;
+        for (Country l_country : l_player.get_countries()) {
+            if (l_highestArmyCountry == null || l_country.getArmyCount() > l_highestArmyCountry.getArmyCount()) {
+                l_highestArmyCountry = l_country;
+            }
+        }
+        return l_highestArmyCountry;
     }
 
     /**
      * Retrieves the country with the most armies owned by a player other than the current player.
      *
      * @param p_currentPlayer The current player.
-     * @param p_playersList   The list of all players.
+     * @param p_gameMap   The game map.
      * @return The country with the most armies owned by another player, or null if not found.
      */
-    public static Country getStrongestCountryOtherThanCurrentPlayer(Player p_currentPlayer, List<Player> p_playersList) {
+    public static Country getStrongestNeighbouringEnemyCountry(Player p_currentPlayer, Map p_gameMap) {
         Country l_strongestCountry = null;
-        for (Player l_player : p_playersList) {
-            if (!l_player.equals(p_currentPlayer)) {
-                for (Country l_country : l_player.get_countries()) {
-                    if (l_strongestCountry == null || l_country.getArmyCount() > l_strongestCountry.getArmyCount()) {
-                        l_strongestCountry = l_country;
+        for (Country l_country : p_currentPlayer.get_countries()) {
+            for (int l_neighborID : l_country.getNeighbourCountryIds()) {
+                Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
+                if (!p_currentPlayer.equals(l_neighbor.getOwner())) {
+                    if (l_strongestCountry == null || l_neighbor.getArmyCount() > l_strongestCountry.getArmyCount()) {
+                        l_strongestCountry = l_neighbor;
                     }
                 }
             }
         }
         return l_strongestCountry;
+    }
+
+    /**
+     * Retrieves a random neighboring enemy country for the given player and country.
+     *
+     * @param p_country       The country whose neighbors are being checked.
+     * @param p_gameMap       The game map containing all countries and their relationships.
+     * @param p_currentPlayer The current player whose ownership is being considered.
+     * @return A random neighboring enemy country, or null if none exist.
+     */
+    public static Country getRandomNeighbouringEnemyCountry(Country p_country, Map p_gameMap, Player p_currentPlayer) {
+        List<Country> enemyCountries = new ArrayList<>();
+        for (int l_neighborID : p_country.getNeighbourCountryIds()) {
+            Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
+            if (!l_neighbor.getOwner().equals(p_currentPlayer)) {
+                enemyCountries.add(l_neighbor);
+            }
+        }
+        if (enemyCountries.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        return enemyCountries.get(random.nextInt(enemyCountries.size()));
     }
 }

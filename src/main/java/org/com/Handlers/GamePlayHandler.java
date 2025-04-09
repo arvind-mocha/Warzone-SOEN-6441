@@ -79,6 +79,8 @@ public class GamePlayHandler {
 
             l_cardPlays.forEach(Order::execute);
             l_advancePlays.forEach(Order::execute);
+            p_player.set_cardsExecuted(false);
+            p_player.set_advanceExecuted(false);
         }
 //        p_player.set_negotiationPlayer(new HashSet<>());
 //        p_player.set_orderList(new ArrayList<>());
