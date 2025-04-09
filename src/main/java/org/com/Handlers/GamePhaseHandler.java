@@ -26,6 +26,7 @@ public class GamePhaseHandler {
     private Map d_gameMap;
     private String d_mapFileName;
     private int d_turnsCompleted;
+    private String d_winnerPlayer;
 
     /**
      * Constructor for GamePhaseHandler.
@@ -187,5 +188,23 @@ public class GamePhaseHandler {
      */
     public void setTurnsCompleted(int p_turnsCompleted) {
         this.d_turnsCompleted = p_turnsCompleted;
+    }
+
+    /**
+     * Retrieves the winner player.
+     *
+     * @return the name of the winner player.
+     */
+    public String getWinnerPlayer() {
+        return d_winnerPlayer;
+    }
+
+    /**
+     * Sets the winner player.
+     *
+     * @param p_winnerPlayer the name of the winner player to set.
+     */
+    public void setWinnerPlayer(String p_winnerPlayer) {
+        this.d_winnerPlayer = p_winnerPlayer;
     }
 }

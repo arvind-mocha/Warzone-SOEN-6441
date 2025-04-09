@@ -48,11 +48,11 @@ public class PlayerOperationsHandler {
                 String[] l_operationsArray = l_attribute.split(" ");
                 String l_attributeOperation = l_operationsArray[0];
                 String l_playerName = l_operationsArray[1];
-                String l_playerStrategy = l_operationsArray[2];
                 ValidationUtil.validatePlayerManagement(l_playerList, l_attributeOperation, l_playerName);
 
                 if (l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
                     Player l_player = new Player(l_playerName);
+                    String l_playerStrategy = l_operationsArray[2];
                     l_player.set_playerStrategy(StrategyConstants.getStrategyByName(l_playerStrategy));
                     l_playerList.add(l_player);
                     System.console().println(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));

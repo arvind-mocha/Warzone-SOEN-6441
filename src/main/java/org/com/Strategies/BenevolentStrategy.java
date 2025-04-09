@@ -17,21 +17,21 @@ public class BenevolentStrategy implements Strategy{
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        if(l_currentPlayer.get_countries().isEmpty()) return null;
+        if(l_currentPlayer.get_countries().isEmpty()) {return null;}
 
         List<Country> l_countries = l_currentPlayer.get_countries();
         Country l_weakestCountry = getWeakestCountry(l_countries);
         Random l_random = new Random();
 
-        if(l_weakestCountry == null) return null;
+        if(l_weakestCountry == null) {return null;}
         int l_availableArmies = p_currentPlayer.get_armyCount();
-        if(l_currentPlayer.get_armyCount() > 0) {
+        if(l_availableArmies > 0) {
             return Arrays.asList(String.format(CommonConstants.DEPLOY, l_weakestCountry.getName(), l_availableArmies));
         } else if (!l_currentPlayer.get_cards().isEmpty() && !l_currentPlayer.get_cardsExecuted()) {
             List<String> l_commandArray = new ArrayList<>();
             if (l_currentPlayer.get_cards().containsKey(Cards.AIRLIFT_CARD)){
                 Country l_countryFrom = HelperUtil.getPlayerHighestArmyCountry(p_currentPlayer);
-                l_commandArray.add(String.format(CommonConstants.AIRLIFT, l_countryFrom, l_weakestCountry));
+                l_commandArray.add(String.format(CommonConstants.AIRLIFT, l_countryFrom.getName(), l_weakestCountry.getName(), l_countryFrom.getArmyCount()-1));
             } else if(l_currentPlayer.get_cards().containsKey(Cards.DIPLOMACY_CARD) && !l_currentPlayer.get_countries().isEmpty()){
                 Player l_oppPlayer = p_gamePhaseHandler.getPlayerList().get(l_random.nextInt(p_gamePhaseHandler.getPlayerList().size()));
                 l_commandArray.add(p_currentPlayer.equals(l_oppPlayer) ? null : String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name()));
@@ -40,12 +40,12 @@ public class BenevolentStrategy implements Strategy{
             }
             l_currentPlayer.set_cardsExecuted(true);
             return l_commandArray;
-        } else {
+        } else if(!l_currentPlayer.get_advanceExecuted()) {
             List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
             for (int l_neighborCountryID: l_neighbours) {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
                 if(l_neighborCountry.getArmyCount() > 1 && l_currentPlayer.equals(l_neighborCountry.getOwner())) {
-                    return Arrays.asList(String.format(CommonConstants.ADVANCE, l_neighborCountry, l_weakestCountry, l_neighborCountry.getArmyCount() - 1));
+                    return Arrays.asList(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_weakestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
                 }
             }
             l_currentPlayer.set_advanceExecuted(true);
