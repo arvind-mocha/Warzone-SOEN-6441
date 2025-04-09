@@ -88,6 +88,8 @@ public class CommandHandler {
                 case CommonConstants.AIRLIFT_COMMAND:
                     IssueOrderHandler.processAirLiftCommand(p_gamePhaseHandler, l_commandArray);
                     break;
+                case CommonConstants.TOURNAMENT_COMMAND:
+                    TournamentHandler.processTournament(l_command);
                 case CommonConstants.COMMIT:
                     IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
             }

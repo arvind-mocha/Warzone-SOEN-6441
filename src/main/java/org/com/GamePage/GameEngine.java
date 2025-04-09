@@ -7,6 +7,7 @@ import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.GameLog.LogManager;
 import org.com.Models.Player;
+import org.com.Models.Tournament;
 import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
 
@@ -38,6 +39,7 @@ public class GameEngine implements Serializable {
 
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
+        Tournament l_tournamentManager = new Tournament();
         GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
         LogManager.logAction("Game has begun!!");
         List<String> l_inputCommand;
