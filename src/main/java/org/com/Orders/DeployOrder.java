@@ -6,13 +6,15 @@ import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 
+import java.io.Serializable;
+
 /**
  * Bomb order command functionality and validation are present in this class
  *
  *
  * @author Arvind Nachiappan
  */
-public class DeployOrder implements Order{
+public class DeployOrder implements Order, Serializable {
 
     private Player d_player;
     private Country d_country;

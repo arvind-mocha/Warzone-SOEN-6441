@@ -10,6 +10,3 @@ cache:
 # Run tests and build
 script:
   - mvn clean install
-  - if [ "$TRAVIS_BRANCH" == "main" ]; then
-    mvn clean test;
-    fi

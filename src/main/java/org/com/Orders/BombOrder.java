@@ -6,6 +6,7 @@ import org.com.GameLog.LogManager;
 import org.com.Models.Country;
 import org.com.Models.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,7 +16,7 @@ import java.util.HashMap;
  *
  * @author Arvind Nachiappan
  */
-public class BombOrder implements Order{
+public class BombOrder implements Order, Serializable {
 
     private final Player d_player;
     private final Country d_targetCountry;

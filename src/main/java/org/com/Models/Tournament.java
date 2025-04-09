@@ -1,9 +1,10 @@
 package org.com.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tournament {
+public class Tournament implements Serializable {
 
     private List<String> d_mapList;
     private List<String> d_strategyList;

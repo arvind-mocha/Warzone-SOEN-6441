@@ -7,6 +7,7 @@ import org.com.Handlers.MapOperationsHandler;
 import org.com.Models.Map;
 import org.jgrapht.alg.linkprediction.CommonNeighborsLinkPrediction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,7 +18,7 @@ import java.util.Arrays;
  *
  */
 
-public class LoadMapPhase implements Phase{
+public class LoadMapPhase implements Phase, Serializable {
     @Override
     public Phase getNextPhase() {
         return new GameStartUpPhase();

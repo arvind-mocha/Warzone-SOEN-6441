@@ -6,9 +6,10 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CheaterStrategy implements Strategy {
+public class CheaterStrategy implements Strategy, Serializable {
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());

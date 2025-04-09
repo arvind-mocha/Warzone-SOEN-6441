@@ -7,6 +7,8 @@ import org.com.Models.Player;
 import org.com.Orders.*;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
+
 /**
  *
  * Order related functions are present in this class
@@ -14,7 +16,7 @@ import org.com.Utils.HelperUtil;
  * @author Arvind Nachiappan
  * @author Devasenan Murugan
  */
-public class IssueOrderHandler {
+public class IssueOrderHandler implements Serializable {
     /**
      * This method marks the beginning of the game where players are asked to <b>deploy all of their armies in their own countries.</b>
      * Only after a player <b>deploys all</b> of his/her armies, the next player's turn begins.
