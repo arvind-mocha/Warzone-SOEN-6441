@@ -10,6 +10,7 @@ import org.com.Utils.HelperUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class BenevolentStrategy implements Strategy{
     @Override
@@ -19,6 +20,7 @@ public class BenevolentStrategy implements Strategy{
 
         List<Country> l_countries = l_currentPlayer.get_countries();
         Country l_weakestCountry = getWeakestCountry(l_countries);
+        Random l_random = new Random();
 
         if(l_weakestCountry == null) return null;
         int l_availableArmies = p_currentPlayer.get_armyCount();
@@ -28,21 +30,21 @@ public class BenevolentStrategy implements Strategy{
             Country l_countryFrom = HelperUtil.getPlayerHighestArmyCountry(p_currentPlayer);
             return Arrays.asList(String.format(CommonConstants.AIRLIFT, l_countryFrom, l_weakestCountry));
         } else if(l_currentPlayer.get_cards().containsKey(Cards.DIPLOMACY_CARD) && !l_currentPlayer.get_countries().isEmpty()){
-            Player l_randomPlayer = getRandomPlayer(l_currentPlayer, p_gameManager);
-            l_order = new NegotiateOrder(l_currentPlayer, l_randomPlayer);
-        } else if(l_currentPlayer.getD_playerCardList().contains(Cards.BLOCKADE_CARD)){
-            l_order = new BlockadeOrder(l_currentPlayer, l_weakestCountry);
+            Player l_oppPlayer = p_gamePhaseHandler.getPlayerList().get(l_random.nextInt(p_gamePhaseHandler.getPlayerList().size()));
+            return p_currentPlayer.equals(l_oppPlayer) ? null : Arrays.asList(String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name()));
+        } else if(l_currentPlayer.get_cards().containsKey(Cards.BLOCKADE_CARD)){
+            return Arrays.asList(String.format(CommonConstants.BLOCKADE, l_weakestCountry.getName()));
         } else {
-            List<Integer> l_neighbours = l_weakestCountry.get_neighbourCountryIDList();
+            List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
             for (int l_neighborCountryID: l_neighbours) {
-                Country l_neighborCountry = p_gameManager.getD_map().getD_countryByID(l_neighborCountryID);
-                if(l_neighborCountry.get_numArmies() > 1 && l_neighborCountry.get_owner().equals(l_currentPlayer)) {
-                    l_order = new AdvanceOrder(l_currentPlayer, l_neighborCountry, l_weakestCountry, l_neighborCountry.get_numArmies()-1);
+                Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
+                if(l_neighborCountry.getArmyCount() > 1 && l_currentPlayer.equals(l_neighborCountry.getOwner())) {
+                    return Arrays.asList(String.format(CommonConstants.ADVANCE, l_neighborCountry, l_weakestCountry, l_neighborCountry.getArmyCount() - 1));
                 }
             }
         }
 
-        return l_order;
+        return Arrays.asList(CommonConstants.COMMIT);
     }
 
     @Override
