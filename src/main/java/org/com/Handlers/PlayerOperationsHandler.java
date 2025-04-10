@@ -12,7 +12,6 @@ import org.com.Utils.ValidationUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import java.util.List;
  * @author Arvind Lakshmanan
  * @author Barath Sundararaj
  * @author Devasenan Murugan
- *
  */
 
 public class PlayerOperationsHandler implements Serializable {
@@ -34,15 +32,15 @@ public class PlayerOperationsHandler implements Serializable {
      *     <li>Add New Player</li>
      *     <li>Remove Existing Player</li>
      * </ul>
-     * @param p_command The user input
+     *
+     * @param p_command          The user input
      * @param p_gamePhaseHandler Current Game Phase
      * @throws Exception Error in case of a non-existing player is asked to be removed
      */
-    public static void processPlayerManagement(String p_command, GamePhaseHandler p_gamePhaseHandler) throws Exception
-    {
+    public static void processPlayerManagement(String p_command, GamePhaseHandler p_gamePhaseHandler) throws Exception {
         List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
         String[] l_commandsArray = p_command.split(" -");
-        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+        for (int l_index = 1; l_index < l_commandsArray.length; l_index++) {
             String[] l_attributesArray = l_commandsArray[l_index].split(" -");
 
             for (String l_attribute : l_attributesArray) {
@@ -59,8 +57,7 @@ public class PlayerOperationsHandler implements Serializable {
                     System.console().println(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
                     LogManager.logAction(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
                 } else if (l_attributeOperation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
-                    if(!ValidationUtil.validatePlayerExistence(l_playerList, l_playerName))
-                    {
+                    if (!ValidationUtil.validatePlayerExistence(l_playerList, l_playerName)) {
                         throw new Exception(String.format(CommonErrorMessages.PLAYER_NOT_EXISTS_REMOVAL, l_playerName));
                     }
                     l_playerList.removeIf(l_player -> l_player.get_name().equalsIgnoreCase(l_playerName));
@@ -73,21 +70,22 @@ public class PlayerOperationsHandler implements Serializable {
 
     /**
      * This method is used to divide the Loaded Map and <b>Assign Countries</b> among the registered players.
+     *
      * @param p_gamePhaseHandler Game Phase
      * @throws Exception
      */
-    public static void processAssignCountries(GamePhaseHandler p_gamePhaseHandler)throws Exception {
+    public static void processAssignCountries(GamePhaseHandler p_gamePhaseHandler) throws Exception {
         List<Player> l_playerList = p_gamePhaseHandler.getPlayerList();
         ValidationUtil.validateAssignCountries(l_playerList);
 
         ArrayList<Continent> l_continentsArray = new ArrayList<>(p_gamePhaseHandler.getGameMap().getContinentMap().vertexSet());
         Collections.shuffle(l_continentsArray);
-        for (int i=0; i < l_playerList.size(); i++){
+        for (int i = 0; i < l_playerList.size(); i++) {
             Continent l_randomContinent = l_continentsArray.get(i);
             Player l_player = l_playerList.get(i);
             ArrayList<Country> l_countryArray = new ArrayList<>(l_randomContinent.getCountries());
             Collections.shuffle(l_countryArray);
-            for(int j = 0; j < l_countryArray.size()/2; j++){
+            for (int j = 0; j < l_countryArray.size() / 2; j++) {
                 Country l_country = l_countryArray.get(j);
                 l_player.addCountry(l_country);
                 l_country.setOwner(l_player);

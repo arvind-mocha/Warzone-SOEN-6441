@@ -52,6 +52,10 @@ public class CommonConstants implements Serializable {
     public static final Integer MAX_PLAYER_COUNT = 5;
     public static final Integer MIN_PLAYER_COUNT = 2;
 
+    // Game Mode
+    public static final String SINGLE_GAME_MODE = "Single";
+    public static final String TOURNAMENT_GAME_MODE = "Tournament";
+
     // Strings
     public static final String CONTINENTS = "[continents]";
     public static final String COUNTRIES = "[countries]";
@@ -64,6 +68,7 @@ public class CommonConstants implements Serializable {
     public static final String BLOCKADE = BLOCKADE_COMMAND + " %s";
     public static final String AIRLIFT = AIRLIFT_COMMAND + " %s %s %d";
     public static final String NEGOTIATE = NEGOTIATE_COMMAND + " %s";
+    public static final String LOAD_MAP = LOAD_MAP_COMMAND + " %s";
 
 
     // Attributes

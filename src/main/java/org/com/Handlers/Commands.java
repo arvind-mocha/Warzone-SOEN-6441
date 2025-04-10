@@ -2,13 +2,12 @@ package org.com.Handlers;
 
 import org.com.Constants.CommonConstants;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * This enum contains all commands and their valid attributes.
  *
  * @author Arvind Lakshmanan
- *
  */
 
 public enum Commands {
@@ -43,8 +42,8 @@ public enum Commands {
     /**
      * Constructor for Commands enum.
      *
-     * @param p_name The name of the command.
-     * @param p_isFileRequired Indicates if a file is required for the command.
+     * @param p_name              The name of the command.
+     * @param p_isFileRequired    Indicates if a file is required for the command.
      * @param p_attributesHashMap The list of valid attributes for the command.
      */
     Commands(String p_name, boolean p_isFileRequired, HashMap<String, Integer> p_attributesHashMap, Integer p_commandSize) {
@@ -86,8 +85,7 @@ public enum Commands {
      *
      * @return the name of the command.
      */
-    public boolean isFileRequired()
-    {
+    public boolean isFileRequired() {
         return d_isFileRequired;
     }
 
@@ -95,7 +93,6 @@ public enum Commands {
      * Retrieves the command enum if name of the command is provided.
      *
      * @param p_name The name of the command.
-     *
      * @return the name of the command.
      */
     public static Commands getCommandByName(String p_name) {

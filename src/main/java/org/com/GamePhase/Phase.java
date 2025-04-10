@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * This interface is the basic structure of the entire phase management.
  *
  * @author Arvind Lakshmanan
- *
  */
 public interface Phase {
 

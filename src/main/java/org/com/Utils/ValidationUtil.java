@@ -2,13 +2,10 @@ package org.com.Utils;
 
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.Constants.StrategyConstants;
 import org.com.GamePhase.Phase;
 import org.com.Handlers.Commands;
-import org.com.Handlers.GamePhaseHandler;
-import org.com.Models.Continent;
-import org.com.Models.Country;
-import org.com.Models.Map;
-import org.com.Models.Player;
+import org.com.Models.*;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -21,7 +18,6 @@ import java.util.List;
  * This class contains util method for validating.
  *
  * @author Arvind Lakshmanan
- *
  */
 public class ValidationUtil implements Serializable {
 
@@ -160,9 +156,9 @@ public class ValidationUtil implements Serializable {
     /**
      * Validates continent management operations such as adding or removing continents.
      *
-     * @param p_gameMap The game map.
-     * @param p_operation The operation to perform (add or remove).
-     * @param p_continentName The name of the continent.
+     * @param p_gameMap        The game map.
+     * @param p_operation      The operation to perform (add or remove).
+     * @param p_continentName  The name of the continent.
      * @param p_continentValue The value of the continent.
      * @throws Exception if the operation is invalid.
      */
@@ -188,9 +184,9 @@ public class ValidationUtil implements Serializable {
     /**
      * Validates country management operations such as adding or removing countries.
      *
-     * @param p_gameMap The game map.
-     * @param p_operation The operation to perform (add or remove).
-     * @param p_countryName The name of the country.
+     * @param p_gameMap       The game map.
+     * @param p_operation     The operation to perform (add or remove).
+     * @param p_countryName   The name of the country.
      * @param p_continentName The name of the continent.
      * @throws Exception if the operation is invalid.
      */
@@ -238,5 +234,21 @@ public class ValidationUtil implements Serializable {
             }
         }
         return false;
+    }
+
+    public static void validateTournamentCommand(Tournament l_tournament) throws Exception {
+        if (l_tournament == null) {
+            throw new Exception("The tournament is empty");
+        } else if (l_tournament.getNumGames() != l_tournament.getMapList().size()) {
+            throw new Exception(String.format("Not enough maps to play %d games", l_tournament.getNumGames()));
+        }
+
+        for(String l_player : l_tournament.getStrategyList())
+        {
+            if(!StrategyConstants.SUPPORTED_STRATEGIES.contains(l_player))
+            {
+                throw new Exception(String.format("Please select a player name from the following list: %s", StrategyConstants.SUPPORTED_STRATEGIES.toString()));
+            }
+        }
     }
 }
