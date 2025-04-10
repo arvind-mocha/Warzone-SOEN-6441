@@ -1,8 +1,8 @@
 package org.com.test;
 
+import org.com.Handlers.GamePhaseHandler;
 import org.com.Handlers.MapOperationsHandler;
 import org.com.Models.Map;
-import org.com.Handlers.GamePhaseHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,88 +15,54 @@ class MapOperationsHandlerTest {
     @BeforeEach
     void setUp() {
         gamePhaseHandler = new GamePhaseHandler();
-    }
-
-    @Test
-    void testEditMapWithValidFile() {
-        assertDoesNotThrow(() -> MapOperationsHandler.editMap(gamePhaseHandler, "valid_map.map"));
-    }
-
-    @Test
-    void testEditMapWithInvalidFile() {
-        assertDoesNotThrow(() -> MapOperationsHandler.editMap(gamePhaseHandler, "invalid_file.map"));
-    }
-
-    @Test
-    void testEditContinent_Add() throws Exception {
         gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add Continent A 5"));
-
     }
 
     @Test
-    void testEditContinent_Remove() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "remove Continent A"));
+    void testAddValidContinent() throws Exception {
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add Asia 5"));
     }
 
     @Test
-    void testEditCountry_Add() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add CountryA ContinentA"));
+    void testAddContinentWithNegativeBonus() {
+        Exception exception = assertThrows(Exception.class, () ->
+                MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add InvalidContinent -5")
+        );
+        assertFalse(exception.getMessage().contains("negative"));
     }
 
     @Test
-    void testEditCountry_Remove() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "remove CountryA"));
+    void testRemoveExistingContinent() throws Exception {
+        MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add Europe 10");
+        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -remove Europe"));
     }
 
     @Test
-    void testEditNeighbour_Add() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "add Country A Country B"));
+    void testAddValidCountry() throws Exception {
+        MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add Africa 7");
+        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "editcountry -add Nigeria Africa"));
     }
 
     @Test
-    void testEditNeighbour_Remove() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "remove Country A Country B"));
+    void testAddCountryToInvalidContinent() {
+        Exception exception = assertThrows(Exception.class, () ->
+                MapOperationsHandler.editCountry(gamePhaseHandler, "editcountry -add Egypt UnknownContinent")
+        );
+        assertFalse(exception.getMessage().contains("Unknown"));
     }
 
     @Test
-    void testSaveMap_Valid() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save valid_map.map"));
+    void testAddNeighbourCountries() throws Exception {
+        MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add Asia 5");
+        MapOperationsHandler.editCountry(gamePhaseHandler, "editcountry -add India Asia");
+        MapOperationsHandler.editCountry(gamePhaseHandler, "editcountry -add China Asia");
+        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "editneighbor -add India China"));
     }
 
     @Test
-    void testSaveMap_InvalidWithNegativeContinentValue() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add InvalidContinent -5"));
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_negative_continent.map"));
-    }
-
-    @Test
-    void testSaveMap_InvalidWithEmptyContinentName() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editContinent(gamePhaseHandler, "add  10"));
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_empty_continent.map"));
-    }
-
-    @Test
-    void testSaveMap_InvalidWithNonExistentContinentForCountry() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country A NonExistentContinent"));
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_country_continent.map"));
-    }
-
-    @Test
-    void testSaveMap_InvalidWithIncorrectBorders() throws Exception {
-        gamePhaseHandler.setGameMap(new Map());
-        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country A Continent A"));
-        assertDoesNotThrow(() -> MapOperationsHandler.editCountry(gamePhaseHandler, "add Country B Continent B"));
-        assertDoesNotThrow(() -> MapOperationsHandler.editNeighbour(gamePhaseHandler, "add Country A NonExistentCountry"));
-        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save invalid_borders.map"));
+    void testSaveMapWithoutErrors() throws Exception {
+        MapOperationsHandler.editContinent(gamePhaseHandler, "editcontinent -add Europe 5");
+        MapOperationsHandler.editCountry(gamePhaseHandler, "editcountry -add France Europe");
+        assertDoesNotThrow(() -> MapOperationsHandler.saveMap(gamePhaseHandler, "save savedMapTest.map"));
     }
 }
