@@ -6,7 +6,6 @@ import org.com.Models.Map;
 import org.com.Models.Player;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.Strategies.AggressiveStrategy;
-import org.com.Strategies.BenevolentStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
