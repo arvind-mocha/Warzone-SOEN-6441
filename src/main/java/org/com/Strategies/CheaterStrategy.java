@@ -39,8 +39,17 @@ public class CheaterStrategy implements Strategy, Serializable {
 
     @Override
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
-        return "";
+        // In CheaterStrategy, we assume the player can always play a Bomb card
+        // Regardless of whether the player actually has the card, we return a "Bomb" card order
+        if ("Bomb".equals(p_prioritizeCard)) {
+            return "Bomb " + p_currentPlayer.get_cards().getOrDefault("Bomb", 0);  // Return Bomb order with available count
+        }
+
+        // You can add similar checks for other cards (e.g., Airlift, Blockade) if needed
+
+        return "";  // Return empty string for unsupported card types
     }
+
 
     @Override
     public Country getNeighbour(Country p_country, Map p_gameMap, Player p_currentPlayer) {
