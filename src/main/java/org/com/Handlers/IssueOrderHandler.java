@@ -57,7 +57,7 @@ public class IssueOrderHandler implements Serializable {
         Order l_advanceOrder = new AdvanceOrder(l_currentPlayer, l_sourceCountry, l_targetCountry, l_numArmies);
         l_advanceOrder.isValid();
         l_currentPlayer.get_orderList().add(l_advanceOrder);
-        System.console().println(String.format("Order to advance %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+        System.out.println(String.format("Order to advance %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
         LogManager.logAction(String.format("Order to advance %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
     }
 
@@ -84,7 +84,7 @@ public class IssueOrderHandler implements Serializable {
         l_blockadeOrder.isValid();
         l_player.set_cardPlayedInTurn(l_blockadeOrder);
         l_player.get_orderList().add(l_blockadeOrder);
-        System.console().println(String.format("Order to blockade country %s has been saved", l_country.getName()));
+        System.out.println(String.format("Order to blockade country %s has been saved", l_country.getName()));
         LogManager.logAction(String.format("Order to blockade country %s has been saved", l_country.getName()));
     }
 
@@ -105,7 +105,7 @@ public class IssueOrderHandler implements Serializable {
         l_player.get_orderList().add(l_diplomacyOrder);
         l_diplomacyOrder.execute();
         l_player.get_orderList().remove(l_diplomacyOrder);
-//        System.console().println(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
+//        System.out.println(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
 //        LogManager.logAction(String.format("Order to negotiate peace with player %s has been saved", l_targetPlayer.get_name()));
     }
 
@@ -124,7 +124,7 @@ public class IssueOrderHandler implements Serializable {
         l_bombOrder.isValid();
         l_player.set_cardPlayedInTurn(l_bombOrder);
         l_player.get_orderList().add(l_bombOrder);
-        System.console().println(String.format("Order to bomb country country %s has been saved", l_country.getName()));
+        System.out.println(String.format("Order to bomb country country %s has been saved", l_country.getName()));
         LogManager.logAction(String.format("Order to bomb country country %s has been saved", l_country.getName()));
     }
 
@@ -145,7 +145,7 @@ public class IssueOrderHandler implements Serializable {
         l_airLiftOrder.isValid();
         l_player.set_cardPlayedInTurn(l_airLiftOrder);
         l_player.get_orderList().add(l_airLiftOrder);
-        System.console().println(String.format("Order to airlift %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
+        System.out.println(String.format("Order to airlift %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
         LogManager.logAction(String.format("Order to airlift %d armies from %s to %s has been saved", l_numArmies, l_sourceCountry.getName(), l_targetCountry.getName()));
     }
 }
