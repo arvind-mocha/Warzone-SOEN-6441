@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Test class for the RandomStrategy.
- *  * This class contains the setup and tests for the AggressiveStrategy used by players in the game.
+ *  * This class contains the setup and tests for the RandomStrategy used by players in the game.
  * @author Swathi Priya P
  */
 public class RandomStrategyTest {
