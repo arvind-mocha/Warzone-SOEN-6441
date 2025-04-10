@@ -32,9 +32,9 @@ public class GameEngine implements Serializable {
     public static void main(String[] p_args) {
 
         //The following messages will be displayed at the start of the game.
-        var l_console = System.console();
-        l_console.println("Welcome to the WarZone edition of Risk.");
-        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+//        var l_console = System.console();
+        System.out.println("Welcome to the WarZone edition of Risk.");
+        System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
 
 
         // Getting Input from the players
@@ -49,7 +49,7 @@ public class GameEngine implements Serializable {
             Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
             if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
             {
-                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
+                System.out.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
                 l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
             }
             else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
@@ -63,19 +63,19 @@ public class GameEngine implements Serializable {
             }
             else
             {
-                l_console.print("> ");
+                System.out.print("> ");
                 l_inputCommand = Arrays.asList(l_scanner.nextLine());
             }
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             } catch (Exception e) {
-                l_console.println("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
+                System.out.println("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
                 LogManager.logAction("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
-                l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+                System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
         } while(l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
 
         LogManager.logAction("Game has been ended");
-        l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
+        System.out.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
     }
 }
