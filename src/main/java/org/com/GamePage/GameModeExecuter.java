@@ -6,7 +6,9 @@ import org.com.GameLog.LogManager;
 import org.com.GamePhase.IssueOrderPhase;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
+import org.com.Handlers.TournamentHandler;
 import org.com.Models.Player;
+import org.com.Models.Tournament;
 import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
 
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameModeExecuter {
-    public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager) {
+    public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager, Tournament l_tournamentHandler) {
         var l_console = System.console();
         l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
         Scanner l_scanner = new Scanner(System.in);
@@ -44,6 +46,6 @@ public class GameModeExecuter {
                 LogManager.logAction("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
                 l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
-        } while (l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
+        } while (l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND) || (l_tournamentHandler != null && l_tournamentHandler.getMaxTurns() >= l_gamePhaseManager.getTurnsCompleted()));
     }
 }

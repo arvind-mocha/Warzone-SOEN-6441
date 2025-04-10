@@ -38,7 +38,7 @@ public class GameEngine implements Serializable {
 
         if (CommonConstants.SINGLE_GAME_MODE.equals(l_gameMode)) {
             GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
-            GameModeExecuter.gameModeHandler(l_gamePhaseManager);
+            GameModeExecuter.gameModeHandler(l_gamePhaseManager, null);
         } else if (CommonConstants.TOURNAMENT_COMMAND.equals(l_gameMode.toLowerCase())) {
             Tournament l_tournamentManager = new Tournament();
             l_console.println("Set up the tournament using the following format:\n" + "tournament -M maps -P players -G number_of_games -D max_turns");
@@ -49,7 +49,7 @@ public class GameEngine implements Serializable {
                 String l_loadMap = String.format(CommonConstants.LOAD_MAP + " ", l_tournamentManager.getMapList().get(l_gameNum));
                 String l_addPlayers = CommonConstants.ADD_PLAYER_COMMAND + l_tournamentManager.getStrategyList().stream().map(player -> "-add " + player + " " + player).reduce("", (partialString, element) -> partialString + " " + element).trim();
                 CommandHandler.processCommand(l_gamePhaseManager, Arrays.asList(l_loadMap, l_addPlayers, CommonConstants.ASSIGN_COUNTRIES_COMMAND));
-                GameModeExecuter.gameModeHandler(l_gamePhaseManager);
+                GameModeExecuter.gameModeHandler(l_gamePhaseManager, l_tournamentManager);
                 l_console.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_tournamentManager.getGameWinners().get(l_gameNum)));
             }
         } else {
