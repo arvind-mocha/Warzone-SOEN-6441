@@ -32,6 +32,12 @@ import java.util.Set;
 
 public class MapOperationsHandler implements Serializable {
 
+    public class InvalidMapException extends Exception {
+        public InvalidMapException(String message) {
+            super(message);
+        }
+    }
+
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
     /**
@@ -296,7 +302,11 @@ public class MapOperationsHandler implements Serializable {
             ValidationUtil.validateMap(l_gameMap);
             System.out.println("The map has been validated!");
             LogManager.logAction("The map has been validated!");
-        } catch (Exception e){
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: Map file not found → " + l_fileName);
+        } catch (InvalidMapException e) {
+            System.err.println("Error: Malformed map file → " + l_fileName);
+        }catch (Exception e){
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss_ddMMyyyy");
             l_fileName += "_inValidMap_" + now.format(formatter) + ".map";
@@ -385,7 +395,11 @@ public class MapOperationsHandler implements Serializable {
 
             try{
                 ValidationUtil.validateMap(l_gameMap);
-            } catch (Exception e){
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: Map file not found → " + p_fileName);
+            } catch (InvalidMapException e) {
+                System.err.println("Error: Malformed map file → " + p_fileName);
+            }catch (Exception e){
                 System.out.println("The Map Validation has failed and has the following error");
                 LogManager.logAction("The Map Validation has failed and has the following error");
                 if(p_isEditMapCommand){
