@@ -90,8 +90,6 @@ public class CommandHandler implements Serializable {
                 case CommonConstants.AIRLIFT_COMMAND:
                     IssueOrderHandler.processAirLiftCommand(p_gamePhaseHandler, l_commandArray);
                     break;
-                case CommonConstants.TOURNAMENT_COMMAND:
-                    TournamentHandler.processTournament(l_command);
                 case CommonConstants.SAVE_GAME_COMMAND:
                     SaveGameUtil.saveGame(p_gamePhaseHandler, l_commandArray[1]);
                     break;

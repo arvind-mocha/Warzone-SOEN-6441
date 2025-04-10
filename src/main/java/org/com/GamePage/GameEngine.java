@@ -2,23 +2,15 @@ package org.com.GamePage;
 
 import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
-import org.com.GamePhase.IssueOrderPhase;
+import org.com.GameLog.LogManager;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
-import org.com.GameLog.LogManager;
-import org.com.Handlers.MapOperationsHandler;
-import org.com.Models.Country;
-import org.com.Models.Player;
+import org.com.Handlers.TournamentHandler;
 import org.com.Models.Tournament;
-import org.com.Strategies.HumanStrategy;
-import org.com.Strategies.Strategy;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  * The main game engine set of codes are present here.
@@ -33,7 +25,7 @@ public class GameEngine implements Serializable {
      *
      * @param p_args Command line arguments.
      */
-    public static void main(String[] p_args) {
+    public static void main(String[] p_args) throws Exception {
 
         //The following messages will be displayed at the start of the game.
         var l_console = System.console();
@@ -43,71 +35,31 @@ public class GameEngine implements Serializable {
 
         // Getting Input from the players
         Scanner l_scanner = new Scanner(System.in);
-        Tournament l_tournamentManager = new Tournament();
-        GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
-        LogManager.logAction("Game has begun!!");
-        List<String> l_inputCommand;
-        do {
-            boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
-            List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
-            Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
-            List<Player> l_ownersMap = new ArrayList<>();
-
-            if(l_gamePhaseManager.getGameMap() != null){
-                for (Country l_country : l_gamePhaseManager.getGameMap().getCountryMap().vertexSet()){
-                    if(l_country.getOwner() != null) {
-                        l_ownersMap.add(l_country.getOwner());
-                    }
+        String l_gameMode = l_scanner.nextLine();
+        try {
+            if (CommonConstants.SINGLE_GAME_MODE.equals(l_gameMode)) {
+                GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
+                GameModeExecuter.gameModeHandler(l_gamePhaseManager);
+            } else if (CommonConstants.TOURNAMENT_COMMAND.equals(l_gameMode)) {
+                Tournament l_tournamentManager = new Tournament();
+                TournamentHandler.processTournament(l_scanner.nextLine(), l_tournamentManager);
+                for (int l_gameNum = 0; l_gameNum == l_tournamentManager.getNumGames(); l_gameNum++) {
+                    GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
+                    String l_loadMap = String.format(CommonConstants.LOAD_MAP, l_tournamentManager.getMapList().get(l_gameNum));
+                    String l_addPlayers = CommonConstants.ADD_PLAYER_COMMAND + l_tournamentManager.getStrategyList().stream().map(player -> "-add " + player + " " + player).reduce("", (partialString, element) -> partialString + " " + element).trim();
+                    CommandHandler.processCommand(l_gamePhaseManager, Arrays.asList(l_loadMap, l_addPlayers, CommonConstants.ASSIGN_COUNTRIES_COMMAND));
+                    GameModeExecuter.gameModeHandler(l_gamePhaseManager);
+                    l_console.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_tournamentManager.getGameWinners().get(l_gameNum)));
                 }
-                l_ownersMap = l_ownersMap.stream().distinct().collect(Collectors.toList());
-//                System.out.println(l_ownersMap.size());
+            } else {
+                l_console.println("Game mode does not exists");
             }
-
-
-//            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
-//            if(l_isIssueOrderPhase && l_gamePhaseManager.getTurnsCompleted() > 400)
-            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1)
-            {
-                Player l_winner = l_ownersMap.getFirst();
-                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
-                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_winner.get_name()));
-
-                try{
-                    MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
-                } catch (Exception e){
-                    System.out.println(e.toString());
-                }
-
-                l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
-            }
-            else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
-            {
-                l_inputCommand = Arrays.asList(CommonConstants.COMMIT);
-            }
-            else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
-            {
-                Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
-//                l_console.println(String.format("%d, %d", l_currentPlayer.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
-                l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
-            }
-
-            else
-            {
-                l_console.print("> ");
-                l_inputCommand = Arrays.asList(l_scanner.nextLine());
-            }
-
-
-            try {
-                CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
-            } catch (Exception e) {
-                l_console.println("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
-                LogManager.logAction("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
-                l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
-            }
-        } while(l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
-
-        LogManager.logAction("Game has been ended");
+        } catch (Exception l_exception) {
+            l_console.println("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
+            LogManager.logAction("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
+            l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+        }
+        LogManager.logAction("Warzone has been ended");
         l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
     }
 }
