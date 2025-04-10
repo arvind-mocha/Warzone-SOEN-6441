@@ -73,6 +73,10 @@ public class HelperUtil {
 
     public static void setCountryOwnerShip(Player p_player, Country p_country, boolean p_isNeutralize)
     {
+        Player l_oldOwner = p_country.getOwner();
+        if (l_oldOwner != null){
+            l_oldOwner.get_countries().remove(p_country);
+        }
         if(p_isNeutralize) {
             p_player.get_countries().remove(p_country);
             p_country.setOwner(null);
@@ -106,7 +110,7 @@ public class HelperUtil {
         for (Country l_country : p_currentPlayer.get_countries()) {
             for (int l_neighborID : l_country.getNeighbourCountryIds()) {
                 Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
-                if (!p_currentPlayer.equals(l_neighbor.getOwner())) {
+                if (!p_currentPlayer.equals(l_neighbor.getOwner()) && l_neighbor.getOwner() != null) {
                     if (l_strongestCountry == null || l_neighbor.getArmyCount() > l_strongestCountry.getArmyCount()) {
                         l_strongestCountry = l_neighbor;
                     }
@@ -128,8 +132,10 @@ public class HelperUtil {
         List<Country> enemyCountries = new ArrayList<>();
         for (int l_neighborID : p_country.getNeighbourCountryIds()) {
             Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
-            if (!l_neighbor.getOwner().equals(p_currentPlayer)) {
-                enemyCountries.add(l_neighbor);
+            if(l_neighbor.getOwner() != null){
+                if (!l_neighbor.getOwner().equals(p_currentPlayer)) {
+                    enemyCountries.add(l_neighbor);
+                }
             }
         }
         if (enemyCountries.isEmpty()) {

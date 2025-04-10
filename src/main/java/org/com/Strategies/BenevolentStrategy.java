@@ -26,6 +26,8 @@ public class BenevolentStrategy implements Strategy{
         if(l_weakestCountry == null) {return null;}
         int l_availableArmies = p_currentPlayer.get_armyCount();
         if(l_availableArmies > 0) {
+            p_currentPlayer.set_advanceExecuted(false);
+            p_currentPlayer.set_cardsExecuted(false);
             return Arrays.asList(String.format(CommonConstants.DEPLOY, l_weakestCountry.getName(), l_availableArmies));
         } else if (!l_currentPlayer.get_cards().isEmpty() && !l_currentPlayer.get_cardsExecuted()) {
             List<String> l_commandArray = new ArrayList<>();
@@ -57,24 +59,36 @@ public class BenevolentStrategy implements Strategy{
     @Override
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
         Random l_random = new Random();
-        p_currentPlayer.set_cardsExecuted(true);
         if (!p_currentPlayer.get_cards().isEmpty()) {
+            p_currentPlayer.set_cardsExecuted(true);
             String l_card = p_currentPlayer.get_cards().containsKey(p_prioritizeCard) ? p_prioritizeCard : p_currentPlayer.get_cards().keySet().iterator().next();
-            Country l_strongestCountry = HelperUtil.getStrongestNeighbouringEnemyCountry(p_currentPlayer, p_gameManager.getGameMap());
+            Country l_randomCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
+            int l_randomArmies = Math.max(1, l_random.nextInt(Math.max(l_randomCountry.getArmyCount(), 1)));
             switch (l_card) {
                 case Cards.BOMB_CARD:
-                    return String.format(CommonConstants.BOMB, l_strongestCountry.getName());
+                    Country l_randomEnemyCountry = HelperUtil.getRandomNeighbouringEnemyCountry(l_randomCountry, p_gameManager.getGameMap(), p_currentPlayer);
+                    if (l_randomEnemyCountry == null){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
+                    return String.format(CommonConstants.BOMB, l_randomEnemyCountry.getName());
                 case Cards.AIRLIFT_CARD:
-                    if (p_currentPlayer.get_countries().size() == 1) break;
-                    Country l_randCountryFrom = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
+                    if (p_currentPlayer.get_countries().size() < 2) break;
                     Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    return String.format(CommonConstants.AIRLIFT, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randCountryFrom.getArmyCount());
+                    if(l_randCountryTo == l_randomCountry){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
+                    return String.format(CommonConstants.AIRLIFT, l_randomCountry.getName(), l_randCountryTo.getName(), l_randomArmies);
                 case Cards.DIPLOMACY_CARD:
                     Player l_oppPlayer = p_gameManager.getPlayerList().get(l_random.nextInt(p_gameManager.getPlayerList().size()));
-                    return p_currentPlayer.equals(l_oppPlayer) ? null : String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name());
+                    if(l_oppPlayer == p_currentPlayer){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
+                    return String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name());
                 case Cards.BLOCKADE_CARD:
-                    Country l_randCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    return String.format(CommonConstants.BLOCKADE, l_randCountry.getName());
+                    return String.format(CommonConstants.BLOCKADE, l_randomCountry.getName());
             }
         }
         return null;

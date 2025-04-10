@@ -24,28 +24,28 @@ public class RandomStrategy implements Strategy{
         Random l_random = new Random();
         Boolean l_hasPlayerExecutedCard = p_currentPlayer.get_cardsExecuted();
         Boolean l_hasPlayerExecutedAdvance = p_currentPlayer.get_advanceExecuted();
+
+        Country l_randomCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
+
         if (l_availableArmies > 0) {
-            int l_randomCountry = l_random.nextInt(p_currentPlayer.get_countries().size());
-            return Arrays.asList(String.format(CommonConstants.DEPLOY, p_currentPlayer.get_countries().get(l_randomCountry).getName(), p_currentPlayer.get_armyCount()));
+            p_currentPlayer.set_advanceExecuted(false);
+            p_currentPlayer.set_cardsExecuted(false);
+            return Arrays.asList(String.format(CommonConstants.DEPLOY, l_randomCountry.getName(), p_currentPlayer.get_armyCount()));
         } else if (!l_hasPlayerExecutedCard && !p_currentPlayer.get_cards().isEmpty() && !p_currentPlayer.get_countries().isEmpty()) {
             return Arrays.asList(generateCardOrder(p_gamePhaseHandler, p_currentPlayer, null));
         } else if(!l_hasPlayerExecutedAdvance) {
+            if(l_randomCountry.getArmyCount() <= 1){
+                return null;
+            }
             List<String> commands = new ArrayList<>();
-            Country l_randomCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
             Country l_randomNeighbour = getNeighbour(l_randomCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
-            if(l_randomNeighbour != null)
-            {
-                int l_randomArmies = Math.max(1, l_random.nextInt(Math.abs(l_randomCountry.getArmyCount()-1)));
+            if(l_randomNeighbour != null) {
+                int l_randomArmies = Math.max(1, l_random.nextInt(Math.max(l_randomCountry.getArmyCount(), 1)));
+//                System.out.println(l_randomCountry.getName());
+//                System.out.println(l_randomCountry.getOwner().get_name());
                 commands.add(String.format(CommonConstants.ADVANCE, l_randomCountry.getName(), l_randomNeighbour.getName(), l_randomArmies));
+                p_currentPlayer.set_advanceExecuted(true);
             }
-
-            Country l_randCountryFrom = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-            Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-            if (!l_randCountryFrom.equals(l_randCountryTo) && l_randCountryFrom.getArmyCount() > 1) {
-                int l_randomArmies = Math.max(1, l_random.nextInt(l_randCountryFrom.getArmyCount() - 1));
-                commands.add(String.format(CommonConstants.ADVANCE, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randomArmies));
-            }
-            p_currentPlayer.set_advanceExecuted(true);
             return commands;
         }
         return Arrays.asList(CommonConstants.COMMIT);
@@ -54,20 +54,33 @@ public class RandomStrategy implements Strategy{
     @Override
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
         Random l_random = new Random();
-        p_currentPlayer.set_cardsExecuted(true);
         if (!p_currentPlayer.get_cards().isEmpty()) {
+            p_currentPlayer.set_cardsExecuted(true);
             String l_card = p_currentPlayer.get_cards().containsKey(p_prioritizeCard) ? p_prioritizeCard : p_currentPlayer.get_cards().keySet().iterator().next();
             Country l_randomCountry = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
+            int l_randomArmies = Math.max(1, l_random.nextInt(Math.max(l_randomCountry.getArmyCount(), 1)));
             switch (l_card) {
                 case Cards.BOMB_CARD:
                     Country l_randomEnemyCountry = HelperUtil.getRandomNeighbouringEnemyCountry(l_randomCountry, p_gameManager.getGameMap(), p_currentPlayer);
+                    if (l_randomEnemyCountry == null){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
                     return String.format(CommonConstants.BOMB, l_randomEnemyCountry.getName());
                 case Cards.AIRLIFT_CARD:
-                    if (p_currentPlayer.get_countries().size() == 1) break;
+                    if (p_currentPlayer.get_countries().size() < 2) break;
                     Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    return String.format(CommonConstants.AIRLIFT, l_randomCountry.getName(), l_randCountryTo.getName(), l_randomCountry.getArmyCount());
+                    if(l_randCountryTo == l_randomCountry){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
+                    return String.format(CommonConstants.AIRLIFT, l_randomCountry.getName(), l_randCountryTo.getName(), l_randomArmies);
                 case Cards.DIPLOMACY_CARD:
                     Player l_oppPlayer = p_gameManager.getPlayerList().get(l_random.nextInt(p_gameManager.getPlayerList().size()));
+                    if(l_oppPlayer == p_currentPlayer){
+                        p_currentPlayer.set_cardsExecuted(false);
+                        return null;
+                    }
                     return String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name());
                 case Cards.BLOCKADE_CARD:
                     return String.format(CommonConstants.BLOCKADE, l_randomCountry.getName());
@@ -81,7 +94,8 @@ public class RandomStrategy implements Strategy{
         List<Country> l_neighbouringCountries = new ArrayList<>();
         for (int l_neighborID : p_country.getNeighbourCountryIds()) {
             Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
-            if (l_neighbor != null && !p_currentPlayer.equals(l_neighbor.getOwner())) {
+//            if (l_neighbor != null && !p_currentPlayer.equals(l_neighbor.getOwner())) {
+            if (l_neighbor != null){
                 l_neighbouringCountries.add(l_neighbor);
             }
         }

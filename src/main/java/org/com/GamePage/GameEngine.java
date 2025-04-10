@@ -6,15 +6,19 @@ import org.com.GamePhase.IssueOrderPhase;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.GameLog.LogManager;
+import org.com.Handlers.MapOperationsHandler;
+import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Models.Tournament;
 import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * The main game engine set of codes are present here.
@@ -47,9 +51,33 @@ public class GameEngine implements Serializable {
             boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
             List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
             Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
-            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
+            List<Player> l_ownersMap = new ArrayList<>();
+
+            if(l_gamePhaseManager.getGameMap() != null){
+                for (Country l_country : l_gamePhaseManager.getGameMap().getCountryMap().vertexSet()){
+                    if(l_country.getOwner() != null) {
+                        l_ownersMap.add(l_country.getOwner());
+                    }
+                }
+                l_ownersMap = l_ownersMap.stream().distinct().collect(Collectors.toList());
+//                System.out.println(l_ownersMap.size());
+            }
+
+
+//            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
+//            if(l_isIssueOrderPhase && l_gamePhaseManager.getTurnsCompleted() > 400)
+            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1)
             {
-                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
+                Player l_winner = l_ownersMap.getFirst();
+                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_winner.get_name()));
+
+                try{
+                    MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
+                } catch (Exception e){
+                    System.out.println(e.toString());
+                }
+
                 l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
             }
             else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
@@ -59,13 +87,17 @@ public class GameEngine implements Serializable {
             else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
             {
                 Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
+//                l_console.println(String.format("%d, %d", l_currentPlayer.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
                 l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
             }
+
             else
             {
                 l_console.print("> ");
                 l_inputCommand = Arrays.asList(l_scanner.nextLine());
             }
+
+
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             } catch (Exception e) {
