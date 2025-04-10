@@ -17,11 +17,9 @@ import java.util.List;
 public class AggressiveStrategyTest {
 
     private AggressiveStrategy aggressiveStrategy;
-    private BenevolentStrategy benevolentStrategy;
     private GamePhaseHandler gamePhaseHandler;
     private Player currentPlayer;
     private Country strongestCountry;
-    private Country weakestCountry;
 
     @Before
     public void setUp() {
@@ -34,7 +32,6 @@ public class AggressiveStrategyTest {
         // Initialize the strongest country and target country
         strongestCountry = new Country("StrongCountry", null, 10); // Country with 10 armies
         Country targetCountry = new Country("TargetCountry", null, 5); // Country with 5 armies
-        weakestCountry = new Country("WeakCountry", null, 3);
 
         // Add countries to the current player
         currentPlayer.addCountry(strongestCountry);
