@@ -241,7 +241,7 @@ public class Player implements Serializable {
     }
 
     public Boolean get_cardsExecuted() {
-        return d_cardsExecuted;
+        return this.d_cardsExecuted;
     }
 
     public void set_cardsExecuted(Boolean p_cardsExecuted) {
@@ -249,7 +249,7 @@ public class Player implements Serializable {
     }
 
     public Boolean get_advanceExecuted() {
-        return d_advanceExecuted;
+        return this.d_advanceExecuted;
     }
 
     public void set_advanceExecuted(Boolean p_advanceExecuted) {

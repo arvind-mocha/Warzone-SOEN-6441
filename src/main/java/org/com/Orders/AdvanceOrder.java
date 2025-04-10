@@ -60,7 +60,12 @@ public class AdvanceOrder implements Order , Serializable {
         d_sourceCountry.setArmyCount(l_ArmyCount - l_toMoveCount);
 
         if(l_toMoveCount > 0) {
-            int l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
+            int l_armyCountAfterAdvance = 0;
+            if (d_targetCountry.getOwner() == d_sourceCountry.getOwner()){
+                l_armyCountAfterAdvance = d_targetCountry.getArmyCount() + l_toMoveCount;
+            } else{
+                l_armyCountAfterAdvance = d_targetCountry.getArmyCount() - l_toMoveCount;
+            }
             if (l_armyCountAfterAdvance == 0){
                 HelperUtil.setCountryOwnerShip(d_player, d_targetCountry, true);
             } else if (l_armyCountAfterAdvance < 0){
@@ -96,7 +101,7 @@ public class AdvanceOrder implements Order , Serializable {
         } else if(d_armies == 0){
             throw new Exception(CommonErrorMessages.ARMY_COUNT_ZERO);
         } else if (d_armies == d_sourceCountry.getArmyCount()) {
-            throw new Exception(String.format("At least one army my be present in source country. Source army count: %s", d_sourceCountry.getArmyCount()));
+            throw new Exception(String.format("At least one army should be present in source country. Source army count: %s", d_sourceCountry.getArmyCount()));
         }
     }
 }

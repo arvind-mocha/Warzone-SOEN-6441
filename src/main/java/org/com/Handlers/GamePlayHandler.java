@@ -38,12 +38,21 @@ public class GamePlayHandler implements Serializable {
                 issueCards(l_player, l_numberOfCountriesBeforeExecution);
                 l_player.set_orderList(new ArrayList<>());
                 l_player.set_cardPlayedInTurn(null);
+                l_player.set_negotiationPlayer(new HashSet<>());
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
             System.console().println(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             System.console().println("\u001B[32m================================================================\n\u001B[0m");
             LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
+
+
+//            try{
+//                MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
+//            } catch (Exception e){
+//                System.out.println(e.toString());
+//            }
+
         }
 
         System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
@@ -83,8 +92,6 @@ public class GamePlayHandler implements Serializable {
             p_player.set_cardsExecuted(false);
             p_player.set_advanceExecuted(false);
         }
-//        p_player.set_negotiationPlayer(new HashSet<>());
-//        p_player.set_orderList(new ArrayList<>());
     }
 
     /**

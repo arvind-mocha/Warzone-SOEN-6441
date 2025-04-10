@@ -84,7 +84,7 @@ public class BombOrder implements Order, Serializable {
             throw new Exception("Cannot bomb neutral countries");
         }
         if (l_tempList.isEmpty()) {
-            throw new Exception("Target country is not a neighbour of the source country.");
+            throw new Exception("Target country is not a neighbour of any of your territory.");
         }
         if (d_targetCountry.getOwner().equals(d_player)){
             throw new Exception("Cannot bomb your own country");
