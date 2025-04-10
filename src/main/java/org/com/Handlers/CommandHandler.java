@@ -4,7 +4,9 @@ import org.com.Constants.CommonConstants;
 import org.com.GameLog.LogManager;
 import org.com.GamePhase.Phase;
 import org.com.Utils.ValidationUtil;
+import org.com.Utils.SaveGameUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -15,7 +17,7 @@ import java.util.List;
  *
  */
 
-public class CommandHandler {
+public class CommandHandler implements Serializable {
 
     /**
      * Processes the given command based on the current game phase.
@@ -90,6 +92,20 @@ public class CommandHandler {
                     break;
                 case CommonConstants.TOURNAMENT_COMMAND:
                     TournamentHandler.processTournament(l_command);
+                case CommonConstants.SAVE_GAME_COMMAND:
+                    SaveGameUtil.saveGame(p_gamePhaseHandler, l_commandArray[1]);
+                    break;
+                case CommonConstants.LOAD_GAME_COMMAND:
+                    GamePhaseHandler l_loadedGame = SaveGameUtil.loadGame(l_commandArray[1]);
+                    p_gamePhaseHandler.setGamePhase(l_loadedGame.getGamePhase());
+                    p_gamePhaseHandler.setGameMap(l_loadedGame.getGameMap());
+                    p_gamePhaseHandler.setPlayerList(l_loadedGame.getPlayerList());
+                    p_gamePhaseHandler.setCurrentPlayer(l_loadedGame.getCurrentPlayer());
+                    p_gamePhaseHandler.setMapFileName(l_loadedGame.getMapFileName());
+                    p_gamePhaseHandler.setTurnsCompleted(l_loadedGame.getTurnsCompleted());
+                    p_gamePhaseHandler.setWinnerPlayer(l_loadedGame.getWinnerPlayer());
+                    System.out.println("Game state restored from file: " + l_commandArray[1]);
+                    break;
                 case CommonConstants.COMMIT:
                     IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
             }

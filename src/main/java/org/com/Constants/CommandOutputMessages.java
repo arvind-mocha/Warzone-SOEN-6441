@@ -1,5 +1,7 @@
 package org.com.Constants;
 
+import java.io.Serializable;
+
 /**
  * This class contains output messages of each command.
  *
@@ -7,7 +9,7 @@ package org.com.Constants;
  *
  */
 
-public class CommandOutputMessages {
+public class CommandOutputMessages implements Serializable {
 
     // Message to get all instructions
     public static final String HELP_DEFAULT_MESSAGE = "Enter 'help' to get instructions of available commands";

@@ -2,7 +2,9 @@ package org.com.Constants;
 
 import org.com.Strategies.*;
 
-public class StrategyConstants {
+import java.io.Serializable;
+
+public class StrategyConstants implements Serializable {
     public static final String AGGRESSIVE_STRATEGY = "aggressive";
     public static final String BENEVOLENT_STRATEGY = "benevolent";
     public static final String RANDOM_STRATEGY = "random";

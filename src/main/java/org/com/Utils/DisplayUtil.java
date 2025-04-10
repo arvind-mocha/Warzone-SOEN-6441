@@ -2,6 +2,7 @@ package org.com.Utils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.Serializable;
 
 /**
  * This class contains util method for displaying the map.
@@ -9,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Arvind Lakshmanan
  *
  */
-public class DisplayUtil {
+public class DisplayUtil implements Serializable {
 
     /**
      * Displays the map in a GUI table format.

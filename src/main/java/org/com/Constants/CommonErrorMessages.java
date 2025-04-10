@@ -1,5 +1,7 @@
 package org.com.Constants;
 
+import java.io.Serializable;
+
 /**
  * This class contains all global error messages.
  *
@@ -7,7 +9,7 @@ package org.com.Constants;
  *
  */
 
-public class CommonErrorMessages {
+public class CommonErrorMessages implements Serializable {
     public static final String INVALID_FILE = "Provide a valid file";
     public static final String INVALID_COMMAND = "Invalid command";
     public static final String INVALID_ATTRIBUTE = "Provided attributes or values are invalid";

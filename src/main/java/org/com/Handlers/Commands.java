@@ -31,7 +31,9 @@ public enum Commands {
     NEGOTIATE_COMMAND(CommonConstants.NEGOTIATE_COMMAND, false, null, 2),
     BOMB_COMMAND(CommonConstants.BOMB_COMMAND, false, null, 2),
     AIRLIFT_COMMAND(CommonConstants.AIRLIFT_COMMAND, false, null, 4),
-    COMMIT(CommonConstants.COMMIT, false, null, null);
+    COMMIT(CommonConstants.COMMIT, false, null, null),
+    SAVE_GAME(CommonConstants.SAVE_GAME_COMMAND, true, null, null),
+    LOAD_GAME(CommonConstants.LOAD_GAME_COMMAND, true, null, null);
 
     private final String d_name;
     private final HashMap<String, Integer> d_attributesHashMap;

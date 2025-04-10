@@ -1,10 +1,11 @@
 package org.com.GameLog;
 
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
-public class LogManager {
+public class LogManager implements Serializable {
     private static final LogEntryBuffer d_logBuffer;
     private static final LogFileWriter d_logWriter;
 

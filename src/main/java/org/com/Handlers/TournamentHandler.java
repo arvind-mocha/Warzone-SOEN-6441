@@ -3,10 +3,11 @@ package org.com.Handlers;
 import org.com.Constants.CommonConstants;
 import org.com.Models.Tournament;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TournamentHandler {
+public class TournamentHandler implements Serializable {
     public static void processTournament(String p_command) {
         String[] l_commandsArray = p_command.split(" -");
         List<String> l_mapList = new ArrayList<>();
