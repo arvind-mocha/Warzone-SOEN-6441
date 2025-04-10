@@ -2,12 +2,10 @@ package org.com.Utils;
 
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
+import org.com.Constants.StrategyConstants;
 import org.com.GamePhase.Phase;
 import org.com.Handlers.Commands;
-import org.com.Models.Continent;
-import org.com.Models.Country;
-import org.com.Models.Map;
-import org.com.Models.Player;
+import org.com.Models.*;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -238,9 +236,19 @@ public class ValidationUtil implements Serializable {
         return false;
     }
 
-    public static void validateTournamentCommand(String[] l_commandsArray) {
-        for (String command : l_commandsArray) {
+    public static void validateTournamentCommand(Tournament l_tournament) throws Exception {
+        if (l_tournament == null) {
+            throw new Exception("The tournament is empty");
+        } else if (l_tournament.getNumGames() != l_tournament.getMapList().size()) {
+            throw new Exception(String.format("Not enough maps to play %d games", l_tournament.getNumGames()));
+        }
 
+        for(String l_player : l_tournament.getStrategyList())
+        {
+            if(!StrategyConstants.SUPPORTED_STRATEGIES.contains(l_player))
+            {
+                throw new Exception(String.format("Please select a player name from the following list: %s", StrategyConstants.SUPPORTED_STRATEGIES.toString()));
+            }
         }
     }
 }
