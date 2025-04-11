@@ -66,7 +66,6 @@ public class BenevolentStrategy implements Strategy, Serializable {
         return orders;
     }
 
-
     @Override
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
         Random l_random = new Random();
