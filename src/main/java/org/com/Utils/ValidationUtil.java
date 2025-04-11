@@ -86,7 +86,7 @@ public class ValidationUtil implements Serializable {
     public static void validateMap(Map p_gameMap) throws Exception {
         // Checking whether the map is empty
         if (p_gameMap == null) {
-            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+            throw new Exception(CommonErrorMessages.TOURNAMENT_NOT_PLAYED);
         }
 
         // Continent validation
@@ -239,8 +239,6 @@ public class ValidationUtil implements Serializable {
     public static void validateTournamentCommand(Tournament l_tournament) throws Exception {
         if (l_tournament == null) {
             throw new Exception("The tournament is empty");
-        } else if (l_tournament.getNumGames() != l_tournament.getMapList().size()) {
-            throw new Exception(String.format("Not enough maps to play %d games", l_tournament.getNumGames()));
         }
 
         for(String l_player : l_tournament.getStrategyList())
