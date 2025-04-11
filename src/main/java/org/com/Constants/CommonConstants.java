@@ -1,20 +1,14 @@
 package org.com.Constants;
 
-import org.com.Orders.AdvanceOrder;
-import org.com.Orders.BombOrder;
-import org.com.Orders.Order;
 import org.com.Utils.HelperUtil;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class contains all global constants.
  *
  * @author Arvind Lakshmanan
- *
  */
 
 public class CommonConstants implements Serializable {
@@ -55,6 +49,7 @@ public class CommonConstants implements Serializable {
     // Game Mode
     public static final String SINGLE_GAME_MODE = "Single";
     public static final String TOURNAMENT_GAME_MODE = "Tournament";
+    public static final String GAME_DRAW = "Draw";
 
     // Strings
     public static final String CONTINENTS = "[continents]";
@@ -84,8 +79,8 @@ public class CommonConstants implements Serializable {
 
 
     static {
-        TWO_ATTRIBUTES_TWO_ONE_VALUE = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2,1}, 2);
-        TWO_ATTRIBUTES_TWO_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2,2}, 2);
-        FOUR_ATTRIBUTES_ONE_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{MAP_ATTRIBUTE, PLAYER_ATTRIBUTE, GAME_ATTRIBUTE, TURNS_ATTRIBUTE}, new Integer[]{1,1,1,1}, 4);
+        TWO_ATTRIBUTES_TWO_ONE_VALUE = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2, 1}, 2);
+        TWO_ATTRIBUTES_TWO_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{ADD_ATTRIBUTE, REMOVE_ATTRIBUTE}, new Integer[]{2, 2}, 2);
+        FOUR_ATTRIBUTES_ONE_VALUE_EACH = HelperUtil.constructAttributeHashMap(new String[]{MAP_ATTRIBUTE, PLAYER_ATTRIBUTE, GAME_ATTRIBUTE, TURNS_ATTRIBUTE}, new Integer[]{1, 1, 1, 1}, 4);
     }
 }

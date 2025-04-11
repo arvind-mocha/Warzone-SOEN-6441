@@ -2,7 +2,6 @@ package org.com.Utils;
 
 import org.com.Constants.CommonConstants;
 import org.com.Constants.CommonErrorMessages;
-import org.com.Constants.StrategyConstants;
 import org.com.GamePhase.Phase;
 import org.com.Handlers.Commands;
 import org.com.Models.*;
@@ -86,7 +85,7 @@ public class ValidationUtil implements Serializable {
     public static void validateMap(Map p_gameMap) throws Exception {
         // Checking whether the map is empty
         if (p_gameMap == null) {
-            throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
+            throw new Exception(CommonErrorMessages.TOURNAMENT_NOT_PLAYED);
         }
 
         // Continent validation

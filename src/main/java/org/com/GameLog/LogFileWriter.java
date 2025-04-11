@@ -1,5 +1,6 @@
 package org.com.GameLog;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -17,6 +18,12 @@ public class LogFileWriter implements Observer, Serializable {
      */
     public LogFileWriter(Path p_logFilePath) {
         this.d_logFilePath = p_logFilePath;
+
+        File logFile = p_logFilePath.toFile();
+        File logDir = logFile.getParentFile();
+        if (logDir != null && !logDir.exists()) {
+            logDir.mkdirs();
+        }
     }
 
     /**

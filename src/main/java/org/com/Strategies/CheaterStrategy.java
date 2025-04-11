@@ -6,8 +6,8 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheaterStrategy implements Strategy, Serializable {
@@ -48,7 +48,6 @@ public class CheaterStrategy implements Strategy, Serializable {
 
         return "";  // Return empty string for unsupported card types
     }
-
 
     @Override
     public Country getNeighbour(Country p_country, Map p_gameMap, Player p_currentPlayer) {
