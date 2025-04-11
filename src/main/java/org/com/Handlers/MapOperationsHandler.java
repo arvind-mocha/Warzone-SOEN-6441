@@ -549,6 +549,6 @@ public class MapOperationsHandler implements Serializable {
             l_data[l_rowNum][5] = String.valueOf(l_country.getArmyCount());
             l_rowNum++;
         }
-        DisplayUtil.displayMap(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, String.format("Domination Map Viewer | Turn - %d", p_gameMap.getTurnsCompleted()));
+        DisplayUtil.displayData(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, String.format("Domination Map Viewer | Turn - %d", p_gameMap.getTurnsCompleted()));
     }
 }

@@ -17,16 +17,16 @@ public class DisplayUtil implements Serializable {
      *
      * @param l_data The data to be displayed in the table.
      * @param l_columnNames The names of the columns in the table.
-     * @param p_mapName The name of the map to be displayed in the window title.
+     * @param p_tableName The name of the map to be displayed in the window title.
      */
-    public static void displayMap(String[][] l_data, String[] l_columnNames, String p_mapName) {
+    public static void displayData(String[][] l_data, String[] l_columnNames, String p_tableName) {
         // Creating the tableModel object
         DefaultTableModel tableModel = new DefaultTableModel(l_data, l_columnNames);
         JTable gameTable = new JTable(tableModel);
 
         // Adding scroll bar to the GUI
         JScrollPane scrollPane = new JScrollPane(gameTable);
-        JFrame frame = new JFrame(p_mapName);
+        JFrame frame = new JFrame(p_tableName);
         frame.add(scrollPane);
 
         // Adjusting the initial frame of the GUI
