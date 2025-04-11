@@ -12,7 +12,6 @@ import java.util.Arrays;
  *
  * @author Arvind Lakshmanan
  * @author Barath Sundararaj
- *
  */
 
 public class IssueOrderPhase implements Phase, Serializable {
@@ -23,7 +22,7 @@ public class IssueOrderPhase implements Phase, Serializable {
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.DEPLOY_ARMY_COMMAND.getName(), Commands.ADVANCE_ARMY_COMMAND.getName(), Commands.COMMIT.getName(), Commands.BLOCKADE_COMMAND.getName(), Commands.AIRLIFT_COMMAND.getName() ,Commands.NEGOTIATE_COMMAND.getName(), Commands.BOMB_COMMAND.getName(), Commands.SAVE_GAME.getName(), Commands.LOAD_GAME.getName()));
+        return new ArrayList<>(Arrays.asList(Commands.DEPLOY_ARMY_COMMAND.getName(), Commands.ADVANCE_ARMY_COMMAND.getName(), Commands.COMMIT.getName(), Commands.BLOCKADE_COMMAND.getName(), Commands.AIRLIFT_COMMAND.getName(), Commands.NEGOTIATE_COMMAND.getName(), Commands.BOMB_COMMAND.getName(), Commands.SAVE_GAME.getName(), Commands.LOAD_GAME.getName()));
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.logging.*;
 
 /**
- *
  * This class contains the base method for logging all game activities.
  *
  * @author Arvind Lakshmanan
@@ -30,11 +29,10 @@ public class LogUtil implements Serializable {
      * Logs a message with a specified logging level and class name.
      *
      * @param className The name of the class where the log message originates.
-     * @param level The logging level of the message (e.g., INFO, WARNING, SEVERE).
-     * @param message The log message to be recorded.
+     * @param level     The logging level of the message (e.g., INFO, WARNING, SEVERE).
+     * @param message   The log message to be recorded.
      */
-    public static void Logger(String className, Level level, String message)
-    {
+    public static void Logger(String className, Level level, String message) {
         Logger l_logger = Logger.getLogger(className);
         try {
             // Removing the console handler from the default logger to prevent logs getting printed in the console.
@@ -63,7 +61,6 @@ public class LogUtil implements Serializable {
      */
     static class CustomFormatter extends Formatter {
         /**
-         *
          * @param p_record The log record containing the log message and metadata.
          * @return A formatted string representing the log record.
          */
@@ -76,8 +73,7 @@ public class LogUtil implements Serializable {
     /**
      * Creates the log folder if it does not exist.
      */
-    public static void createLogFolder()
-    {
+    public static void createLogFolder() {
         File l_logsDirectory = new File(LOG_FOLDER);
         if (!l_logsDirectory.exists()) {
             l_logsDirectory.mkdir();

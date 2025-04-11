@@ -236,6 +236,12 @@ public class ValidationUtil implements Serializable {
         return false;
     }
 
+    /**
+     * Validates the tournament command to ensure the tournament object and its strategies are valid.
+     *
+     * @param l_tournament The tournament object to validate.
+     * @throws Exception if the tournament is null or contains unsupported strategies.
+     */
     public static void validateTournamentCommand(Tournament l_tournament) throws Exception {
         if (l_tournament == null) {
             throw new Exception("The tournament is empty");

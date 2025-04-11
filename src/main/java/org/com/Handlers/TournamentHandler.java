@@ -11,7 +11,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * The `TournamentHandler` class is responsible for managing tournament-related operations.
+ * It includes methods to process tournament configurations and display tournament results.
+ * This class implements `Serializable` to allow its instances to be serialized.
+ *
+ * @author Arvind Lakshmanan
+ */
 public class TournamentHandler implements Serializable {
+
+    /**
+     * Processes the tournament configuration based on the input command.
+     * Parses the command to extract attributes such as maps, players, number of games, and maximum turns,
+     * and updates the tournament object accordingly.
+     *
+     * @param p_command   The input command containing tournament configuration details.
+     * @param l_tournament The tournament object to be updated with the parsed configuration.
+     * @throws Exception If there is an error in parsing or invalid input.
+     */
     public static void processTournament(String p_command, Tournament l_tournament) throws Exception {
         String[] l_commandsArray = p_command.split(" -");
         for (int l_index = 1; l_index < l_commandsArray.length; l_index++) {
@@ -26,6 +44,12 @@ public class TournamentHandler implements Serializable {
         }
     }
 
+    /**
+     * Processes and displays the results of a tournament in a tabular format.
+     *
+     * @param p_tournament The tournament object containing the results.
+     * @throws Exception If the tournament has not been played or no results are available.
+     */
     public static void processTournamentResult(Tournament p_tournament) throws Exception {
         if (p_tournament == null || p_tournament.getGameWinners().isEmpty()) {
             throw new Exception(CommonErrorMessages.TOURNAMENT_NOT_PLAYED);

@@ -8,16 +8,15 @@ import java.io.Serializable;
  * This class contains util method for displaying the map.
  *
  * @author Arvind Lakshmanan
- *
  */
 public class DisplayUtil implements Serializable {
 
     /**
      * Displays the map in a GUI table format.
      *
-     * @param l_data The data to be displayed in the table.
+     * @param l_data        The data to be displayed in the table.
      * @param l_columnNames The names of the columns in the table.
-     * @param p_tableName The name of the map to be displayed in the window title.
+     * @param p_tableName   The name of the map to be displayed in the window title.
      */
     public static void displayData(String[][] l_data, String[] l_columnNames, String p_tableName) {
         // Creating the tableModel object

@@ -12,7 +12,6 @@ import java.util.Arrays;
  * The <b>GameStartUpPhase</b> implements the <b>Phase Interface</b>
  *
  * @author Arvind Lakshmanan
- *
  */
 public class GameStartUpPhase implements Phase, Serializable {
 

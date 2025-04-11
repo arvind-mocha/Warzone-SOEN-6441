@@ -6,6 +6,15 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class defines constants and utility methods related to game strategies.
+ * It provides a list of supported strategies and a method to retrieve
+ * the corresponding strategy implementation by name.
+ *
+ *
+ * The class ensures that only valid strategies are used in the game.
+ * @author Arvind Lakshmanan
+ */
 public class StrategyConstants implements Serializable {
     public static final String AGGRESSIVE_STRATEGY = "aggressive";
     public static final String BENEVOLENT_STRATEGY = "benevolent";

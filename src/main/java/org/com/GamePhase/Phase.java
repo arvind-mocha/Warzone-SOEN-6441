@@ -29,8 +29,4 @@ public interface Phase {
      * @return the next Phase object.
      */
     String getHelpMessage();
-
-    default String getGameState() {
-        return null;
-    }
 }

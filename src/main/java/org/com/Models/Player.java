@@ -79,11 +79,21 @@ public class Player implements Serializable {
     }
 
 
+    /**
+     * Gets the card played by the player in the current turn.
+     *
+     * @return The card played in the current turn.
+     */
     public Order get_cardPlayedInTurn() {
         return d_cardPlayedInTurn;
     }
 
 
+    /**
+     * Sets the card played by the player in the current turn.
+     *
+     * @param p_cardPlayed The card to set as played in the current turn.
+     */
     public void set_cardPlayedInTurn(Order p_cardPlayed) {
         this.d_cardPlayedInTurn = p_cardPlayed;
     }
@@ -242,18 +252,38 @@ public class Player implements Serializable {
         this.d_playerStrategy = p_playerStrategy;
     }
 
+    /**
+     * Checks if the cards have been executed by the player.
+     *
+     * @return True if the cards have been executed, false otherwise.
+     */
     public Boolean get_cardsExecuted() {
         return this.d_cardsExecuted;
     }
 
+    /**
+     * Sets whether the cards have been executed by the player.
+     *
+     * @param p_cardsExecuted True if the cards have been executed, false otherwise.
+     */
     public void set_cardsExecuted(Boolean p_cardsExecuted) {
         this.d_cardsExecuted = p_cardsExecuted;
     }
 
+    /**
+     * Checks if the advance order has been executed by the player.
+     *
+     * @return True if the advance order has been executed, false otherwise.
+     */
     public Boolean get_advanceExecuted() {
         return this.d_advanceExecuted;
     }
 
+    /**
+     * Sets whether the advance order has been executed by the player.
+     *
+     * @param p_advanceExecuted True if the advance order has been executed, false otherwise.
+     */
     public void set_advanceExecuted(Boolean p_advanceExecuted) {
         this.d_advanceExecuted = p_advanceExecuted;
     }

@@ -31,12 +31,10 @@ public class Cards implements Serializable {
      *
      * @return A randomly selected card constant.
      */
-    public static String getRandomCard(HashMap<String, Integer> p_cards)
-    {
+    public static String getRandomCard(HashMap<String, Integer> p_cards) {
         Random random = new Random();
         if (p_cards != null) {
-            if(p_cards.isEmpty())
-            {
+            if (p_cards.isEmpty()) {
                 return null;
             }
             List<String> l_availableCards = new ArrayList<>(p_cards.keySet());

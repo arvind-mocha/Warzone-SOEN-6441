@@ -13,22 +13,19 @@ import java.util.*;
  * This class contains helper methods to perform small operations.
  *
  * @author Arvind Lakshmanan
- *
  */
 public class HelperUtil implements Serializable {
     /**
      * Constructs a HashMap from the given attribute names and values.
      *
-     * @param p_attributeName  Array of attribute names.
-     * @param p_attributeValue Array of attribute values.
+     * @param p_attributeName   Array of attribute names.
+     * @param p_attributeValue  Array of attribute values.
      * @param p_attributesCount Number of attributes.
      * @return A HashMap with attribute names as keys and attribute values as values.
      */
-    public static HashMap<String, Integer> constructAttributeHashMap(String[] p_attributeName, Integer[] p_attributeValue, Integer p_attributesCount)
-    {
+    public static HashMap<String, Integer> constructAttributeHashMap(String[] p_attributeName, Integer[] p_attributeValue, Integer p_attributesCount) {
         HashMap<String, Integer> l_hashMap = new HashMap<>();
-        for (int l_i = 0; l_i<p_attributesCount; l_i++)
-        {
+        for (int l_i = 0; l_i < p_attributesCount; l_i++) {
             l_hashMap.put(p_attributeName[l_i], p_attributeValue[l_i]);
         }
         return l_hashMap;
@@ -38,7 +35,7 @@ public class HelperUtil implements Serializable {
      * Retrieves the name of a continent by its ID.
      *
      * @param p_continents Set of Continent objects.
-     * @param p_id The ID of the continent to find.
+     * @param p_id         The ID of the continent to find.
      * @return The name of the continent with the given ID, or null if not found.
      */
     public static String getContinentById(Set<Continent> p_continents, int p_id) {
@@ -50,8 +47,14 @@ public class HelperUtil implements Serializable {
         return null;
     }
 
-    public static Country getCountryByCountryName(String p_countryName, Map p_gameMap)
-    {
+    /**
+     * Retrieves a country by its name from the game map.
+     *
+     * @param p_countryName The name of the country to search for.
+     * @param p_gameMap     The game map containing all countries.
+     * @return The Country object with the matching name, or null if not found.
+     */
+    public static Country getCountryByCountryName(String p_countryName, Map p_gameMap) {
         // Find the country by name
         for (Country l_country : p_gameMap.getCountryMap().vertexSet()) {
             if (l_country.getName().equalsIgnoreCase(p_countryName)) {
@@ -61,24 +64,35 @@ public class HelperUtil implements Serializable {
         return null;
     }
 
-    public static Player getPlayerByName(String p_playerName, List<Player> p_playersList)
-    {
+    /**
+     * Retrieves a player by their name from a list of players.
+     *
+     * @param p_playerName  The name of the player to search for.
+     * @param p_playersList The list of players to search within.
+     * @return The Player object with the matching name, or null if not found.
+     */
+    public static Player getPlayerByName(String p_playerName, List<Player> p_playersList) {
         for (Player l_player : p_playersList) {
-            if(l_player.get_name().equals(p_playerName))
-            {
+            if (l_player.get_name().equals(p_playerName)) {
                 return l_player;
             }
         }
         return null;
     }
 
-    public static void setCountryOwnerShip(Player p_player, Country p_country, boolean p_isNeutralize)
-    {
+    /**
+     * Updates the ownership of a country.
+     *
+     * @param p_player       The player to whom the country ownership is being assigned.
+     * @param p_country      The country whose ownership is being updated.
+     * @param p_isNeutralize If true, neutralizes the country (removes ownership and resets army count).
+     */
+    public static void setCountryOwnerShip(Player p_player, Country p_country, boolean p_isNeutralize) {
         Player l_oldOwner = p_country.getOwner();
-        if (l_oldOwner != null){
+        if (l_oldOwner != null) {
             l_oldOwner.get_countries().remove(p_country);
         }
-        if(p_isNeutralize) {
+        if (p_isNeutralize) {
             p_player.get_countries().remove(p_country);
             p_country.setOwner(null);
             p_country.setArmyCount(0);
@@ -88,8 +102,13 @@ public class HelperUtil implements Serializable {
         }
     }
 
-    public static Country getPlayerHighestArmyCountry(Player l_player)
-    {
+    /**
+     * Retrieves the country with the highest number of armies owned by the specified player.
+     *
+     * @param l_player The player whose countries are being evaluated.
+     * @return The country with the highest army count owned by the player, or null if the player has no countries.
+     */
+    public static Country getPlayerHighestArmyCountry(Player l_player) {
         Country l_highestArmyCountry = null;
         for (Country l_country : l_player.get_countries()) {
             if (l_highestArmyCountry == null || l_country.getArmyCount() > l_highestArmyCountry.getArmyCount()) {
@@ -103,7 +122,7 @@ public class HelperUtil implements Serializable {
      * Retrieves the country with the most armies owned by a player other than the current player.
      *
      * @param p_currentPlayer The current player.
-     * @param p_gameMap   The game map.
+     * @param p_gameMap       The game map.
      * @return The country with the most armies owned by another player, or null if not found.
      */
     public static Country getStrongestNeighbouringEnemyCountry(Player p_currentPlayer, Map p_gameMap) {
@@ -133,7 +152,7 @@ public class HelperUtil implements Serializable {
         List<Country> enemyCountries = new ArrayList<>();
         for (int l_neighborID : p_country.getNeighbourCountryIds()) {
             Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
-            if(l_neighbor.getOwner() != null){
+            if (l_neighbor.getOwner() != null) {
                 if (!l_neighbor.getOwner().equals(p_currentPlayer)) {
                     enemyCountries.add(l_neighbor);
                 }
