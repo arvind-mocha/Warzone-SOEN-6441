@@ -51,4 +51,12 @@ public class Tournament implements Serializable {
     public void setMaxTurns(int p_maxTurns) {
         this.d_maxTurns = p_maxTurns;
     }
+
+    public List<String> getGameWinners() {
+        return d_gameWinners;
+    }
+
+    public void setGameWinners(List<String> p_gameWinners) {
+        this.d_gameWinners = p_gameWinners;
+    }
 }

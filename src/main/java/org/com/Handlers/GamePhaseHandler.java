@@ -11,12 +11,12 @@ import org.com.Strategies.CheaterStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Handles the game phase and changes after each players turn.
  *
  * @author Arvind Lakshmanan
  * @author Devasenan Murugan
- *
  */
 
 public class GamePhaseHandler implements Serializable {
@@ -136,11 +136,15 @@ public class GamePhaseHandler implements Serializable {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
+<<<<<<< HEAD
             if(l_player.get_countries().isEmpty())
             {
                 System.console().println(String.format("Player %s has no owned territory, so gets no army", l_player.get_name()));
                 continue;
             } else if (l_player.get_playerStrategy() instanceof CheaterStrategy){
+=======
+            if (l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy) {
+>>>>>>> de7a03b (Tournament)
                 System.console().println(String.format("Cheater player %s get no army", l_player.get_name()));
                 continue;
             }
@@ -150,28 +154,33 @@ public class GamePhaseHandler implements Serializable {
                 l_numArmies = l_numArmies + l_continent.getValue();
             }
 
-            if(l_numArmies < 5){
+            if (l_numArmies < 5) {
                 l_numArmies = 5;
             }
 
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
+<<<<<<< HEAD
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
             LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
+=======
+            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
+            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
+>>>>>>> de7a03b (Tournament)
         }
         LogManager.logAction("Armies have been assigned to all player\n");
     }
+
     public void assignReinforcements(boolean startupPhase) {
-        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size()+1), 3);
+        int l_numArmies = Math.max(Math.divideExact(d_gameMap.getCountryMap().vertexSet().size(), d_playerList.size() + 1), 3);
 
         for (Player l_player : d_playerList) {
-            if(l_player.get_playerStrategy() instanceof CheaterStrategy)
-            {
+            if (l_player.get_playerStrategy() instanceof CheaterStrategy) {
                 System.console().println(String.format("No army will be assigned to Cheater player %s", l_player.get_name()));
                 continue;
             }
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
-            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
-            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name());
+            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
+            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
         }
         LogManager.logAction("Armies have been assigned to all player\n");
     }
