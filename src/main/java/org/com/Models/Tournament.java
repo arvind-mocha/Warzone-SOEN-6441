@@ -11,7 +11,7 @@ public class Tournament implements Serializable {
     private List<String> d_strategyList;
     private int d_numGames;
     private int d_maxTurns;
-    private HashMap<String, ArrayList<String >> d_gameWinners;
+    private HashMap<String, ArrayList<String>> d_gameWinners;
 
     public Tournament() {
         this.d_mapList = new ArrayList<>();

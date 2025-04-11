@@ -42,8 +42,6 @@ public class RandomStrategy implements Strategy, Serializable {
             Country l_randomNeighbour = getNeighbour(l_randomCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
             if(l_randomNeighbour != null) {
                 int l_randomArmies = Math.max(1, l_random.nextInt(Math.max(l_randomCountry.getArmyCount(), 1)));
-//                System.out.println(l_randomCountry.getName());
-//                System.out.println(l_randomCountry.getOwner().get_name());
                 commands.add(String.format(CommonConstants.ADVANCE, l_randomCountry.getName(), l_randomNeighbour.getName(), l_randomArmies));
                 p_currentPlayer.set_advanceExecuted(true);
             }
@@ -71,7 +69,7 @@ public class RandomStrategy implements Strategy, Serializable {
                 case Cards.AIRLIFT_CARD:
                     if (p_currentPlayer.get_countries().size() < 2) break;
                     Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    if(l_randCountryTo == l_randomCountry){
+                    if(l_randCountryTo == l_randomCountry || l_randomCountry.getArmyCount() < 2){
                         p_currentPlayer.set_cardsExecuted(false);
                         return null;
                     }

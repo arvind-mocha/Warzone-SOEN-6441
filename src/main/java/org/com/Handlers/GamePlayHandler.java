@@ -45,14 +45,6 @@ public class GamePlayHandler implements Serializable {
             System.out.println("\u001B[32m================================================================\n\u001B[0m");
             LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
-
-
-//            try{
-//                MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
-//            } catch (Exception e){
-//                System.out.println(e.toString());
-//            }
-
         }
 
         System.out.println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));

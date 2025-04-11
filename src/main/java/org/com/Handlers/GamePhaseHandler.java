@@ -136,8 +136,12 @@ public class GamePhaseHandler implements Serializable {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
-            if (l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy) {
-                System.out.println(String.format("Cheater player %s get no army", l_player.get_name()));
+            if(l_player.get_countries().isEmpty())
+            {
+                System.out.println(String.format("Player %s has no owned territory, so gets no army", l_player.get_name()));
+                continue;
+            } else if (l_player.get_playerStrategy() instanceof CheaterStrategy){
+                System.out.println(String.format("Cheater player %s gets no army", l_player.get_name()));
                 continue;
             }
 
@@ -151,8 +155,8 @@ public class GamePhaseHandler implements Serializable {
             }
 
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
-            System.out.println("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
-            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
+            System.out.println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
+            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
         }
         LogManager.logAction("Armies have been assigned to all player\n");
     }
