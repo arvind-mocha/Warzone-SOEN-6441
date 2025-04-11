@@ -10,6 +10,7 @@ import org.com.Handlers.MapOperationsHandler;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Models.Tournament;
+import org.com.Strategies.CheaterStrategy;
 import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
 
@@ -60,16 +61,14 @@ public class GameEngine implements Serializable {
                     }
                 }
                 l_ownersMap = l_ownersMap.stream().distinct().collect(Collectors.toList());
-//                System.out.println(l_ownersMap.size());
             }
 
-
-//            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
-//            if(l_isIssueOrderPhase && l_gamePhaseManager.getTurnsCompleted() > 400)
-            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1)
+            // if(l_isIssueOrderPhase && l_gamePhaseManager.getTurnsCompleted() > 400)
+            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
+//            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1)
             {
                 Player l_winner = l_ownersMap.getFirst();
-                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+//                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
                 l_console.println(String.format("Hurray!!!. Player %s won the game.", l_winner.get_name()));
 
                 try{
@@ -77,7 +76,6 @@ public class GameEngine implements Serializable {
                 } catch (Exception e){
                     System.out.println(e.toString());
                 }
-
                 l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
             }
             else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
@@ -86,9 +84,21 @@ public class GameEngine implements Serializable {
             }
             else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
             {
-                Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
-//                l_console.println(String.format("%d, %d", l_currentPlayer.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
-                l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
+                if (l_currentPlayer.get_playerStrategy() instanceof CheaterStrategy && l_isIssueOrderPhase && l_ownersMap.size() <= 1){
+                    Player l_winner = l_ownersMap.getFirst();
+//                    l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                    l_console.println(String.format("Cheater!!!. Player %s won the game.", l_winner.get_name()));
+
+                    try{
+                        MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
+                    } catch (Exception e){
+                        System.out.println(e.toString());
+                    }
+                    l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
+                } else {
+                    Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
+                    l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
+                }
             }
 
             else

@@ -41,8 +41,6 @@ public class RandomStrategy implements Strategy{
             Country l_randomNeighbour = getNeighbour(l_randomCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
             if(l_randomNeighbour != null) {
                 int l_randomArmies = Math.max(1, l_random.nextInt(Math.max(l_randomCountry.getArmyCount(), 1)));
-//                System.out.println(l_randomCountry.getName());
-//                System.out.println(l_randomCountry.getOwner().get_name());
                 commands.add(String.format(CommonConstants.ADVANCE, l_randomCountry.getName(), l_randomNeighbour.getName(), l_randomArmies));
                 p_currentPlayer.set_advanceExecuted(true);
             }

@@ -31,31 +31,50 @@ public class AggressiveStrategy implements Strategy {
         } else if (!l_hasPlayerExecutedCard && !p_currentPlayer.get_cards().isEmpty() && !p_currentPlayer.get_countries().isEmpty()) {
             return Arrays.asList(generateCardOrder(p_gamePhaseHandler, p_currentPlayer, Cards.BOMB_CARD));
         } else if(!l_hasPlayerExecutedAdvance) {
+            l_strongestCountry = HelperUtil.getPlayerHighestArmyCountry(p_currentPlayer);
+
             if(l_strongestCountry.getArmyCount() <= 1){
                 p_currentPlayer.set_advanceExecuted(false);
                 return null;
             }
-            Random l_random = new Random();
             List<String> commands = new ArrayList<>();
             List<Integer> l_neighbours = l_strongestCountry.getNeighbourCountryIds();
 
             // Attacking unowned country from the strongest country
             Country l_neighbour = getNeighbour(l_strongestCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
-            commands.add(String.format(CommonConstants.ADVANCE, l_strongestCountry.getName(), l_neighbour.getName(),  l_strongestCountry.getArmyCount()-1));
+            if (l_neighbour != null){
+                commands.add(String.format(CommonConstants.ADVANCE, l_strongestCountry.getName(), l_neighbour.getName(),  l_strongestCountry.getArmyCount()/2));
+                p_currentPlayer.set_advanceExecuted(true);
+            }
+
+            for(Country l_ownedCountry: p_currentPlayer.get_countries()){
+                Country ll_neighbour = getNeighbour(l_ownedCountry, p_gamePhaseHandler.getGameMap(), p_currentPlayer);
+                if(ll_neighbour == null){
+                    continue;
+                } else {
+                    if(l_ownedCountry.getArmyCount() <= 1){
+//                        p_currentPlayer.set_advanceExecuted(false);
+                        continue;
+                    }
+                    commands.add(String.format(CommonConstants.ADVANCE, l_ownedCountry.getName(), ll_neighbour.getName(), l_ownedCountry.getArmyCount()-1));
+                    p_currentPlayer.set_advanceExecuted(true);
+//                    break;
+                }
+            }
 
             // Moving armies from owned countries to strong owned country
             for (int l_neighborCountryID : l_neighbours) {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
                 if (l_neighborCountry.getArmyCount() > 2 && p_currentPlayer.equals(l_neighborCountry.getOwner())) {
                     if(l_neighborCountry.getArmyCount() <= 1){
-                        p_currentPlayer.set_advanceExecuted(false);
-                        return null;
+//                        p_currentPlayer.set_advanceExecuted(false);
+                        continue;
                     }
-                    System.out.println(l_neighborCountry.getArmyCount()-1);
                     commands.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_strongestCountry.getName(), l_neighborCountry.getArmyCount()-1));
+                    p_currentPlayer.set_advanceExecuted(true);
+                    break;
                 }
             }
-            p_currentPlayer.set_advanceExecuted(true);
             return commands;
         }
         return Arrays.asList(CommonConstants.COMMIT);
@@ -85,13 +104,19 @@ public class AggressiveStrategy implements Strategy {
         Random random = new Random();
         return l_neighbouringCountries.get(random.nextInt(l_neighbouringCountries.size()));
     }
+
 //    public Country getNeighbour(Country p_country, Map p_gameMap, Player p_currentPlayer) {
 //        Country l_neighbor;
+////        List<Country> l_neighbouringCountries = new ArrayList<>();
 //        for(Country l_country: p_currentPlayer.get_countries()){
 //            for (int l_neighborID: l_country.getNeighbourCountryIds()){
 //                l_neighbor = p_gameMap.getCountryById(l_neighborID);
-//                if(!p_currentPlayer.equals(l_neighbor.getOwner())){
+//                if(l_neighbor.getOwner() == null){
 //                    return l_neighbor;
+////                    l_neighbouringCountries.add(l_neighbor);
+//                } else if (!p_currentPlayer.equals(l_neighbor.getOwner())){
+//                    return l_neighbor;
+////                    l_neighbouringCountries.add(l_neighbor);
 //                }
 //            }
 //        }
