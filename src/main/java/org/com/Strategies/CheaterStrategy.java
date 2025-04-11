@@ -7,10 +7,17 @@ import org.com.Models.Map;
 import org.com.Models.Player;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.ArrayList;
 =======
 import java.io.Serializable;
 >>>>>>> 804f482 (Made all the files serializable)
+=======
+import java.io.Serializable;
+=======
+import java.util.ArrayList;
+>>>>>>> 829dd75 (fixed Benevolent and Cheater stratergies - works completely)
+>>>>>>> afdec0f (rebasing on main)
 import java.util.List;
 
 public class CheaterStrategy implements Strategy, Serializable {

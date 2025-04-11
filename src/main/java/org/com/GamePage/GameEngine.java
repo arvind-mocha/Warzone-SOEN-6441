@@ -8,6 +8,7 @@ import org.com.Handlers.TournamentHandler;
 import org.com.Models.Tournament;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.com.Strategies.CheaterStrategy;
 import org.com.Strategies.HumanStrategy;
 import org.com.Strategies.Strategy;
@@ -16,6 +17,14 @@ import org.com.Strategies.Strategy;
 =======
 import org.com.Utils.ValidationUtil;
 >>>>>>> 118221f (tournaments)
+=======
+import org.com.Utils.ValidationUtil;
+=======
+import org.com.Strategies.CheaterStrategy;
+import org.com.Strategies.HumanStrategy;
+import org.com.Strategies.Strategy;
+>>>>>>> 829dd75 (fixed Benevolent and Cheater stratergies - works completely)
+>>>>>>> afdec0f (rebasing on main)
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -45,6 +54,7 @@ public class GameEngine implements Serializable {
         Scanner l_scanner = new Scanner(System.in);
         String l_gameMode = l_scanner.nextLine();
 
+<<<<<<< HEAD
         if (CommonConstants.SINGLE_GAME_MODE.equals(l_gameMode)) {
             GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
             GameModeExecuter.gameModeHandler(l_gamePhaseManager, null);
@@ -145,7 +155,76 @@ public class GameEngine implements Serializable {
             l_console.println("Game mode does not exists");
         }
         LogManager.logAction("Warzone has been ended");
+<<<<<<< HEAD
 >>>>>>> de7a03b (Tournament)
+=======
+=======
+            if(l_gamePhaseManager.getGameMap() != null){
+                for (Country l_country : l_gamePhaseManager.getGameMap().getCountryMap().vertexSet()){
+                    if(l_country.getOwner() != null) {
+                        l_ownersMap.add(l_country.getOwner());
+                    }
+                }
+                l_ownersMap = l_ownersMap.stream().distinct().collect(Collectors.toList());
+            }
+
+            // if(l_isIssueOrderPhase && l_gamePhaseManager.getTurnsCompleted() > 400)
+            if(l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size())
+//            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1)
+            {
+                Player l_winner = l_ownersMap.getFirst();
+//                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_winner.get_name()));
+
+                try{
+                    MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
+                } catch (Exception e){
+                    System.out.println(e.toString());
+                }
+                l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
+            }
+            else if(l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty())
+            {
+                l_inputCommand = Arrays.asList(CommonConstants.COMMIT);
+            }
+            else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
+            {
+                if (l_currentPlayer.get_playerStrategy() instanceof CheaterStrategy && l_isIssueOrderPhase && l_ownersMap.size() <= 1){
+                    Player l_winner = l_ownersMap.getFirst();
+//                    l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                    l_console.println(String.format("Cheater!!!. Player %s won the game.", l_winner.get_name()));
+
+                    try{
+                        MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
+                    } catch (Exception e){
+                        System.out.println(e.toString());
+                    }
+                    l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
+                } else {
+                    Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
+                    l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
+                }
+            }
+
+            else
+            {
+                l_console.print("> ");
+                l_inputCommand = Arrays.asList(l_scanner.nextLine());
+            }
+
+
+            try {
+                CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
+            } catch (Exception e) {
+                l_console.println("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
+                LogManager.logAction("\u001B[31m-- " + e.getMessage() + " --\u001B[0m");
+                l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+            }
+        } while(l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
+
+        LogManager.logAction("Game has been ended");
+>>>>>>> 829dd75 (fixed Benevolent and Cheater stratergies - works completely)
+>>>>>>> afdec0f (rebasing on main)
         l_console.println("Thanks for giving our game a try! We hope you have an epic time on the battlefield. \uD83D\uDE80\uD83D\uDD25");
     }
 }
