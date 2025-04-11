@@ -6,6 +6,7 @@ import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
 import org.com.Handlers.TournamentHandler;
 import org.com.Models.Tournament;
+import org.com.Utils.DisplayUtil;
 import org.com.Utils.ValidationUtil;
 
 import java.io.Serializable;
@@ -28,6 +29,7 @@ public class GameEngine implements Serializable {
     public static void main(String[] p_args) throws Exception {
 
         //The following messages will be displayed at the start of the game.
+        var l_console = System.console();
         System.out.println("Welcome to the WarZone edition of Risk.");
 
         // Getting Input from the players
@@ -45,13 +47,21 @@ public class GameEngine implements Serializable {
                 System.out.println("Set up the tournament using the following format:\n" + "tournament -M maps -P players -G number_of_games -D max_turns");
                 TournamentHandler.processTournament(l_scanner.nextLine(), l_tournamentManager);
                 ValidationUtil.validateTournamentCommand(l_tournamentManager);
-                for (int l_gameNum = 0; l_gameNum < l_tournamentManager.getNumGames(); l_gameNum++) {
-                    GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
-                    String l_loadMap = String.format(CommonConstants.LOAD_MAP + " ", l_tournamentManager.getMapList().get(l_gameNum));
-                    String l_addPlayers = CommonConstants.ADD_PLAYER_COMMAND + " " + l_tournamentManager.getStrategyList().stream().map(player -> "-add " + player + " " + player).reduce("", (partialString, element) -> partialString + " " + element).trim();
-                    CommandHandler.processCommand(l_gamePhaseManager, Arrays.asList(l_loadMap, l_addPlayers, CommonConstants.ASSIGN_COUNTRIES_COMMAND));
-                    GameModeExecuter.gameModeHandler(l_gamePhaseManager, l_tournamentManager);
-                    System.out.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_tournamentManager.getGameWinners().get(l_gameNum)));
+                for(String l_map : l_tournamentManager.getMapList()) {
+                    String l_loadMap = String.format(CommonConstants.LOAD_MAP + " ", l_map);
+                    for (int l_gameNum = 0; l_gameNum < l_tournamentManager.getNumGames(); l_gameNum++) {
+                        GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
+                        String l_addPlayers = CommonConstants.ADD_PLAYER_COMMAND + " " + l_tournamentManager.getStrategyList().stream().map(player -> "-add " + player + " " + player).reduce("", (partialString, element) -> partialString + " " + element).trim();
+                        CommandHandler.processCommand(l_gamePhaseManager, Arrays.asList(l_loadMap, l_addPlayers, CommonConstants.ASSIGN_COUNTRIES_COMMAND));
+                        GameModeExecuter.gameModeHandler(l_gamePhaseManager, l_tournamentManager);
+                        String l_gameWinner = l_tournamentManager.getGameWinners().get(l_map).get(l_gameNum);
+                        if(l_gameWinner == null || l_gameWinner.isEmpty())
+                        {
+                            l_gameWinner = CommonConstants.GAME_DRAW;
+                            l_tournamentManager.getGameWinners().get(l_map).set(l_gameNum, l_gameWinner);
+                        }
+                        System.out.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_gameWinner));
+                    }
                 }
             } else {
                 System.out.println("Game mode does not exists");
