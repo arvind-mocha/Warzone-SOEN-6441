@@ -42,7 +42,6 @@ public class MapOperationsHandler implements Serializable {
      */
 
     public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
-//        var l_console = System.console();
         Map l_map;
         p_gamePhaseHandler.setMapFileName(p_fileName);
 
@@ -70,7 +69,6 @@ public class MapOperationsHandler implements Serializable {
      * @throws Exception Map Not loaded
      */
     public static void editContinent(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
-//        var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -135,7 +133,6 @@ public class MapOperationsHandler implements Serializable {
      * @throws Exception Map Not Loaded
      */
     public static void editCountry(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
-//        var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -199,7 +196,6 @@ public class MapOperationsHandler implements Serializable {
      * @throws Exception Map Not Loaded
      */
     public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
-//        var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -278,7 +274,6 @@ public class MapOperationsHandler implements Serializable {
      * @throws Exception Map Not Loaded
      */
     public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
-//        var l_console = System.console();
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -355,7 +350,6 @@ public class MapOperationsHandler implements Serializable {
      */
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand, boolean p_isEditMapCommand) throws Exception {
         Map l_gameMap = new Map();
-//        var l_console = System.console();
         System.out.println("Processing the map from " + p_fileName + " ...");
         LogManager.logAction("Processing the map from " + p_fileName + " ...");
 
@@ -549,6 +543,6 @@ public class MapOperationsHandler implements Serializable {
             l_data[l_rowNum][5] = String.valueOf(l_country.getArmyCount());
             l_rowNum++;
         }
-        DisplayUtil.displayMap(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, "Domination Map Viewer");
+        DisplayUtil.displayData(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, String.format("Domination Map Viewer | Turn - %d", p_gameMap.getTurnsCompleted()));
     }
 }

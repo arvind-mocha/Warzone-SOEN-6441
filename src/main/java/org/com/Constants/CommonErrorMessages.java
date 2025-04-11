@@ -16,6 +16,7 @@ public class CommonErrorMessages implements Serializable {
     public static final String CONTINENT_UNAVAILABLE = "No continents are available";
     public static final String COUNTRIES_UNAVAILABLE = "No countries are available";
     public static final String MAP_NOT_LOADED = "No map has been loaded";
+    public static final String TOURNAMENT_NOT_PLAYED = "No tournament has been played";
     public static final String COUNTRYLESS_CONTINENT = "No countries are present in the continent";
     public static final String NEIGHBOURLESS_COUNTRIES = "No neighbour are present in for some countries";
     public static final String IMPROPER_NEIGHBOUR_MAPPING = "Neighbour countries has not been properly mapped";

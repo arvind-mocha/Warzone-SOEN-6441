@@ -1,5 +1,7 @@
 package org.com.Handlers;
 
+import org.com.Adapter.MapFileHandler;
+import org.com.Adapter.MapFileHandlerFactory;
 import org.com.Constants.CommonConstants;
 import org.com.GameLog.LogManager;
 import org.com.GamePhase.Phase;
@@ -32,7 +34,7 @@ public class CommandHandler implements Serializable {
             IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
             return;
         }
-//        var l_console = System.console();
+
         for(String l_command : p_commandList) {
             String[] l_commandArray = l_command.split("\\s+");
             Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
@@ -55,10 +57,13 @@ public class CommandHandler implements Serializable {
                     MapOperationsHandler.editNeighbour(p_gamePhaseHandler, l_command);
                     break;
                 case CommonConstants.SAVE_MAP_COMMAND:
-                    MapOperationsHandler.saveMap(p_gamePhaseHandler, l_command);
+                    String fileToSave = l_commandArray.length == 1 ? p_gamePhaseHandler.getMapFileName() : l_commandArray[1];
+                    MapFileHandler handler = MapFileHandlerFactory.getHandler(fileToSave);
+                    handler.saveMap(fileToSave, p_gamePhaseHandler.getGameMap());
                     break;
                 case CommonConstants.LOAD_MAP_COMMAND:
-                    MapOperationsHandler.processMap(p_gamePhaseHandler, l_commandArray[1], false, false);
+                    handler = MapFileHandlerFactory.getHandler(l_commandArray[1]);
+                    handler.loadMap(l_commandArray[1], p_gamePhaseHandler);
                     break;
                 case CommonConstants.SHOW_MAP_COMMAND:
                     MapOperationsHandler.processShowGameMap(p_gamePhaseHandler);
@@ -90,8 +95,6 @@ public class CommandHandler implements Serializable {
                 case CommonConstants.AIRLIFT_COMMAND:
                     IssueOrderHandler.processAirLiftCommand(p_gamePhaseHandler, l_commandArray);
                     break;
-                case CommonConstants.TOURNAMENT_COMMAND:
-                    TournamentHandler.processTournament(l_command);
                 case CommonConstants.SAVE_GAME_COMMAND:
                     SaveGameUtil.saveGame(p_gamePhaseHandler, l_commandArray[1]);
                     break;

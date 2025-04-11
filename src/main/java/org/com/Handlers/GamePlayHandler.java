@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *
  * Gameplay related codes are present in this class
  *
  * @author Arvind Nachiappan
@@ -24,6 +23,7 @@ import java.util.List;
 public class GamePlayHandler implements Serializable {
     /**
      * Advances the turn to the next player.
+     *
      * @param p_gamePhaseHandler The current game phase handler
      */
     public static void advanceTurn(GamePhaseHandler p_gamePhaseHandler) {
@@ -61,10 +61,10 @@ public class GamePlayHandler implements Serializable {
 
     /**
      * Issues orders for the given player.
+     *
      * @param p_player The player for whom the orders are issued
      */
-    public static void issueOrder(Player p_player)
-    {
+    public static void issueOrder(Player p_player) {
         List<Order> l_ordersList = p_player.get_orderList();
         if (l_ordersList.isEmpty()) {
             System.out.println(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
@@ -73,7 +73,7 @@ public class GamePlayHandler implements Serializable {
         }
 
         Order l_order = p_player.nextOrder();
-        if(l_order instanceof DeployOrder){
+        if (l_order instanceof DeployOrder) {
             l_order.execute();
         } else {
             List<Order> l_cardPlays = new ArrayList<>();
@@ -96,11 +96,11 @@ public class GamePlayHandler implements Serializable {
 
     /**
      * Issues cards to the player if they have conquered new countries.
-     * @param p_player The player to whom the cards are issued
+     *
+     * @param p_player                   The player to whom the cards are issued
      * @param p_initialNumberOfCountries The number of countries the player had before executing orders
      */
-    public static void issueCards(Player p_player, int p_initialNumberOfCountries)
-    {
+    public static void issueCards(Player p_player, int p_initialNumberOfCountries) {
         int l_numberOfCountriesAfterExecution = p_player.get_countries().size();
         if (l_numberOfCountriesAfterExecution > p_initialNumberOfCountries) {
             String l_randomCard = Cards.getRandomCard(null);

@@ -2,6 +2,7 @@ package org.com.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Tournament implements Serializable {
@@ -10,14 +11,14 @@ public class Tournament implements Serializable {
     private List<String> d_strategyList;
     private int d_numGames;
     private int d_maxTurns;
-    private List<String> d_gameWinners;
+    private HashMap<String, ArrayList<String >> d_gameWinners;
 
     public Tournament() {
         this.d_mapList = new ArrayList<>();
         this.d_strategyList = new ArrayList<>();
         this.d_numGames = 0;
         this.d_maxTurns = 0;
-        this.d_gameWinners = new ArrayList<>();
+        this.d_gameWinners = new HashMap<>();
     }
 
     public List<String> getMapList() {
@@ -50,5 +51,9 @@ public class Tournament implements Serializable {
 
     public void setMaxTurns(int p_maxTurns) {
         this.d_maxTurns = p_maxTurns;
+    }
+
+    public HashMap<String, ArrayList<String>> getGameWinners() {
+        return d_gameWinners;
     }
 }

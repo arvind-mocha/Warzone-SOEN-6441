@@ -3,6 +3,8 @@ package org.com.Constants;
 import org.com.Strategies.*;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 public class StrategyConstants implements Serializable {
     public static final String AGGRESSIVE_STRATEGY = "aggressive";
@@ -10,6 +12,7 @@ public class StrategyConstants implements Serializable {
     public static final String RANDOM_STRATEGY = "random";
     public static final String CHEATER_STRATEGY = "cheater";
     public static final String HUMAN_STRATEGY = "human";
+    public static final List<String> SUPPORTED_STRATEGIES = Arrays.asList(AGGRESSIVE_STRATEGY, BENEVOLENT_STRATEGY, RANDOM_STRATEGY, CHEATER_STRATEGY, HUMAN_STRATEGY);
 
     /**
      * Retrieves the strategy constant by its name.
