@@ -51,6 +51,7 @@ public class AggressiveStrategy implements Strategy {
                         p_currentPlayer.set_advanceExecuted(false);
                         return null;
                     }
+                    System.out.println(l_neighborCountry.getArmyCount()-1);
                     commands.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_strongestCountry.getName(), l_neighborCountry.getArmyCount()-1));
                 }
             }
@@ -122,11 +123,11 @@ public class AggressiveStrategy implements Strategy {
                     if (p_currentPlayer.get_countries().size() == 1) break;
                     Country l_randCountryFrom = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
                     Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    if(l_randCountryTo == l_randCountryFrom){
+                    if(l_randCountryTo == l_randCountryFrom || l_randCountryFrom.getArmyCount() < 2) {
                         p_currentPlayer.set_cardsExecuted(false);
                         return null;
                     }
-                    return String.format(CommonConstants.AIRLIFT, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randCountryFrom.getArmyCount());
+                    return String.format(CommonConstants.AIRLIFT, l_randCountryFrom.getName(), l_randCountryTo.getName(), l_randCountryFrom.getArmyCount() - 1);
                 case Cards.DIPLOMACY_CARD:
                     Player l_oppPlayer = p_gameManager.getPlayerList().get(l_random.nextInt(p_gameManager.getPlayerList().size()));
                     if(l_oppPlayer == p_currentPlayer){

@@ -70,7 +70,7 @@ public class RandomStrategy implements Strategy{
                 case Cards.AIRLIFT_CARD:
                     if (p_currentPlayer.get_countries().size() < 2) break;
                     Country l_randCountryTo = p_currentPlayer.get_countries().get(l_random.nextInt(p_currentPlayer.get_countries().size()));
-                    if(l_randCountryTo == l_randomCountry){
+                    if(l_randCountryTo == l_randomCountry || l_randomCountry.getArmyCount() < 2){
                         p_currentPlayer.set_cardsExecuted(false);
                         return null;
                     }
