@@ -54,10 +54,15 @@ public class GameEngine implements Serializable {
                         String l_addPlayers = CommonConstants.ADD_PLAYER_COMMAND + " " + l_tournamentManager.getStrategyList().stream().map(player -> "-add " + player + " " + player).reduce("", (partialString, element) -> partialString + " " + element).trim();
                         CommandHandler.processCommand(l_gamePhaseManager, Arrays.asList(l_loadMap, l_addPlayers, CommonConstants.ASSIGN_COUNTRIES_COMMAND));
                         GameModeExecuter.gameModeHandler(l_gamePhaseManager, l_tournamentManager);
-                        l_console.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_tournamentManager.getGameWinners().get(l_gameNum)));
+                        String l_gameWinner = l_tournamentManager.getGameWinners().get(l_map).get(l_gameNum);
+                        if(l_gameWinner == null || l_gameWinner.isEmpty())
+                        {
+                            l_gameWinner = CommonConstants.GAME_DRAW;
+                            l_tournamentManager.getGameWinners().get(l_map).set(l_gameNum, l_gameWinner);
+                        }
+                        l_console.println(String.format("Game %d got ended. Winner: %s", l_gameNum + 1, l_gameWinner));
                     }
                 }
-                DisplayUtil.displayData();
             } else {
                 l_console.println("Game mode does not exists");
             }
