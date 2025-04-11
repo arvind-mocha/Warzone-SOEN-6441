@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 public class GameModeExecuter {
     public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager, Tournament l_tournamentHandler) {
-        var l_console = System.console();
         System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
         Scanner l_scanner = new Scanner(System.in);
         LogManager.logAction("Game has begun!!");
@@ -43,11 +42,11 @@ public class GameModeExecuter {
                 }
                 l_ownersMap = l_ownersMap.stream().distinct().collect(Collectors.toList());
             }
-            Player l_winner = l_ownersMap.getFirst();
 
             if (l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()) {
 //            if(l_isIssueOrderPhase && l_ownersMap.size() <= 1){
-//                l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                Player l_winner = l_ownersMap.getFirst();
+//                System.out.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
                 System.out.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
                 try{
                     MapOperationsHandler.processShowGameMap(l_gamePhaseManager);
@@ -60,7 +59,8 @@ public class GameModeExecuter {
             } else if (l_isIssueOrderPhase && !(l_currentPlayer.get_playerStrategy() instanceof HumanStrategy))
             {
                 if (l_currentPlayer.get_playerStrategy() instanceof CheaterStrategy && l_isIssueOrderPhase && l_ownersMap.size() <= 1){
-//                    l_console.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
+                    Player l_winner = l_ownersMap.getFirst();
+//                    System.out.println(String.format("%d, %d", l_winner.get_countries().size(), l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()));
                     System.out.println(String.format("Cheater!!!. Player %s won the game.", l_winner.get_name()));
 
                     try{
