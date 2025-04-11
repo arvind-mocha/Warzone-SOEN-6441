@@ -1,5 +1,6 @@
 package org.com.GamePage;
 
+import org.com.Constants.CommandOutputMessages;
 import org.com.Constants.CommonConstants;
 import org.com.GameLog.LogManager;
 import org.com.GamePhase.IssueOrderPhase;
@@ -14,11 +15,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameModeExecuter {
-    public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager) throws Exception {
+    public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager) {
         var l_console = System.console();
+        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
         Scanner l_scanner = new Scanner(System.in);
         LogManager.logAction("Game has begun!!");
-        List<String> l_inputCommand;
+        List<String> l_inputCommand = null;
         do {
             boolean l_isIssueOrderPhase = l_gamePhaseManager.getGamePhase() instanceof IssueOrderPhase;
             List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
@@ -35,7 +37,13 @@ public class GameModeExecuter {
                 l_console.print("> ");
                 l_inputCommand = Arrays.asList(l_scanner.nextLine());
             }
-            CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
+            try {
+                CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
+            } catch (Exception l_exception) {
+                l_console.println("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
+                LogManager.logAction("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
+                l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+            }
         } while (l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
     }
 }
