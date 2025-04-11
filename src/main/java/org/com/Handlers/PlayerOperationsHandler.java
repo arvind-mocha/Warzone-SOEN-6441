@@ -54,14 +54,14 @@ public class PlayerOperationsHandler implements Serializable {
                     String l_playerStrategy = l_operationsArray[2];
                     l_player.set_playerStrategy(StrategyConstants.getStrategyByName(l_playerStrategy));
                     l_playerList.add(l_player);
-                    System.console().println(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
+                    System.out.println(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
                     LogManager.logAction(String.format("Player %s has been added successfully. Strategy :: %s", l_playerName, l_playerStrategy));
                 } else if (l_attributeOperation.equalsIgnoreCase(CommonConstants.REMOVE_ATTRIBUTE)) {
                     if (!ValidationUtil.validatePlayerExistence(l_playerList, l_playerName)) {
                         throw new Exception(String.format(CommonErrorMessages.PLAYER_NOT_EXISTS_REMOVAL, l_playerName));
                     }
                     l_playerList.removeIf(l_player -> l_player.get_name().equalsIgnoreCase(l_playerName));
-                    System.console().println(String.format("Player %s! has been removed successfully", l_playerName));
+                    System.out.println(String.format("Player %s! has been removed successfully", l_playerName));
                     LogManager.logAction(String.format("Player %s! has been removed successfully", l_playerName));
                 }
             }
@@ -93,14 +93,14 @@ public class PlayerOperationsHandler implements Serializable {
             }
         }
 
-        System.console().println("Game has begun!");
+        System.out.println("Game has begun!");
         LogManager.logAction("Game has begun!");
         p_gamePhaseHandler.assignReinforcements(true);
 
         p_gamePhaseHandler.setCurrentPlayer(0);
         int l_currentPlayerTurn = p_gamePhaseHandler.getCurrentPlayer();
         Player l_currentPlayer = l_playerList.get(l_currentPlayerTurn);
-        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        System.out.println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
         LogManager.logAction(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
         p_gamePhaseHandler.setGamePhase(p_gamePhaseHandler.getGamePhase().getNextPhase());
     }
