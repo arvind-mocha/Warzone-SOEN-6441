@@ -1,0 +1,148 @@
+[Map]
+author=GiGi
+warn=yes
+image=Hong Kong.bmp
+wrap=no
+scroll=horizontal,vertical
+
+[Continents]
+Airport=1
+Lantau=6
+New Territories W=6
+New Territories N=7
+New Territories E=7
+New Territories S=5
+New Territories C=4
+Kowloon W=6
+Kowloon E=7
+HK Island N=6
+HK Island S=6
+Northwest Islands=2
+Southern Islands=2
+
+[Territories]
+Airport,206,598,Airport,Tuen Mun Pier,Tung Chung,Tai O,Kam Tin
+
+Tung Chung,248,648,Lantau,Airport,Tuen Mun Pier,Siu Ho Wan,Discovery Bay,Sa Lo Wan
+Sa Lo Wan,175,676,Lantau,Tung Chung,Cheung Sha,Po Lin
+Tai O,93,719,Lantau,Po Lin,Airport,Shek Pik
+Po Lin,155,727,Lantau,Tai O,Sa Lo Wan,Cheung Sha,Tong Fuk,Shek Pik
+Shek Pik,82,798,Lantau,Tai O,Po Lin,Tong Fuk
+Tong Fuk,181,784,Lantau,Shek Pik,Po Lin,Cheung Sha
+Cheung Sha,279,739,Lantau,Tong Fuk,Po Lin,Sa Lo Wan,Discovery Bay,Mui Wo,Che Ma Wan
+Mui Wo,354,722,Lantau,Discovery Bay,Cheung Sha,Peng Chau,Hei Ling Chau,Che Ma Wan
+Discovery Bay,350,667,Lantau,Peng Chau,Mui Wo,Cheung Sha,Tung Chung,Siu Ho Wan
+Che Ma Wan,351,787,Lantau,Cheung Sha,Mui Wo,Cheung Chau
+Cheung Chau,419,811,Lantau,Che Ma Wan,Hei Ling Chau,Central
+Hei Ling Chau,443,725,Lantau,Mui Wo,Cheung Chau
+Peng Chau,445,667,Lantau,Mui Wo,Discovery Bay,Central
+Disneyland,441,591,Lantau,Siu Ho Wan
+Siu Ho Wan,388,581,Lantau,Tung Chung,Discovery Bay,Disneyland,Ma Wan
+
+Siu Lam,401,467,New Territories W,Sham Tseng,Tai Tong,Tuen Mun Centre,Ma Wan
+Tai Tong,443,384,New Territories W,Siu Lam,Tuen Mun North,Hung Shui Kiu,Tin Shui Wai S,Yuen Long,Kam Tin,Tai Mo Shan,Sham Tseng
+Tuen Mun Centre,327,435,New Territories W,Siu Lam,Tuen Mun North,Tuen Mun Pier
+Tuen Mun Pier,285,437,New Territories W,Tuen Mun Centre,Tuen Mun North,Castle Peak,Airport,Tung Chung
+Tuen Mun North,310,394,New Territories W,Tuen Mun Pier,Tuen Mun Centre,Castle Peak,Hung Shui Kiu,Tai Tong
+Castle Peak,243,390,New Territories W,Tuen Mun Pier,Tuen Mun North,Hung Shui Kiu,Lau Fau Shan
+Lau Fau Shan,314,305,New Territories W,Castle Peak,Hung Shui Kiu,Tin Shui Wai S,Tin Shui Wai N,Wetland Park
+Wetland Park,363,229,New Territories W,Lau Fau Shan,Yuen Long Industrial,Tin Shui Wai N
+Tin Shui Wai N,364,270,New Territories W,Lau Fau Shan,Wetland Park,Yuen Long Industrial,Tin Shui Wai S
+Tin Shui Wai S,378,310,New Territories W,Lau Fau Shan,Hung Shui Kiu,Tin Shui Wai N,Yuen Long,Tai Tong
+Hung Shui Kiu,343,346,New Territories W,Castle Peak,Tuen Mun North,Tai Tong,Lau Fau Shan,Tin Shui Wai S
+Yuen Long Industrial,417,259,New Territories W,Tin Shui Wai N,Wetland Park,Yuen Long,Kam Shau
+Yuen Long,427,305,New Territories W,Tin Shui Wai S,Tai Tong,Kam Shau,Yuen Long Industrial,Kam Tin
+
+Kam Tin,531,322,New Territories N,Tai Tong,Yuen Long,Kam Shau,Lam Tsuen Country Park,Lam Tsuen Valley,Tai Mo Shan,Airport
+Kam Shau,465,238,New Territories N,Yuen Long,Yuen Long Industrial,Kam Tin,Lam Tsuen Country Park,Lok Ma Chau
+Lok Ma Chau,500,170,New Territories N,Kam Shau,Lam Tsuen Country Park,Sheung Shui
+Man Kam To,630,114,New Territories N,Fanling,Sheung Shui,Ta Kwu Ling
+Sheung Shui,595,150,New Territories N,Man Kam To,Fanling,Lam Tsuen Country Park,Lok Ma Chau
+Fanling,661,191,New Territories N,Sheung Shui,Lam Tsuen Country Park,Man Kam To,Pat Sin Range,Taipo
+Ta Kwu Ling,702,91,New Territories N,Man Kam To,Pat Sin Range,Sha Tou Kok
+Sha Tou Kok,789,69,New Territories N,Ta Kwu Ling,Pat Sin Range,Kat O
+Pat Sin Range,764,161,New Territories N,Sha Tou Kok,Ta Kwu Ling,Fanling,Taipo,Tai Mei Tuk,Wu Kau Tang
+Wu Kau Tang,884,120,New Territories N,Pat Sin Range,Plover Cove Reservoir
+Plover Cove Reservoir,926,175,New Territories N,Wu Kau Tang,Tai Mei Tuk
+Tai Mei Tuk,779,234,New Territories N,Pat Sin Range,Plover Cove Reservoir,Taipo
+Taipo,700,271,New Territories N,Pat Sin Range,Tai Mei Tuk,Lam Tsuen Valley,CUHK,Fanling
+Lam Tsuen Valley,630,298,New Territories N,Lam Tsuen Country Park,Taipo,Tai Mo Shan,Kam Tin
+Lam Tsuen Country Park,557,238,New Territories N,Kam Tin,Kam Shau,Lok Ma Chau,Sheung Shui,Fanling,Lam Tsuen Valley
+
+Kat O,986,84,Northwest Islands,Sha Tou Kok,Cresent Island,CUHK
+Cresent Island,1017,133,Northwest Islands,Kat O,CUHK
+Tung Ping Chau,1257,66,Northwest Islands,Wong Shek,CUHK
+
+CUHK,779,340,New Territories C,Taipo,Tai Mo Shan,Sha Tin N,Wong Shek,Grass Island,Cresent Island,Kat O,Tung Ping Chau
+Tai Mo Shan,662,383,New Territories C,Tai Tong,Kam Tin,Lam Tsuen Valley,CUHK,Sha Tin N,Tsuen Wan,Kwai Chung N,Lion Rock
+Sha Tin N,765,413,New Territories C,CUHK,Tai Mo Shan,Sha Tin S
+Sha Tin S,787,437,New Territories C,Sha Tin N,Lion Rock,Ma On Shan,Tate's Cairn
+Lion Rock,703,484,New Territories C,Tai Mo Shan,Sha Tin S,Tate's Cairn,Kwai Chung S,Mei Foo,Sham Shui Po,Shek Kip Mei
+Ma On Shan,852,351,New Territories C,Sha Tin S,Ho Chung,Pak Tam Chung
+
+Sham Tseng,502,450,New Territories S,Tai Tong,Siu Lam,Ma Wan,Tsing Yi W,Tsuen Wan
+Tsuen Wan,596,451,New Territories S,Sham Tseng,Tsing Yi E,Tai Mo Shan,Kwai Chung N,Kwai Chung S
+Kwai Chung N,641,456,New Territories S,Tsuen Wan,Tai Mo Shan,Kwai Chung S
+Kwai Chung S,626,502,New Territories S,Tsuen Wan,Kwai Chung N,Lion Rock,Tsing Yi E,Mei Foo
+Tsing Yi E,574,509,New Territories S,Tsuen Wan,Kwai Chung S,Tsing Yi W
+Tsing Yi W,547,509,New Territories S,Sham Tseng,Ma Wan,Tsing Yi E,Stonecutters Island
+Ma Wan,488,509,New Territories S,Siu Lam,Sham Tseng,Tsing Yi W,Siu Ho Wan,Central
+
+Grass Island,1079,242,New Territories E,CUHK,Wong Shek
+Wong Shek,1013,301,New Territories E,Grass Island,CUHK,Pak Tam Chung,Tung Ping Chau
+Pak Tam Chung,989,377,New Territories E,Wong Shek,Tai Long Wan,Ma On Shan,Sai Kung,Ho Chung
+Tai Long Wan,1104,373,New Territories E,Pak Tam Chung,High Island Reservoir
+High Island Reservoir,1096,484,New Territories E,Tai Long Wan,Kau Sai Chau
+Kau Sai Chau,1021,488,New Territories E,High Island Reservoir,Sai Kung
+Sai Kung,922,434,New Territories E,Pak Tam Chung,Ho Chung,Kau Sai Chau
+Ho Chung,875,421,New Territories E,Pak Tam Chung,Sai Kung,Ma On Shan,Tate's Cairn,HKUST
+HKUST,872,536,New Territories E,Kowloon Bay,Tate's Cairn,Ho Chung,Tseung Kwan O,Hang Hau
+Tseung Kwan O,886,599,New Territories E,Hang Hau,HKUST,Kwun Tong,Yau Tong
+Hang Hau,914,575,New Territories E,Tseung Kwan O Industrial,Tseung Kwan O,Clear Water Bay,HKUST
+Clear Water Bay,971,624,New Territories E,Tseung Kwan O Industrial,Hang Hau
+Tseung Kwan O Industrial,949,662,New Territories E,Clear Water Bay,Hang Hau,Tung Lung Chau
+Tung Lung Chau,968,737,New Territories E,Tseung Kwan O Industrial
+Tate's Cairn,802,501,New Territories E,Sha Tin S,Ho Chung,HKUST,Lion Rock,Wong Tai Sin,Kowloon Bay
+
+Mei Foo,654,541,Kowloon W,Kwai Chung S,Lion Rock,Sham Shui Po,Nam Cheong,Stonecutters Island
+Sham Shui Po,695,538,Kowloon W,Mei Foo,Lion Rock,Shek Kip Mei,Nam Cheong,Mong Kok
+Stonecutters Island,649,573,Kowloon W,Tsing Yi W,Mei Foo
+Nam Cheong,688,564,Kowloon W,Mei Foo,Sham Shui Po,Mong Kok,Yau Ma Tei
+Mong Kok,718,564,Kowloon W,Sham Shui Po,Nam Cheong,Yau Ma Tei,Ho Man Tin,Kowloon City,Shek Kip Mei
+Yau Ma Tei,712,587,Kowloon W,Nam Cheong,Mong Kok,Ho Man Tin,Jordan
+Jordan,709,608,Kowloon W,Yau Ma Tei,Ho Man Tin,Tsim Sha Tsui,Sheung Wan
+Tsim Sha Tsui,723,624,Kowloon W,Jordan,Hung Hom,Central,Wan Chai
+
+Shek Kip Mei,729,537,Kowloon E,Lion Rock,Sham Shui Po,Mong Kok,Wong Tai Sin
+Wong Tai Sin,766,538,Kowloon E,Tate's Cairn,Shek Kip Mei,Kowloon City,Kowloon Bay
+Kowloon Bay,793,557,Kowloon E,Tate's Cairn,Wong Tai Sin,Kowloon City,Kwun Tong,HKUST
+Kwun Tong,817,581,Kowloon E,Tseung Kwan O,Kowloon Bay,Yau Tong
+Yau Tong,843,604,Kowloon E,Kwun Tong,Tseung Kwan O,Shau Kei Wan
+Kowloon City,763,567,Kowloon E,Wong Tai Sin,Kowloon Bay,Mong Kok,Ho Man Tin,To Kwa Wan
+Ho Man Tin,735,581,Kowloon E,Mong Kok,Kowloon City,To Kwa Wan,Hung Hom,Jordan,Yau Ma Tei
+To Kwa Wan,751,592,Kowloon E,Kowloon City,Ho Man Tin,Hung Hom,North Point
+Hung Hom,745,616,Kowloon E,Ho Man Tin,To Kwa Wan,Tsim Sha Tsui,Wan Chai,Causeway Bay
+
+Kennedy Town,646,656,HK Island N,Wah Fu,Sheung Wan
+Sheung Wan,668,653,HK Island N,Kennedy Town,The Peak,Jordan,Central
+Central,687,658,HK Island N,Sheung Wan,Wan Chai,The Peak,Tsim Sha Tsui,Ma Wan,Peng Chau,Lamma Island,Cheung Chau
+Wan Chai,713,668,HK Island N,Central,The Peak,Causeway Bay,Tsim Sha Tsui,Hung Hom
+Causeway Bay,735,669,HK Island N,Wan Chai,Happy Valley,Hung Hom,North Point
+North Point,778,648,HK Island N,Causeway Bay,Happy Valley,Shau Kei Wan,To Kwa Wan
+Shau Kei Wan,813,653,HK Island N,North Point,Yau Tong,Chai Wan,Tai Tam
+Chai Wan,861,688,HK Island N,Shau Kei Wan,Tai Tam,Shek O
+
+Wah Fu,641,704,HK Island S,Kennedy Town,The Peak,Aberdeen
+The Peak,685,691,HK Island S,Wah Fu,Sheung Wan,Central,Wan Chai,Happy Valley,Aberdeen
+Happy Valley,746,703,HK Island S,The Peak,Causeway Bay,North Point,Tai Tam,Repulse Bay
+Tai Tam,813,713,HK Island S,Happy Valley,Shau Kei Wan,Chai Wan,Shek O,Stanley,Repulse Bay
+Shek O,871,756,HK Island S,Chai Wan,Tai Tam
+Aberdeen,695,730,HK Island S,Wah Fu,The Peak,Repulse Bay,Ocean Park,Ap Lei Chau,Po Toi Island
+Ap Lei Chau,683,755,HK Island S,Aberdeen,Lamma Island
+Ocean Park,720,758,HK Island S,Aberdeen
+Repulse Bay,767,744,HK Island S,Happy Valley,Aberdeen,Tai Tam,Stanley
+Stanley,796,796,HK Island S,Repulse Bay,Tai Tam,Beaufort Island
+
+Lamma Island,624,815,Southern Islands,Central,Ap Lei Chau
+Beaufort Island,888,882,Southern Islands,Stanley,Po Toi Island
+Po Toi Island,917,917,Southern Islands,Beaufort Island,Aberdeen
