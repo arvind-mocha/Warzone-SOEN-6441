@@ -5,6 +5,7 @@ import org.com.Orders.BombOrder;
 import org.com.Orders.Order;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  */
 
-public class CommonConstants {
+public class CommonConstants implements Serializable {
 
     // Game commands
     public static final String EXIT_COMMAND = "exit";
@@ -39,6 +40,8 @@ public class CommonConstants {
     public static final String NEGOTIATE_COMMAND = "negotiate";
     public static final String BOMB_COMMAND = "bomb";
     public static final String AIRLIFT_COMMAND = "airlift";
+    public static final String SAVE_GAME_COMMAND = "savegame";
+    public static final String LOAD_GAME_COMMAND = "loadgame";
 
 
     // Directories

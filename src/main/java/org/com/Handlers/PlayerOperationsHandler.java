@@ -10,6 +10,7 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.ValidationUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  */
 
-public class PlayerOperationsHandler {
+public class PlayerOperationsHandler implements Serializable {
 
     /**
      * This method is used depicts the beginning of the player registration.

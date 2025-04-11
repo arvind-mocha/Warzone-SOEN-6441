@@ -2,6 +2,7 @@ package org.com.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
@@ -13,7 +14,7 @@ import java.util.logging.*;
  * @author Arvind Lakshmanan
  */
 
-public class LogUtil {
+public class LogUtil implements Serializable {
 
     private static final String LOG_FILE_DIR;
     private static final String LOG_FOLDER;

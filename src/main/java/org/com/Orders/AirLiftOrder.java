@@ -7,6 +7,7 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -16,7 +17,7 @@ import java.util.HashMap;
  * @author Arvind Nachiappan
  * @author Devasenan Murugan
  */
-public class AirLiftOrder implements Order{
+public class AirLiftOrder implements Order, Serializable {
 
     private Player d_player;
     private Country d_sourceCountry;

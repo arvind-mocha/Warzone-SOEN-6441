@@ -4,6 +4,7 @@ import org.com.Constants.Cards;
 import org.com.GameLog.LogManager;
 import org.com.Models.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ import java.util.HashSet;
  *
  * @author Arvind Nachiappan
  */
-public class DiplomacyOrder implements Order{
+public class DiplomacyOrder implements Order, Serializable {
     private final Player d_player;
     private final Player d_targetPlayer;
 

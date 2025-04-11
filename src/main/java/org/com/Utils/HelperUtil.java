@@ -5,6 +5,7 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -14,7 +15,7 @@ import java.util.*;
  * @author Arvind Lakshmanan
  *
  */
-public class HelperUtil {
+public class HelperUtil implements Serializable {
     /**
      * Constructs a HashMap from the given attribute names and values.
      *

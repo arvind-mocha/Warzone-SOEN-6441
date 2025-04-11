@@ -1,8 +1,9 @@
 package org.com.Constants;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Cards {
+public class Cards implements Serializable {
     /**
      * Bomb Card Constant
      */

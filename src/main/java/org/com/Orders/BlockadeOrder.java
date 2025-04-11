@@ -7,6 +7,7 @@ import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -15,7 +16,7 @@ import java.util.HashMap;
  *
  * @author Arvind Nachiappan
  */
-public class BlockadeOrder implements Order {
+public class BlockadeOrder implements Order, Serializable {
 
     private Country d_targetCountry;
     private final Player d_player;

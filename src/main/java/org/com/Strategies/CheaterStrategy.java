@@ -6,10 +6,14 @@ import org.com.Models.Country;
 import org.com.Models.Map;
 import org.com.Models.Player;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.io.Serializable;
+>>>>>>> 804f482 (Made all the files serializable)
 import java.util.List;
 
-public class CheaterStrategy implements Strategy {
+public class CheaterStrategy implements Strategy, Serializable {
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());

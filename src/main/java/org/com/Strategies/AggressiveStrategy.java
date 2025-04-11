@@ -8,12 +8,13 @@ import org.com.Models.Map;
 import org.com.Models.Player;
 import org.com.Utils.HelperUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class AggressiveStrategy implements Strategy {
+public class AggressiveStrategy implements Strategy, Serializable {
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
         int l_availableArmies = p_currentPlayer.get_armyCount();

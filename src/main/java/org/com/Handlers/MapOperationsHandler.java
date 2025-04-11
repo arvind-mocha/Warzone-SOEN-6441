@@ -30,7 +30,7 @@ import java.util.Set;
  *
  */
 
-public class MapOperationsHandler {
+public class MapOperationsHandler implements Serializable {
 
     private static String CLASS_NAME = MapOperationsHandler.class.getName();
 
