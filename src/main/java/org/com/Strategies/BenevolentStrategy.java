@@ -23,6 +23,8 @@ public class BenevolentStrategy implements Strategy, Serializable {
         List<Country> l_countries = l_currentPlayer.get_countries();
         Country l_weakestCountry = getWeakestCountry(l_countries);
 
+        List<String> orders = new ArrayList<>();
+
         if(l_weakestCountry == null) {return null;}
         int l_availableArmies = p_currentPlayer.get_armyCount();
 
@@ -37,21 +39,26 @@ public class BenevolentStrategy implements Strategy, Serializable {
         } else if (!l_currentPlayer.get_cards().isEmpty() && !l_hasPlayerExecutedCard && l_currentPlayer.get_countries().isEmpty()) {
             return Arrays.asList(generateCardOrder(p_gamePhaseHandler, p_currentPlayer, Cards.AIRLIFT_CARD));
         } else if(!l_hasPlayerExecutedAdvance) {
-            if(l_weakestCountry.getArmyCount() <= 1){
+            if (l_weakestCountry.getArmyCount() <= 1) {
                 p_currentPlayer.set_advanceExecuted(false);
                 return null;
             }
             List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
 
-            for (int l_neighborCountryID: l_neighbours) {
+            for (int l_neighborCountryID : l_neighbours) {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
-                if(l_neighborCountry.getArmyCount() > 2 && l_currentPlayer.equals(l_neighborCountry.getOwner())) {
+                if (l_neighborCountry.getArmyCount() > 2 && l_currentPlayer.equals(l_neighborCountry.getOwner())) {
                     l_currentPlayer.set_advanceExecuted(true);
-                    return Arrays.asList(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_weakestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
+                    orders.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_weakestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
                 }
             }
+
+            if (orders.isEmpty()) {
+                l_currentPlayer.set_advanceExecuted(false);
+                orders.add(CommonConstants.COMMIT);
+            }
         }
-        return Arrays.asList(CommonConstants.COMMIT);
+        return orders;
     }
 
     @Override
