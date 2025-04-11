@@ -19,30 +19,24 @@ public class BenevolentStrategy implements Strategy, Serializable {
         List<String> orders = new ArrayList<>();
         int l_availableArmies = p_currentPlayer.get_armyCount();
 
-        // Ensure the player has countries
         if (p_currentPlayer.get_countries().isEmpty()) {
-            return orders;  // Return empty list if the player has no countries
-        }
-
-        // Find the weakest country to deploy armies to
-        Country l_weakestCountry = getWeakestCountry(p_currentPlayer.get_countries());
-
-        // If no weakest country is found, return empty orders
-        if (l_weakestCountry == null) {
-            orders.add(CommonConstants.COMMIT);  // Commit if no valid country is found
             return orders;
         }
 
-        // If the player has available armies, deploy to the weakest country
+        Country l_weakestCountry = getWeakestCountry(p_currentPlayer.get_countries());
+
+        if (l_weakestCountry == null) {
+            orders.add(CommonConstants.COMMIT);
+            return orders;
+        }
+
         if (l_availableArmies > 0) {
             p_currentPlayer.set_advanceExecuted(false);  // Reset advance execution flag
             orders.add(String.format(CommonConstants.DEPLOY, l_weakestCountry.getName(), l_availableArmies));
         }
-        // If no armies are available, try to generate card orders
         else if (!p_currentPlayer.get_cards().isEmpty() && !p_currentPlayer.get_cardsExecuted()) {
             List<String> cardOrders = new ArrayList<>();
 
-            // Generate card orders (AirLift, Blockade, Diplomacy, etc.)
             if (p_currentPlayer.get_cards().containsKey(Cards.AIRLIFT_CARD)) {
                 cardOrders.add(String.format(CommonConstants.AIRLIFT, l_weakestCountry.getName(), l_weakestCountry.getName(), l_weakestCountry.getArmyCount()));
             } else if (p_currentPlayer.get_cards().containsKey(Cards.DIPLOMACY_CARD) && !p_currentPlayer.get_countries().isEmpty()) {
@@ -52,12 +46,9 @@ public class BenevolentStrategy implements Strategy, Serializable {
                 cardOrders.add(String.format(CommonConstants.BLOCKADE, l_weakestCountry.getName()));
             }
 
-            // Add the card orders to the final list
             p_currentPlayer.set_cardsExecuted(true);
             orders.addAll(cardOrders);
-        }
-        // If no armies and no valid cards, attempt advancing armies
-        else if (!p_currentPlayer.get_advanceExecuted()) {
+        } else if (!p_currentPlayer.get_advanceExecuted()) {
             List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
             for (int l_neighborCountryID : l_neighbours) {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
@@ -68,7 +59,6 @@ public class BenevolentStrategy implements Strategy, Serializable {
             p_currentPlayer.set_advanceExecuted(true);
         }
 
-        // If no orders were generated, commit order is returned
         if (orders.isEmpty()) {
             orders.add(CommonConstants.COMMIT);
         }
