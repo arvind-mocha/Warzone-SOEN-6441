@@ -17,45 +17,66 @@ import java.util.Random;
 public class BenevolentStrategy implements Strategy, Serializable {
     @Override
     public List<String> createOrder(GamePhaseHandler p_gamePhaseHandler, Player p_currentPlayer) {
-        Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        if(l_currentPlayer.get_countries().isEmpty()) {return null;}
-
-        List<Country> l_countries = l_currentPlayer.get_countries();
-        Country l_weakestCountry = getWeakestCountry(l_countries);
-        Random l_random = new Random();
-
-        if(l_weakestCountry == null) {return null;}
+        List<String> orders = new ArrayList<>();
         int l_availableArmies = p_currentPlayer.get_armyCount();
-        if(l_availableArmies > 0) {
-            p_currentPlayer.set_advanceExecuted(false);
-            p_currentPlayer.set_cardsExecuted(false);
-            return Arrays.asList(String.format(CommonConstants.DEPLOY, l_weakestCountry.getName(), l_availableArmies));
-        } else if (!l_currentPlayer.get_cards().isEmpty() && !l_currentPlayer.get_cardsExecuted()) {
-            List<String> l_commandArray = new ArrayList<>();
-            if (l_currentPlayer.get_cards().containsKey(Cards.AIRLIFT_CARD)){
-                Country l_countryFrom = HelperUtil.getPlayerHighestArmyCountry(p_currentPlayer);
-                l_commandArray.add(String.format(CommonConstants.AIRLIFT, l_countryFrom.getName(), l_weakestCountry.getName(), l_countryFrom.getArmyCount()-1));
-            } else if(l_currentPlayer.get_cards().containsKey(Cards.DIPLOMACY_CARD) && !l_currentPlayer.get_countries().isEmpty()){
-                Player l_oppPlayer = p_gamePhaseHandler.getPlayerList().get(l_random.nextInt(p_gamePhaseHandler.getPlayerList().size()));
-                l_commandArray.add(p_currentPlayer.equals(l_oppPlayer) ? null : String.format(CommonConstants.NEGOTIATE, l_oppPlayer.get_name()));
-            } else if(l_currentPlayer.get_cards().containsKey(Cards.BLOCKADE_CARD)){
-                l_commandArray.add(String.format(CommonConstants.BLOCKADE, l_weakestCountry.getName()));
-            }
-            l_currentPlayer.set_cardsExecuted(true);
-            return l_commandArray;
-        } else if(!l_currentPlayer.get_advanceExecuted()) {
-            List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
-            for (int l_neighborCountryID: l_neighbours) {
-                Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
-                if(l_neighborCountry.getArmyCount() > 1 && l_currentPlayer.equals(l_neighborCountry.getOwner())) {
-                    return Arrays.asList(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_weakestCountry.getName(), l_neighborCountry.getArmyCount() - 1));
-                }
-            }
-            l_currentPlayer.set_advanceExecuted(true);
+
+        // Ensure the player has countries
+        if (p_currentPlayer.get_countries().isEmpty()) {
+            return orders;  // Return empty list if the player has no countries
         }
 
-        return Arrays.asList(CommonConstants.COMMIT);
+        // Find the weakest country to deploy armies to
+        Country l_weakestCountry = getWeakestCountry(p_currentPlayer.get_countries());
+
+        // If no weakest country is found, return empty orders
+        if (l_weakestCountry == null) {
+            orders.add(CommonConstants.COMMIT);  // Commit if no valid country is found
+            return orders;
+        }
+
+        // If the player has available armies, deploy to the weakest country
+        if (l_availableArmies > 0) {
+            p_currentPlayer.set_advanceExecuted(false);  // Reset advance execution flag
+            orders.add(String.format(CommonConstants.DEPLOY, l_weakestCountry.getName(), l_availableArmies));
+        }
+        // If no armies are available, try to generate card orders
+        else if (!p_currentPlayer.get_cards().isEmpty() && !p_currentPlayer.get_cardsExecuted()) {
+            List<String> cardOrders = new ArrayList<>();
+
+            // Generate card orders (AirLift, Blockade, Diplomacy, etc.)
+            if (p_currentPlayer.get_cards().containsKey(Cards.AIRLIFT_CARD)) {
+                cardOrders.add(String.format(CommonConstants.AIRLIFT, l_weakestCountry.getName(), l_weakestCountry.getName(), l_weakestCountry.getArmyCount()));
+            } else if (p_currentPlayer.get_cards().containsKey(Cards.DIPLOMACY_CARD) && !p_currentPlayer.get_countries().isEmpty()) {
+                Player opponent = p_gamePhaseHandler.getPlayerList().get(new Random().nextInt(p_gamePhaseHandler.getPlayerList().size()));
+                cardOrders.add(String.format(CommonConstants.NEGOTIATE, opponent.get_name()));
+            } else if (p_currentPlayer.get_cards().containsKey(Cards.BLOCKADE_CARD)) {
+                cardOrders.add(String.format(CommonConstants.BLOCKADE, l_weakestCountry.getName()));
+            }
+
+            // Add the card orders to the final list
+            p_currentPlayer.set_cardsExecuted(true);
+            orders.addAll(cardOrders);
+        }
+        // If no armies and no valid cards, attempt advancing armies
+        else if (!p_currentPlayer.get_advanceExecuted()) {
+            List<Integer> l_neighbours = l_weakestCountry.getNeighbourCountryIds();
+            for (int l_neighborCountryID : l_neighbours) {
+                Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
+                if (l_neighborCountry != null && l_neighborCountry.getArmyCount() > 1) {
+                    orders.add(String.format(CommonConstants.ADVANCE, l_weakestCountry.getName(), l_neighborCountry.getName(), l_neighborCountry.getArmyCount() - 1));
+                }
+            }
+            p_currentPlayer.set_advanceExecuted(true);
+        }
+
+        // If no orders were generated, commit order is returned
+        if (orders.isEmpty()) {
+            orders.add(CommonConstants.COMMIT);
+        }
+
+        return orders;
     }
+
 
     @Override
     public String generateCardOrder(GamePhaseHandler p_gameManager, Player p_currentPlayer, String p_prioritizeCard) {
