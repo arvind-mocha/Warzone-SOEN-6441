@@ -23,7 +23,7 @@ public class GameStartUpPhase implements Phase, Serializable {
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.ADD_PLAYER.getName(), Commands.ASSIGN_COUNTRIES.getName()));
+        return new ArrayList<>(Arrays.asList(Commands.ADD_PLAYER.getName(), Commands.ASSIGN_COUNTRIES.getName(), Commands.SAVE_GAME.getName(), Commands.LOAD_GAME.getName()));
     }
 
     @Override

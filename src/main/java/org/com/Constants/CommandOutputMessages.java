@@ -17,6 +17,8 @@ public class CommandOutputMessages implements Serializable {
     // Map commands help messages
     public static final String MAP_HELP = "usage: " +
             "\n\t loadmap <filename> :\tLoads a map from the given file path " +
+            "\n\t savegame <fileName.ser or fileName.dat> :\t to save the current game state"+
+            "\n\t loadgame <fileName.ser or fileName.date> :\t to load the game state from previously saved file"+
             "\n\t editmap <filename> :\tLoads a map from an existing “domination” map file, or create a new map from scratch if the file does not exist." +
             "\n\n\t editcontinent -add <continentName> <continentvalue> -remove <continentName>" +
             "\t: Add or Remove continents to the map" +
@@ -31,16 +33,22 @@ public class CommandOutputMessages implements Serializable {
     // Game play commands help messages
     public static final String GAME_PLAY_HELP = "usage: " +
             "\n\t gameplayer -add <playername> <strategy> -remove <playername>  :\tAdd or Remove player from the game " +
-            "\n\t assigncountries\t\t\t\t\t\t\t:\tAssigns random countries to the players, and starts the game\n";
+            "\n\t assigncountries\t\t\t\t\t\t\t:\tAssigns random countries to the players, and starts the game"+
+            "\n\t savegame <fileName.ser or fileName.dat> :\t to save the current game state"+
+            "\n\t loadgame <fileName.ser or fileName.date> :\t to load the game state from previously saved file";
 
     // Exit command help message
     public static final String EXIT_KEY = "\t exit : Command to end the game";
 
     // In-game help message
-    public static final String IN_GAME_HELP = "\n\t showmap :\tshow all countries and continents, armies on each country, ownership, and connectivity\n";
+    public static final String IN_GAME_HELP = "\n\t showmap :\tshow all countries and continents, armies on each country, ownership, and connectivity"+
+            "\n\t savegame <fileName.ser or fileName.dat> :\t to save the current game state"+
+            "\n\t loadgame <fileName.ser or fileName.date> :\t to load the game state from previously saved file";
 
     // Issue order help message
     public static final String ISSUE_ORDER_HELP = "usage: " +
+            "\n\t savegame <fileName.ser or fileName.dat> \t: to save the current game state" +
+            "\n\t loadgame <fileName.ser or fileName.date> :\t to load the game state from previously saved file"+
             "\n\t deploy <countryName> <num> \t: deploys armies to mentioned countries" +
             "\n\t commit \t: to execute the set of buffered advanced command"+
             "\n\t advance <countryfromName> <countrytoName> <num> \t: attacks an unowned neighbouring country" +
