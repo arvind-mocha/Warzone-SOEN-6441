@@ -89,7 +89,7 @@ public class DeployOrder implements Order, Serializable {
         d_country.setArmyCount(d_country.getArmyCount() + d_army);
         d_player.set_armyCount(d_player.get_armyCount() - d_army);
 
-        System.console().println(String.format(CommandOutputMessages.PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT, d_player.get_name(), d_army, d_country.getName(), d_player.get_armyCount()));
+        System.out.println(String.format(CommandOutputMessages.PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT, d_player.get_name(), d_army, d_country.getName(), d_player.get_armyCount()));
         LogManager.logAction(String.format(CommandOutputMessages.PLAYER_SUCCESSFUL_ARMY_DEPLOYMENT, d_player.get_name(), d_army, d_country.getName(), d_player.get_armyCount()));
     }
 

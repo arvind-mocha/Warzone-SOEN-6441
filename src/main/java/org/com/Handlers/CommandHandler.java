@@ -34,7 +34,7 @@ public class CommandHandler implements Serializable {
             IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
             return;
         }
-        var l_console = System.console();
+
         for(String l_command : p_commandList) {
             String[] l_commandArray = l_command.split("\\s+");
             Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
@@ -42,7 +42,7 @@ public class CommandHandler implements Serializable {
             LogManager.logAction("\nProcessing the command: " + l_command);
             switch (l_commandArray[0].toLowerCase()) {
                 case CommonConstants.HELP_COMMAND:
-                    l_console.println(l_currentGamePhase.getHelpMessage());
+                    System.out.println(l_currentGamePhase.getHelpMessage());
                     break;
                 case CommonConstants.EDIT_MAP_COMMAND:
                     MapOperationsHandler.editMap(p_gamePhaseHandler, l_commandArray[1]);

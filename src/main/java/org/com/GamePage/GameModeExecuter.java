@@ -18,8 +18,7 @@ import java.util.Scanner;
 
 public class GameModeExecuter {
     public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager, Tournament l_tournamentHandler) {
-        var l_console = System.console();
-        l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+        System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
         Scanner l_scanner = new Scanner(System.in);
         LogManager.logAction("Game has begun!!");
         List<String> l_inputCommand = null;
@@ -28,7 +27,7 @@ public class GameModeExecuter {
             List<Player> l_gamePlayerList = l_gamePhaseManager.getPlayerList();
             Player l_currentPlayer = l_gamePlayerList.isEmpty() ? null : l_gamePlayerList.get(l_gamePhaseManager.getCurrentPlayer());
             if (l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()) {
-                l_console.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
+                System.out.println(String.format("Hurray!!!. Player %s won the game.", l_currentPlayer.get_name()));
                 l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
             } else if (l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty()) {
                 l_inputCommand = Arrays.asList(CommonConstants.COMMIT);
@@ -36,15 +35,15 @@ public class GameModeExecuter {
                 Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
                 l_inputCommand = l_playerStrategy.createOrder(l_gamePhaseManager, l_currentPlayer);
             } else {
-                l_console.print("> ");
+                System.out.print("> ");
                 l_inputCommand = Arrays.asList(l_scanner.nextLine());
             }
             try {
                 CommandHandler.processCommand(l_gamePhaseManager, l_inputCommand);
             } catch (Exception l_exception) {
-                l_console.println("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
+                System.out.println("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
                 LogManager.logAction("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
-                l_console.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
+                System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
         } while (l_inputCommand == null || !l_inputCommand.contains(CommonConstants.EXIT_COMMAND) || (l_tournamentHandler != null && l_tournamentHandler.getMaxTurns() >= l_gamePhaseManager.getTurnsCompleted()));
     }

@@ -41,8 +41,8 @@ public class GamePlayHandler implements Serializable {
                 l_player.set_negotiationPlayer(new HashSet<>());
             }
             p_gamePhaseHandler.setTurnsCompleted(p_gamePhaseHandler.getTurnsCompleted() + 1);
-            System.console().println(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
-            System.console().println("\u001B[32m================================================================\n\u001B[0m");
+            System.out.println(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
+            System.out.println("\u001B[32m================================================================\n\u001B[0m");
             LogManager.logAction(String.format("Turn %d completed. All buffered commands have been executed\n", p_gamePhaseHandler.getTurnsCompleted()));
             p_gamePhaseHandler.assignReinforcements();
 
@@ -55,7 +55,7 @@ public class GamePlayHandler implements Serializable {
 
         }
 
-        System.console().println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
+        System.out.println(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
         LogManager.logAction(String.format(CommandOutputMessages.PLAYER_TURN_INDICATOR, l_currentPlayer.get_name(), l_currentPlayer.get_armyCount(), l_currentPlayer.get_cards().toString()));
     }
 
@@ -67,7 +67,7 @@ public class GamePlayHandler implements Serializable {
     public static void issueOrder(Player p_player) {
         List<Order> l_ordersList = p_player.get_orderList();
         if (l_ordersList.isEmpty()) {
-            System.console().println(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
+            System.out.println(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
             LogManager.logAction(String.format(CommonErrorMessages.NO_ADVANCE_COMMAND, p_player.get_name()));
             return;
         }
@@ -105,7 +105,7 @@ public class GamePlayHandler implements Serializable {
         if (l_numberOfCountriesAfterExecution > p_initialNumberOfCountries) {
             String l_randomCard = Cards.getRandomCard(null);
             p_player.get_cards().merge(l_randomCard, 1, Integer::sum);
-            System.console().println(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
+            System.out.println(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
             LogManager.logAction(String.format("%s got the %s, for capturing a new territory!", p_player.get_name(), l_randomCard));
         }
     }
