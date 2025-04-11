@@ -136,27 +136,12 @@ public class GamePhaseHandler implements Serializable {
     public void assignReinforcements() {
 
         for (Player l_player : d_playerList) {
-<<<<<<< HEAD
-<<<<<<< HEAD
             if(l_player.get_countries().isEmpty())
             {
                 System.console().println(String.format("Player %s has no owned territory, so gets no army", l_player.get_name()));
                 continue;
             } else if (l_player.get_playerStrategy() instanceof CheaterStrategy){
-=======
-            if (l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy) {
->>>>>>> de7a03b (Tournament)
-=======
-            if (l_player.get_countries().isEmpty() || l_player.get_playerStrategy() instanceof CheaterStrategy) {
-=======
-            if(l_player.get_countries().isEmpty())
-            {
-                System.console().println(String.format("Player %s has no owned territory, so gets no army", l_player.get_name()));
-                continue;
-            } else if (l_player.get_playerStrategy() instanceof CheaterStrategy){
->>>>>>> 829dd75 (fixed Benevolent and Cheater stratergies - works completely)
->>>>>>> afdec0f (rebasing on main)
-                System.console().println(String.format("Cheater player %s get no army", l_player.get_name()));
+                System.console().println(String.format("Cheater player %s gets no army", l_player.get_name()));
                 continue;
             }
 
@@ -170,22 +155,8 @@ public class GamePhaseHandler implements Serializable {
             }
 
             l_player.set_armyCount(l_player.get_armyCount() + l_numArmies);
-<<<<<<< HEAD
-<<<<<<< HEAD
             System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
             LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
-=======
-            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
-            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
->>>>>>> de7a03b (Tournament)
-=======
-            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
-            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: " + l_player.get_name());
-=======
-            System.console().println("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
-            LogManager.logAction("Army count :: " + l_numArmies + "\tAssigned to player :: "+l_player.get_name() + "\tTerritories captured :: " + l_player.get_countries().size());
->>>>>>> 829dd75 (fixed Benevolent and Cheater stratergies - works completely)
->>>>>>> afdec0f (rebasing on main)
         }
         LogManager.logAction("Armies have been assigned to all player\n");
     }

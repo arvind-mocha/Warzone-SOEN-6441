@@ -54,12 +54,10 @@ public class AggressiveStrategy implements Strategy, Serializable {
                     continue;
                 } else {
                     if(l_ownedCountry.getArmyCount() <= 1){
-//                        p_currentPlayer.set_advanceExecuted(false);
                         continue;
                     }
                     commands.add(String.format(CommonConstants.ADVANCE, l_ownedCountry.getName(), ll_neighbour.getName(), l_ownedCountry.getArmyCount()-1));
                     p_currentPlayer.set_advanceExecuted(true);
-//                    break;
                 }
             }
 
@@ -68,12 +66,11 @@ public class AggressiveStrategy implements Strategy, Serializable {
                 Country l_neighborCountry = p_gamePhaseHandler.getGameMap().getCountryById(l_neighborCountryID);
                 if (l_neighborCountry.getArmyCount() > 2 && p_currentPlayer.equals(l_neighborCountry.getOwner())) {
                     if(l_neighborCountry.getArmyCount() <= 1){
-//                        p_currentPlayer.set_advanceExecuted(false);
                         continue;
                     }
                     commands.add(String.format(CommonConstants.ADVANCE, l_neighborCountry.getName(), l_strongestCountry.getName(), l_neighborCountry.getArmyCount()-1));
                     p_currentPlayer.set_advanceExecuted(true);
-                    break;
+//                    break;
                 }
             }
             return commands;
@@ -94,7 +91,6 @@ public class AggressiveStrategy implements Strategy, Serializable {
         List<Country> l_neighbouringCountries = new ArrayList<>();
         for (int l_neighborID : p_country.getNeighbourCountryIds()) {
             Country l_neighbor = p_gameMap.getCountryById(l_neighborID);
-//            if (l_neighbor != null && !p_currentPlayer.equals(l_neighbor.getOwner())) {
             if (l_neighbor != null){
                 l_neighbouringCountries.add(l_neighbor);
             }
