@@ -21,7 +21,11 @@ public class LoadMapPhase implements Phase, Serializable {
 
     @Override
     public ArrayList<String> getValidCommands() {
-        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.getName(), Commands.EDIT_MAP.getName(), Commands.EDIT_COUNTRY.getName(), Commands.EDIT_CONTINENT.getName(), Commands.EDIT_NEIGHBOUR.getName(), Commands.VALIDATE_MAP.getName(), Commands.SAVE_MAP.getName(), Commands.TOURNAMENT.getName()));
+        return new ArrayList<>(Arrays.asList(Commands.LOAD_MAP.getName(), Commands.EDIT_MAP.getName(),
+                Commands.EDIT_COUNTRY.getName(), Commands.EDIT_CONTINENT.getName(),
+                Commands.EDIT_NEIGHBOUR.getName(), Commands.VALIDATE_MAP.getName(),
+                Commands.SAVE_MAP.getName(), Commands.TOURNAMENT.getName(), Commands.SAVE_GAME.getName(),
+                Commands.LOAD_GAME.getName()));
     }
 
     @Override
