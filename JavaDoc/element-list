@@ -1,4 +1,5 @@
 Controller
+org.com.Adapter
 org.com.Constants
 org.com.GameLog
 org.com.GamePage
@@ -6,4 +7,7 @@ org.com.GamePhase
 org.com.Handlers
 org.com.Models
 org.com.Orders
+org.com.Strategies
+org.com.test
 org.com.Utils
+strategy
