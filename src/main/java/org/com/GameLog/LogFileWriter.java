@@ -7,6 +7,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * The `LogFileWriter` class is responsible for writing log entries to a specified log file.
+ * It implements the `Observer` interface to receive updates from observable objects,
+ * such as `LogEntryBuffer`, and writes the received log information to the file.
+ *
+ * Key Features:
+ * - Ensures the log file and its parent directories are created if they do not exist.
+ * - Appends log entries to the file whenever notified by the observable.
+ * - Handles file I/O operations with error handling for potential exceptions.
+ *
+ * This class is part of the logging mechanism in the game, ensuring that all
+ * significant actions and events are recorded persistently.
+ *
+ * @author Devasenan Murugan
+ */
 public class LogFileWriter implements Observer, Serializable {
     private final Path d_logFilePath;
 

@@ -12,12 +12,11 @@ import org.com.Utils.ValidationUtil;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,6 @@ import java.util.Set;
  *
  * @author Arvind Lakshmanan
  * @author Devasenan Murugan
- *
  */
 
 public class MapOperationsHandler implements Serializable {
@@ -37,11 +35,11 @@ public class MapOperationsHandler implements Serializable {
     /**
      * Processes the map from the given file.
      *
-     * @param p_fileName The name of the file containing the map data.
+     * @param p_fileName         The name of the file containing the map data.
      * @param p_gamePhaseHandler Game Phase.
      */
 
-    public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName){
+    public static void editMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName) {
         Map l_map;
         p_gamePhaseHandler.setMapFileName(p_fileName);
 
@@ -64,11 +62,12 @@ public class MapOperationsHandler implements Serializable {
      *     <li>Add Continent</li>
      *     <li>Remove Continent</li>
      * </ul>
+     *
      * @param p_gamePhaseHandler Defines the current game phase
-     * @param p_command User Input Command
+     * @param p_command          User Input Command
      * @throws Exception Map Not loaded
      */
-    public static void editContinent(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+    public static void editContinent(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -79,41 +78,41 @@ public class MapOperationsHandler implements Serializable {
         Set<Continent> l_continentsSet = l_continentGraph.vertexSet();
 
         int l_continentID = 0;
-        if(!l_continentsSet.isEmpty()) {
-            for (Continent l_c: l_continentsSet){
+        if (!l_continentsSet.isEmpty()) {
+            for (Continent l_c : l_continentsSet) {
                 if (l_continentID < l_c.getId()) {
                     l_continentID = l_c.getId();
                 }
             }
         }
 
-        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+        for (int l_index = 1; l_index < l_commandsArray.length; l_index++) {
             String[] l_operationsArray = l_commandsArray[l_index].split(" ");
             String l_attributeOperation = l_operationsArray[0];
             String l_continentName = l_operationsArray[1];
             String l_continentValue;
-            try{
+            try {
                 l_continentValue = l_operationsArray[2];
-            }catch(IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 l_continentValue = "0";
             }
             ValidationUtil.validateContinentManagement(l_gameMap, l_attributeOperation, l_continentName, l_continentValue);
             l_continentID += 1;
 
-            if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
+            if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
                 Continent l_continent = new Continent(l_continentName, Integer.parseInt(l_continentValue));
                 l_continent.setId(l_continentID);
                 l_continentGraph.addVertex(l_continent);
                 System.out.println(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
                 LogManager.logAction(String.format("Continent %d - %s has been added", l_continent.getId(), l_continent.getName()));
-            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
+            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                 Continent l_continent = l_gameMap.getContinentByName(l_continentName);
                 l_continentGraph.removeVertex(l_continent);
                 System.out.println(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
                 LogManager.logAction(String.format("Continent %d - %s has been removed", l_continent.getId(), l_continent.getName()));
 
-                for (Country l_c: l_gameMap.getCountryMap().vertexSet()){
-                    if(l_c.getContinentId() == l_continent.getId()){
+                for (Country l_c : l_gameMap.getCountryMap().vertexSet()) {
+                    if (l_c.getContinentId() == l_continent.getId()) {
                         l_gameMap.getCountryMap().removeVertex(l_c);
                     }
                 }
@@ -129,10 +128,10 @@ public class MapOperationsHandler implements Serializable {
      * </ul>
      *
      * @param p_gamePhaseHandler Defines the Current Game Phase
-     * @param p_command User Input Command
+     * @param p_command          User Input Command
      * @throws Exception Map Not Loaded
      */
-    public static void editCountry(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+    public static void editCountry(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -143,23 +142,23 @@ public class MapOperationsHandler implements Serializable {
         Set<Country> l_countriesSet = l_countryGraph.vertexSet();
 
         int l_countryID = 0;
-        if(!l_countriesSet.isEmpty()) {
-            for (Country l_c: l_countriesSet){
+        if (!l_countriesSet.isEmpty()) {
+            for (Country l_c : l_countriesSet) {
                 if (l_countryID < l_c.getId()) {
                     l_countryID = l_c.getId();
                 }
             }
         }
 
-        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+        for (int l_index = 1; l_index < l_commandsArray.length; l_index++) {
             String[] l_operationsArray = l_commandsArray[l_index].split(" ");
             String l_attributeOperation = l_operationsArray[0];
             String l_countryName = l_operationsArray[1];
             String l_inContinent;
 
-            try{
+            try {
                 l_inContinent = l_operationsArray[2];
-            }catch(IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 l_inContinent = "0";
             }
 
@@ -167,7 +166,7 @@ public class MapOperationsHandler implements Serializable {
             l_countryID += 1;
 
             Continent l_continentObj = l_gameMap.getContinentByName(l_inContinent);
-            if(l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))){
+            if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
                 int l_defaultSoldierCount = 2;
                 Country l_country = new Country(l_countryName, l_continentObj, l_defaultSoldierCount);
                 l_country.setId(l_countryID);
@@ -176,7 +175,7 @@ public class MapOperationsHandler implements Serializable {
                 l_continentObj.addCountry(l_country);
                 System.out.println(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
                 LogManager.logAction(String.format("Country %d - %s has been added in %s", l_country.getId(), l_country.getName(), l_continentObj.getName()));
-            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))){
+            } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                 Country l_country = l_gameMap.getCountryByName(l_countryName);
                 l_continentObj = l_country.getContinent();
 
@@ -192,10 +191,10 @@ public class MapOperationsHandler implements Serializable {
      * This method is used to add or remove a specific country as a neighbour to an existing country in the map.
      *
      * @param p_gamePhaseHandler Defines the game phase
-     * @param p_command User Input Command
+     * @param p_command          User Input Command
      * @throws Exception Map Not Loaded
      */
-    public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+    public static void editNeighbour(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -205,50 +204,49 @@ public class MapOperationsHandler implements Serializable {
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = l_gameMap.getContinentMap();
 
         String[] l_commandsArray = p_command.split(" -");
-        for(int l_index=1; l_index<l_commandsArray.length; l_index++) {
+        for (int l_index = 1; l_index < l_commandsArray.length; l_index++) {
             String[] l_operationsArray = l_commandsArray[l_index].split(" ");
             String l_attributeOperation = l_operationsArray[0];
             String l_countryName = l_operationsArray[1];
             Country l_country = l_gameMap.getCountryByName(l_countryName);
-            if(l_country == null)
-            {
+            if (l_country == null) {
                 throw new Exception(CommonErrorMessages.UNKNOWN_COUNTRY);
             }
             List<Integer> l_existingNeighbours = l_country.getNeighbourCountryIds();
 
             String l_neighbourCountryName;
 
-            for(int l_jndex=2; l_jndex<l_operationsArray.length; l_jndex++) {
+            for (int l_jndex = 2; l_jndex < l_operationsArray.length; l_jndex++) {
                 l_neighbourCountryName = l_operationsArray[l_jndex];
                 Country l_neighbourCountry = l_gameMap.getCountryByName(l_neighbourCountryName);
 
-                if (l_neighbourCountry == null){
+                if (l_neighbourCountry == null) {
                     System.out.println(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
                     LogManager.logAction(String.format("Country %s not found to add/remove as neighbour, try with that country again!", l_neighbourCountryName));
-                } else if (l_neighbourCountry.getName().equalsIgnoreCase(l_country.getName())){
+                } else if (l_neighbourCountry.getName().equalsIgnoreCase(l_country.getName())) {
                     continue;
                 } else {
                     if (l_attributeOperation.equalsIgnoreCase((CommonConstants.ADD_ATTRIBUTE))) {
                         if (!l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.addNeighbourCountryId(l_neighbourCountry.getId());
-                            if(!l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
+                            if (!l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
                                 l_neighbourCountry.addNeighbourCountryId(l_country.getId());
                             }
                             l_countryGraph.addEdge(l_country, l_neighbourCountry);
                             l_countryGraph.addEdge(l_neighbourCountry, l_country);
-                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()){
+                            if (l_country.getContinentId() != l_neighbourCountry.getContinentId()) {
                                 l_continentGraph.addEdge(l_country.getContinent(), l_neighbourCountry.getContinent());
                             }
                         }
                     } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
                         if (l_existingNeighbours.contains(l_neighbourCountry.getId())) {
                             l_country.removeNeighbourCountryId(l_neighbourCountry.getId());
-                            if(l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
+                            if (l_neighbourCountry.getNeighbourCountryIds().contains(l_country.getId())) {
                                 l_neighbourCountry.removeNeighbourCountryId(l_country.getId());
                             }
                             l_countryGraph.removeEdge(l_country, l_neighbourCountry);
                             l_countryGraph.removeEdge(l_neighbourCountry, l_country);
-                            if(l_country.getContinentId() != l_neighbourCountry.getContinentId()) {
+                            if (l_country.getContinentId() != l_neighbourCountry.getContinentId()) {
                                 l_continentGraph.removeEdge(l_country.getContinent(), l_neighbourCountry.getContinent());
                             }
                         }
@@ -256,7 +254,7 @@ public class MapOperationsHandler implements Serializable {
                 }
             }
 
-            if(l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)){
+            if (l_attributeOperation.equalsIgnoreCase(CommonConstants.ADD_ATTRIBUTE)) {
                 System.out.println("Added the given Neighbour Countries!");
                 LogManager.logAction("Added the given Neighbour Countries!");
             } else if (l_attributeOperation.equalsIgnoreCase((CommonConstants.REMOVE_ATTRIBUTE))) {
@@ -270,10 +268,10 @@ public class MapOperationsHandler implements Serializable {
      * Saves the edited map after proper validation.
      *
      * @param p_gamePhaseHandler Current Game Phase
-     * @param p_command User Input Command
+     * @param p_command          User Input Command
      * @throws Exception Map Not Loaded
      */
-    public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception{
+    public static void saveMap(GamePhaseHandler p_gamePhaseHandler, String p_command) throws Exception {
         Map l_gameMap = p_gamePhaseHandler.getGameMap();
         if (l_gameMap == null) {
             throw new Exception(CommonErrorMessages.MAP_NOT_LOADED);
@@ -281,9 +279,9 @@ public class MapOperationsHandler implements Serializable {
 
         String[] l_commandArray = p_command.split("\\s+");
         String l_fileName;
-        if(l_commandArray.length == 1){
+        if (l_commandArray.length == 1) {
             l_fileName = p_gamePhaseHandler.getMapFileName();
-        } else{
+        } else {
             l_fileName = l_commandArray[1];
         }
 
@@ -291,7 +289,7 @@ public class MapOperationsHandler implements Serializable {
             ValidationUtil.validateMap(l_gameMap);
             System.out.println("The map has been validated!");
             LogManager.logAction("The map has been validated!");
-        } catch (Exception e){
+        } catch (Exception e) {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss_ddMMyyyy");
             l_fileName += "_inValidMap_" + now.format(formatter) + ".map";
@@ -301,7 +299,7 @@ public class MapOperationsHandler implements Serializable {
             //writing the details of continents in the file
             l_writer.write("[continents]\n");
             for (Continent l_continent : l_gameMap.getContinentMap().vertexSet()) {
-                l_writer.write(l_continent.getName() + " " + l_continent.getValue()+"\n");
+                l_writer.write(l_continent.getName() + " " + l_continent.getValue() + "\n");
 //                        + " blue\n");
             }
             l_writer.write("\n");
@@ -310,7 +308,7 @@ public class MapOperationsHandler implements Serializable {
             l_writer.write("[countries]\n");
             for (Country l_country : l_gameMap.getCountryMap().vertexSet()) {
                 l_writer.write(l_country.getId()
-                        + " " + l_country.getName() + " " + l_country.getContinentId()+"\n");
+                        + " " + l_country.getName() + " " + l_country.getContinentId() + "\n");
 //                + " 100 100\n");
             }
             l_writer.write("\n");
@@ -342,10 +340,10 @@ public class MapOperationsHandler implements Serializable {
     /**
      * This method is the key for processing a map for validation phase.
      *
-     * @param p_gamePhaseHandler Game Phase
-     * @param p_fileName Map File Name
+     * @param p_gamePhaseHandler       Game Phase
+     * @param p_fileName               Map File Name
      * @param p_isMapValidationCommand Boolean value depicting the validation.
-     * @param p_isEditMapCommand Boolean value depicting the edit map command.
+     * @param p_isEditMapCommand       Boolean value depicting the edit map command.
      * @throws Exception Failed to load the file
      */
     public static void processMap(GamePhaseHandler p_gamePhaseHandler, String p_fileName, boolean p_isMapValidationCommand, boolean p_isEditMapCommand) throws Exception {
@@ -355,34 +353,29 @@ public class MapOperationsHandler implements Serializable {
 
         try {
             List<String> l_file = Files.readAllLines(Paths.get(CommonConstants.GAME_DATA_DIR + p_fileName));
-            for (int l_lineNum=0; l_lineNum < l_file.size(); l_lineNum++) {
+            for (int l_lineNum = 0; l_lineNum < l_file.size(); l_lineNum++) {
                 if (l_file.get(l_lineNum).isEmpty()) {
                     continue;
                 }
-                if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.CONTINENTS))
-                {
-                    l_lineNum = processContinents(l_file, l_gameMap, l_lineNum+1);
+                if (l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.CONTINENTS)) {
+                    l_lineNum = processContinents(l_file, l_gameMap, l_lineNum + 1);
                     LogManager.logAction("The continents object has been processed");
-                }
-                else if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.COUNTRIES))
-                {
-                    l_lineNum = processCountries(l_file, l_gameMap, l_lineNum+1);
+                } else if (l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.COUNTRIES)) {
+                    l_lineNum = processCountries(l_file, l_gameMap, l_lineNum + 1);
                     LogManager.logAction("The countries object has been processed");
-                }
-                else if(l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.BORDERS))
-                {
-                    l_lineNum = processBorders(l_file, l_gameMap, l_lineNum+1);
+                } else if (l_file.get(l_lineNum).equalsIgnoreCase(CommonConstants.BORDERS)) {
+                    l_lineNum = processBorders(l_file, l_gameMap, l_lineNum + 1);
                     LogManager.logAction("The continents and countries has been has connected using borders");
                 }
             }
             LogManager.logAction("The map object has been constructed");
 
-            try{
+            try {
                 ValidationUtil.validateMap(l_gameMap);
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("The Map Validation has failed and has the following error");
                 LogManager.logAction("The Map Validation has failed and has the following error");
-                if(p_isEditMapCommand){
+                if (p_isEditMapCommand) {
                     System.out.println(e);
                     LogManager.logAction(e.toString());
                     p_gamePhaseHandler.setGameMap(l_gameMap);
@@ -393,7 +386,7 @@ public class MapOperationsHandler implements Serializable {
                 }
                 throw e;
             }
-            if(p_isMapValidationCommand){
+            if (p_isMapValidationCommand) {
                 System.out.println("The map is valid");
                 return;
             }
@@ -404,7 +397,7 @@ public class MapOperationsHandler implements Serializable {
             p_gamePhaseHandler.setGameMap(l_gameMap);
             p_gamePhaseHandler.setMapFileName(p_fileName);
 
-            if(p_isEditMapCommand){
+            if (p_isEditMapCommand) {
                 return;
             }
 
@@ -420,8 +413,8 @@ public class MapOperationsHandler implements Serializable {
     /**
      * Processes the borders from the given file and updates the map.
      *
-     * @param p_file The list of strings representing the file content.
-     * @param p_map The map object to be updated.
+     * @param p_file    The list of strings representing the file content.
+     * @param p_map     The map object to be updated.
      * @param p_lineNum The starting line number for processing.
      * @return The line number after processing the borders.
      */
@@ -429,7 +422,7 @@ public class MapOperationsHandler implements Serializable {
 
         DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = p_map.getCountryMap();
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = p_map.getContinentMap();
-        for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
+        for (int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String[] l_borderInfoArray = p_file.get(l_lineNum).split(" ");
 
             if (l_borderInfoArray.length == 1) {
@@ -456,8 +449,8 @@ public class MapOperationsHandler implements Serializable {
     /**
      * Processes the countries from the given file and updates the map.
      *
-     * @param p_file The list of strings representing the file content.
-     * @param p_map The map object to be updated.
+     * @param p_file    The list of strings representing the file content.
+     * @param p_map     The map object to be updated.
      * @param p_lineNum The starting line number for processing.
      * @return The line number after processing the countries.
      */
@@ -465,7 +458,7 @@ public class MapOperationsHandler implements Serializable {
 
         DefaultDirectedGraph<Country, DefaultEdge> l_countryGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
         int l_defaultCountryArmyCount = 2;
-        for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
+        for (int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String l_countryInfo = p_file.get(l_lineNum);
             if (l_countryInfo.isEmpty()) {
                 p_map.setCountryMap(l_countryGraph);
@@ -487,15 +480,15 @@ public class MapOperationsHandler implements Serializable {
     /**
      * Processes the continents from the given file and updates the map.
      *
-     * @param p_file The list of strings representing the file content.
-     * @param p_map The map object to be updated.
+     * @param p_file    The list of strings representing the file content.
+     * @param p_map     The map object to be updated.
      * @param p_lineNum The starting line number for processing.
      * @return The line number after processing the continents.
      */
     private static int processContinents(List<String> p_file, Map p_map, int p_lineNum) {
 
         DefaultDirectedGraph<Continent, DefaultEdge> l_continentGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
-        for(int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
+        for (int l_lineNum = p_lineNum; l_lineNum < p_file.size(); l_lineNum++) {
             String l_continentInfo = p_file.get(l_lineNum);
             if (l_continentInfo.isEmpty()) {
                 return l_lineNum;
@@ -505,7 +498,7 @@ public class MapOperationsHandler implements Serializable {
             Continent l_continent = new Continent();
             l_continent.setName(l_continentInfoArray[0]);
             l_continent.setValue(Integer.parseInt(l_continentInfoArray[1]));
-            l_continent.setId(l_lineNum-p_lineNum+1); // Line number is being used as continent id
+            l_continent.setId(l_lineNum - p_lineNum + 1); // Line number is being used as continent id
             l_continentGraph.addVertex(l_continent);
             p_map.setContinentMap(l_continentGraph);
         }
@@ -543,6 +536,6 @@ public class MapOperationsHandler implements Serializable {
             l_data[l_rowNum][5] = String.valueOf(l_country.getArmyCount());
             l_rowNum++;
         }
-        DisplayUtil.displayData(l_data, new String[] {"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, String.format("Domination Map Viewer | Turn - %d", p_gameMap.getTurnsCompleted()));
+        DisplayUtil.displayData(l_data, new String[]{"CountryID", "Country", "Continent", "Neighbours", "Owner", "Armies"}, String.format("Domination Map Viewer | Turn - %d", p_gameMap.getTurnsCompleted()));
     }
 }

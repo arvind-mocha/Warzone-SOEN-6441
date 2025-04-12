@@ -5,8 +5,8 @@ import org.com.Adapter.MapFileHandlerFactory;
 import org.com.Constants.CommonConstants;
 import org.com.GameLog.LogManager;
 import org.com.GamePhase.Phase;
-import org.com.Utils.ValidationUtil;
 import org.com.Utils.SaveGameUtil;
+import org.com.Utils.ValidationUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
  * This class handles all commands and invocation of all command methods take place here.
  *
  * @author Arvind Lakshmanan
- *
  */
 
 public class CommandHandler implements Serializable {
@@ -25,17 +24,15 @@ public class CommandHandler implements Serializable {
      * Processes the given command based on the current game phase.
      *
      * @param p_gamePhaseHandler The game phase manager handling the current game phase.
-     * @param p_commandList The command entered by the user.
+     * @param p_commandList      The command entered by the user.
      */
-    public static void processCommand(GamePhaseHandler p_gamePhaseHandler, List<String> p_commandList)throws Exception
-    {
-        if(p_commandList == null || p_commandList.isEmpty() || p_commandList.contains(null))
-        {
+    public static void processCommand(GamePhaseHandler p_gamePhaseHandler, List<String> p_commandList) throws Exception {
+        if (p_commandList == null || p_commandList.isEmpty() || p_commandList.contains(null)) {
             IssueOrderHandler.processCommitCommand(p_gamePhaseHandler);
             return;
         }
 
-        for(String l_command : p_commandList) {
+        for (String l_command : p_commandList) {
             String[] l_commandArray = l_command.split("\\s+");
             Phase l_currentGamePhase = p_gamePhaseHandler.getGamePhase();
             ValidationUtil.validateCommand(l_currentGamePhase, l_commandArray, l_command);

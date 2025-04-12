@@ -6,7 +6,6 @@ import org.com.GameLog.LogManager;
 import org.com.GamePhase.IssueOrderPhase;
 import org.com.Handlers.CommandHandler;
 import org.com.Handlers.GamePhaseHandler;
-import org.com.Handlers.MapOperationsHandler;
 import org.com.Models.Country;
 import org.com.Models.Player;
 import org.com.Models.Tournament;
@@ -20,9 +19,25 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-
+/**
+ * The game mode executer class is used to switch between single or tournament game mode.
+ *
+ * @author Arvind Nachiappan
+ */
 public class GameModeExecuter {
-    public static Player gameModeHandler(GamePhaseHandler l_gamePhaseManager, Tournament l_tournamentHandler, String l_mapName) {
+
+    /**
+     * Handles the game mode execution for both single and tournament modes.
+     * <p>
+     * This method manages the main game loop, processes player commands, and determines
+     * the winner of the game. It supports both single-game and tournament modes,
+     * handling different player strategies and game phases.
+     *
+     * @param l_gamePhaseManager  The handler for managing the current game phase.
+     * @param l_tournamentHandler The tournament object containing tournament-specific data (can be null for single mode).
+     * @param l_mapName           The name of the map being played (used in tournament mode).
+     */
+    public static void gameModeHandler(GamePhaseHandler l_gamePhaseManager, Tournament l_tournamentHandler, String l_mapName) {
         System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
         Scanner l_scanner = new Scanner(System.in);
         Player l_winner = null;
@@ -72,8 +87,7 @@ public class GameModeExecuter {
                 LogManager.logAction("\u001B[31m-- " + l_exception.getMessage() + " --\u001B[0m");
                 System.out.println(CommandOutputMessages.HELP_DEFAULT_MESSAGE);
             }
-            l_maxNotTurnsCompleted = (l_tournamentHandler != null && l_gamePhaseManager.getTurnsCompleted() < l_tournamentHandler.getMaxTurns());
+            l_maxNotTurnsCompleted = l_tournamentHandler == null || l_gamePhaseManager.getTurnsCompleted() < l_tournamentHandler.getMaxTurns();
         } while (l_inputCommand == null || l_maxNotTurnsCompleted && !l_inputCommand.contains(CommonConstants.EXIT_COMMAND));
-        return l_winner;
     }
 }

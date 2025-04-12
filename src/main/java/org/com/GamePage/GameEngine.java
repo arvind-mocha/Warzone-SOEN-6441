@@ -38,7 +38,6 @@ public class GameEngine implements Serializable {
             if (CommonConstants.SINGLE_GAME_MODE.equalsIgnoreCase(l_gameMode)) {
                 GamePhaseHandler l_gamePhaseManager = new GamePhaseHandler();
                 GameModeExecuter.gameModeHandler(l_gamePhaseManager, null, null);
-
             } else if (CommonConstants.TOURNAMENT_COMMAND.equals(l_gameMode.toLowerCase())) {
                 Tournament l_tournamentManager = new Tournament();
                 System.out.println("Set up the tournament using the following format:\n" + "tournament -M maps -P players -G number_of_games -D max_turns");
