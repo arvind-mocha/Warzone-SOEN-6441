@@ -63,7 +63,6 @@ public class BlockadeOrder implements Order, Serializable {
         {
             throw new Exception(String.format("You don't have a blockade card to use. Available cards %s", d_player.get_cards().toString()));
         }
-//        if(!d_player.get_countries().contains(d_targetCountry))
         if(d_targetCountry.getOwner() == null)
         {
             throw new Exception("Can only be played on your territory");

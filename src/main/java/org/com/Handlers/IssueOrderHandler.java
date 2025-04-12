@@ -62,7 +62,7 @@ public class IssueOrderHandler implements Serializable {
 
     public static void processCommitCommand(GamePhaseHandler p_gamePhaseHandler) throws Exception {
         Player l_currentPlayer = p_gamePhaseHandler.getPlayerList().get(p_gamePhaseHandler.getCurrentPlayer());
-        if (l_currentPlayer.get_armyCount() > 0) {
+        if (!l_currentPlayer.get_countries().isEmpty() && l_currentPlayer.get_armyCount() > 0) {
             throw new Exception(String.format("Deploy all armies to commit your changes. Remaining deployable armies: %s", l_currentPlayer.get_armyCount()));
         }
         GamePlayHandler.advanceTurn(p_gamePhaseHandler);

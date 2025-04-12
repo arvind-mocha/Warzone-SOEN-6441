@@ -236,11 +236,15 @@ public class ValidationUtil implements Serializable {
         return false;
     }
 
+    /**
+     * Validates the tournament command to ensure the tournament object and its strategies are valid.
+     *
+     * @param l_tournament The tournament object to validate.
+     * @throws Exception if the tournament is null or contains unsupported strategies.
+     */
     public static void validateTournamentCommand(Tournament l_tournament) throws Exception {
         if (l_tournament == null) {
             throw new Exception("The tournament is empty");
-        } else if (l_tournament.getNumGames() != l_tournament.getMapList().size()) {
-            throw new Exception(String.format("Not enough maps to play %d games", l_tournament.getNumGames()));
         }
 
         for(String l_player : l_tournament.getStrategyList())

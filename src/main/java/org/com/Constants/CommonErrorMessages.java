@@ -6,7 +6,6 @@ import java.io.Serializable;
  * This class contains all global error messages.
  *
  * @author Arvind Lakshmanan
- *
  */
 
 public class CommonErrorMessages implements Serializable {
