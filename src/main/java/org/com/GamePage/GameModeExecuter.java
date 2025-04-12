@@ -62,7 +62,9 @@ public class GameModeExecuter {
             if (l_isIssueOrderPhase && l_currentPlayer.get_countries().size() == l_gamePhaseManager.getGameMap().getCountryMap().vertexSet().size()) {
                 l_winner = l_ownersMap.getFirst();
                 System.out.println(String.format("Hurray!!!. Player %s won the game.", l_winner.get_name()));
-                l_tournamentHandler.getGameWinners().computeIfAbsent(l_mapName, k -> new ArrayList<String>()).add(l_winner.get_name());
+                if (l_tournamentHandler != null) {
+                    l_tournamentHandler.getGameWinners().computeIfAbsent(l_mapName, k -> new ArrayList<String>()).add(l_winner.get_name());
+                }
                 l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
             } else if (l_isIssueOrderPhase && l_currentPlayer.get_countries().isEmpty()) {
                 l_inputCommand = Arrays.asList(CommonConstants.COMMIT);
@@ -70,7 +72,9 @@ public class GameModeExecuter {
                 if (l_currentPlayer.get_playerStrategy() instanceof CheaterStrategy && l_isIssueOrderPhase && l_ownersMap.size() <= 1) {
                     l_winner = l_ownersMap.getFirst();
                     System.out.println(String.format("Cheater!!!. Player %s won the game.", l_winner.get_name()));
-                    l_tournamentHandler.getGameWinners().computeIfAbsent(l_mapName, k -> new ArrayList<String>()).add(l_winner.get_name());
+                    if (l_tournamentHandler != null) {
+                        l_tournamentHandler.getGameWinners().computeIfAbsent(l_mapName, k -> new ArrayList<String>()).add(l_winner.get_name());
+                    }
                     l_inputCommand = Arrays.asList(CommonConstants.EXIT_COMMAND);
                 } else {
                     Strategy l_playerStrategy = l_currentPlayer.get_playerStrategy();
